@@ -73,10 +73,10 @@ public class BasicOpMode_Iterative extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        backLeftDrive  = hardwareMap.get(DcMotor.class, "back_left");
-        backRightDrive = hardwareMap.get(DcMotor.class, "back_right");
-        frontLeftDrive  = hardwareMap.get(DcMotor.class, "front_left");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right");
+        backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
+        frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -111,8 +111,8 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
-        double backLeftPower = 0;
-        double backRightPower = 0;
+       double backLeftPower = 0;
+       double backRightPower = 0;
         double frontLeftPower = 0;
         double frontRightPower = 0;
 
@@ -121,12 +121,12 @@ public class BasicOpMode_Iterative extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double drive = -gamepad1.left_stick_y;
-        double turn  =  gamepad1.right_stick_x;
-        backLeftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-        backRightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-        frontRightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-        frontLeftPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+        double right = gamepad1.left_stick_y;
+        double left  =  gamepad1.right_stick_y;
+        backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
+        backRightPower   = Range.clip(-right, -1.0, 1.0) ;
+        frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
+        frontRightPower   = Range.clip(left, -1.0, 1.0) ;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.

@@ -55,10 +55,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class HardwarePushbot
 {
     /* Public OpMode members. */
+//
     public DcMotor backLeft;
     public DcMotor frontLeft;
     public DcMotor backRight;
     public DcMotor frontRight;
+//    public DcMotor backLeft;
 
     //public
 
@@ -87,14 +89,14 @@ public class HardwarePushbot
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        backLeft  = hwMap.get(DcMotor.class, "back_left");
-        backRight = hwMap.get(DcMotor.class, "back_right");
-        frontLeft = hwMap.get(DcMotor.class, "front_left");
-        frontRight = hwMap.get(DcMotor.class, "front_right");
+         backLeft  = hwMap.get(DcMotor.class, "backLeft");
+        backRight = hwMap.get(DcMotor.class, "backRight");
+        frontLeft = hwMap.get(DcMotor.class, "frontLeft");
+        frontRight = hwMap.get(DcMotor.class, "frontRight");
 //        leftArm    = hwMap.get(DcMotor.class, "left_arm");
         backLeft.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
+       backRight.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         frontRight.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
