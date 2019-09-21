@@ -7,3 +7,4 @@ gradle-app.setting
 workspace.xml
 usage.statistics
 tasks.xml
+local.properties

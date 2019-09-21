@@ -70,9 +70,7 @@ public class BasicOpMode_Iterative extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
+
         backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
         frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -98,7 +96,7 @@ public class BasicOpMode_Iterative extends OpMode
     }
 
 
-     * Code to run ONCE when the driver hits PLAY
+     /* Code to run ONCE when the driver hits PLAY
      */
     @Override
     public void start() {
@@ -121,7 +119,7 @@ public class BasicOpMode_Iterative extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double right = gamepad1git .left_stick_y;
+        double right = gamepad1 .left_stick_y;
         double left  =  gamepad1.right_stick_y;
         backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
         backRightPower   = Range.clip(-right, -1.0, 1.0) ;
