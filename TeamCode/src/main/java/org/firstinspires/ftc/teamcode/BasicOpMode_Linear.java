@@ -101,12 +101,12 @@ public class BasicOpMode_Linear extends LinearOpMode {
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            backLeftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            backRightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-            frontLeftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            frontRightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
+            double right = gamepad1.left_stick_y;
+            double left  =  gamepad1.right_stick_y;
+            backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
+            backRightPower   = Range.clip(-right, -1.0, 1.0) ;
+            frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
+            frontRightPower   = Range.clip(left, -1.0, 1.0) ;
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.

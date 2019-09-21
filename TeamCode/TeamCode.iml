@@ -97,7 +97,10 @@
     <orderEntry type="library" name="Gradle: :tensorflow-lite-0.0.0-nightly:@aar" level="project" />
     <orderEntry type="module" module-name="FtcRobotController" />
     <orderEntry type="module" module-name="FtcRobotController" />
+<<<<<<< HEAD
     <orderEntry type="module" module-name="FtcRobotController" />
     <orderEntry type="module" module-name="FtcRobotController" />
+=======
+>>>>>>> faf5eb2b6ee9b5b91b9d51d09b168a6376269c7c
   </component>
 </module>

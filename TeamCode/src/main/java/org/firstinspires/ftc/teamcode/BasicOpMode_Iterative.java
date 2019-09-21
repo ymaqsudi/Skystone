@@ -29,7 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -97,7 +97,7 @@ public class BasicOpMode_Iterative extends OpMode
     public void init_loop() {
     }
 
-    /*
+
      * Code to run ONCE when the driver hits PLAY
      */
     @Override
@@ -121,17 +121,13 @@ public class BasicOpMode_Iterative extends OpMode
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double right = gamepad1.left_stick_y;
+        double right = gamepad1git .left_stick_y;
         double left  =  gamepad1.right_stick_y;
         backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
         backRightPower   = Range.clip(-right, -1.0, 1.0) ;
         frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
         frontRightPower   = Range.clip(left, -1.0, 1.0) ;
 
-        // Tank Mode uses one stick to control each wheel.
-        // - This requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y ;
-        // rightPower = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
         backLeftDrive.setPower(backLeftPower);
