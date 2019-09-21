@@ -121,19 +121,8 @@ public class BasicOpMode_Iterative extends OpMode
         double frontLeftPower = 0;
         double frontRightPower = 0;
 
-        // Choose to drive using either Tank Mode, or POV Mode
-        // Comment out the method that's not used.  The default below is POV.
 
-        // POV Mode uses left stick to go forward, and right stick to turn.
-        // - This uses basic math to combine motions and is easier to drive straight.
-/*        double right = gamepad1 .left_stick_y;
-        double left  =  gamepad1.right_stick_y;
-        backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
-        backRightPower   = Range.clip(-right, -1.0, 1.0) ;
-        frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
-        frontRightPower   = Range.clip(left, -1.0, 1.0) ; */
-
-        void setMotors(float x, float y, float rot)  //sets the motor speeds given an x, y and rotation value
+ /*       void setMotors(float x, float y, float rot)  //sets the motor speeds given an x, y and rotation value
         {
             float theta = atan(x/y) - 3.14159/4;  //finds the angle of the joystick and turns it by pi/4 radians or 45 degrees
             rot = .5rot;  //scales rotation factor
@@ -147,15 +136,20 @@ public class BasicOpMode_Iterative extends OpMode
             frontLeftPower = rot - newY;
             frontRightDrive = rot + newY;
         }
+        */
 
+        double drive;
+        double strafe;
+        double rotate;
 
-        // Send calculated power to wheels
-     /*   backLeftDrive.setPower(backLeftPower);
-        backRightDrive.setPower(backRightPower);
-        frontLeftDrive.setPower(frontLeftPower);
-        frontRightDrive.setPower(frontRightPower);
+        drive = -gamepad1.right_stick_y;
+        strafe = gamepad1.right_stick_x;
+        rotate = gamepad1.left_stick_x;
 
-      */
+        frontLeftPower = drive + strafe + rotate;
+        backLeftPower = drive - strafe + rotate;
+        frontRightPower = drive - strafe - rotate;
+        backRightPower = drive + strafe - rotate;
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
