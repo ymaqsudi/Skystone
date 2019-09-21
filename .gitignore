@@ -1,0 +1,9 @@
+.gradle
+/build/
+gradle-app.setting
+.gradletasknamecache
+.idea/
+.gradle/
+workspace.xml
+usage.statistics
+tasks.xml
