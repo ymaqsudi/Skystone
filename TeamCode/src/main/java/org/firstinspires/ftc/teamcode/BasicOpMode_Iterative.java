@@ -135,7 +135,7 @@ public class BasicOpMode_Iterative extends OpMode
             backRightDrive = rot - newX;
             frontLeftPower = rot - newY;
             frontRightDrive = rot + newY;
-            hello world
+
         }
         */
 
