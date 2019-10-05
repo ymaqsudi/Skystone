@@ -65,13 +65,18 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor frontLeftDrive = null;
     private DcMotor frontRightDrive = null;
 
+    // Setup a variable for each drive wheel to save power level for telemetry
+    private double backLeftPower = 0;
+    private double backRightPower = 0;
+    private double frontLeftPower = 0;
+    private double frontRightPower = 0;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
-
 
         backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
@@ -114,48 +119,96 @@ public class BasicOpMode_Iterative extends OpMode
     public void loop() {
 
 
+/*
+        double right = gamepad1.left_stick_y;
+        double left  =  gamepad1.right_stick_y;
 
-        // Setup a variable for each drive wheel to save power level for telemetry
-       double backLeftPower = 0;
-       double backRightPower = 0;
-        double frontLeftPower = 0;
-        double frontRightPower = 0;
+        backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
+        backRightPower   = Range.clip(-right, -1.0, 1.0) ;
+        frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
+        frontRightPower   = Range.clip(left, -1.0, 1.0) ;
+*/
+     /*   if (gamepad1.x) {
+            backLeftPower = Range.clip(-left, -1.0, 1.0);
+            frontLeftPower = Range.clip(-left, -1.0, 1.0);
 
-
- /*       void setMotors(float x, float y, float rot)  //sets the motor speeds given an x, y and rotation value
-        {
-            float theta = atan(x/y) - 3.14159/4;  //finds the angle of the joystick and turns it by pi/4 radians or 45 degrees
-            rot = .5rot;  //scales rotation factor
-            float magnitude = sqrt(xx+yy);  //finds the magnitude of the joystick input by the Pythagorean theorem
-            magnitude = magnitude(100/127) - rot; // subtracts rot from the magnitude to make room for it and scales the magnitude
-            float newX = cos(theta)magnitude; //finds the input to one set of wheels
-            float newY = sin(theta)magnitude //finds the input to the other set of wheels
-            //from here on is just setting motor values
-            frontRightDrive = rot + newX;
-            backRightDrive = rot - newX;
-            frontLeftPower = rot - newY;
-            frontRightDrive = rot + newY;
-
+            backRightPower = Range.clip(-right, 1.0, -1.0);
+            frontRightPower = Range.clip(-right, 1.0, -1.0);
         }
-        */
-
-        double drive;
-        double strafe;
-        double rotate;
-
-        drive = -gamepad1.right_stick_y;
-        strafe = gamepad1.right_stick_x;
-        rotate = gamepad1.left_stick_x;
-
-        frontLeftPower = drive + strafe + rotate;
-        backLeftPower = drive - strafe + rotate;
-        frontRightPower = drive - strafe - rotate;
-        backRightPower = drive + strafe - rotate;
+       */
 
         // Show the elapsed game time and wheel power.
+
+        double forward = gamepad1.right_stick_y;
+        double strafe = gamepad1.right_stick_x;
+
+        double rotate = gamepad1.left_stick_x;
+
+    // if the left stick x value > 0 rotate clockwise
+    // if the left stick x value < 0 rotate counter clockwise
+
+        if (rotate > 0) {
+            backLeftDrive.setPower(1);
+            frontLeftDrive.setPower(1);
+
+            backRightDrive.setPower(-1);
+            frontRightDrive.setPower(-1);
+        } else if(rotate < 0){
+            backLeftDrive.setPower(-1);
+            frontLeftDrive.setPower(-1);
+
+            backRightDrive.setPower(1);
+            frontRightDrive.setPower(1);
+        }
+
+        // set all wheels to gamepad1.rightstick_y
+
+        // make it go forward and backward
+
+        double right = gamepad1.left_stick_y;
+        backLeftPower = Range.clip(-right, -1.0, 1.0);
+        frontLeftPower = Range.clip(-right, -1.0, 1.0);
+        backRightPower = Range.clip(right, 1.0, -1.0);
+        frontRightPower = Range.clip(right, 1.0, -1.0);
+
+        // if rightstick x > 1 strafe right
+        // if rightstick x < 1 strafe left
+    /*
+        if (gamepad1.right_stick_x > 1) {
+            frontRightDrive.setPower(-1);
+            backLeftDrive.setPower(-1);
+
+            frontLeftDrive.setPower(1);
+            backRightDrive.setPower(1);
+        } else if (gamepad1.right_stick_x < 1) {
+            frontRightDrive.setPower(1);
+            backLeftDrive.setPower(1);
+
+            frontLeftDrive.setPower(-1);
+            backRightDrive.setPower(-1);
+        }
+*/
+        setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower);
+
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
+        telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
+        telemetry.addData("right stick x", " : " + gamepad1.right_stick_x);
 
+        telemetry.update();
+    }
+
+    /**
+     * @param backLeftPower
+     * @param backRightPower
+     * @param frontLeftPower
+     * @param frontRightPower
+     */
+    public void setDrivePower(double backLeftPower, double backRightPower, double frontLeftPower, double frontRightPower) {
+        backLeftDrive.setPower(backLeftPower);
+        backRightDrive.setPower(backRightPower);
+        frontRightDrive.setPower(frontRightPower);
+        frontLeftDrive.setPower(frontLeftPower);
     }
 
     /*
