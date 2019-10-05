@@ -52,6 +52,12 @@ import com.qualcomm.robotcore.util.Range;
  * Test-Tank
  *
  * Teleop
+ *
+ *
+ * If you make a change to this file, type the following code into terminal
+ * git add *
+ * git commit -m "type a message explaining what the change you made did"
+ * git push
  */
 
 @TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
