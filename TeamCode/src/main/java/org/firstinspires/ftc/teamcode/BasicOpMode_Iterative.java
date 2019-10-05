@@ -71,11 +71,15 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor frontLeftDrive = null;
     private DcMotor frontRightDrive = null;
 
+
+
     // Setup a variable for each drive wheel to save power level for telemetry
     private double backLeftPower = 0;
     private double backRightPower = 0;
     private double frontLeftPower = 0;
     private double frontRightPower = 0;
+
+
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -149,6 +153,7 @@ public class BasicOpMode_Iterative extends OpMode
         double strafe = gamepad1.right_stick_x;
 
         double rotate = gamepad1.left_stick_x;
+        double drive = gamepad1.right_stick_y;
 
     // if the left stick x value > 0 rotate clockwise
     // if the left stick x value < 0 rotate counter clockwise
@@ -171,11 +176,11 @@ public class BasicOpMode_Iterative extends OpMode
 
         // make it go forward and backward
 
-        double right = gamepad1.left_stick_y;
-        backLeftPower = Range.clip(-right, -1.0, 1.0);
-        frontLeftPower = Range.clip(-right, -1.0, 1.0);
-        backRightPower = Range.clip(right, 1.0, -1.0);
-        frontRightPower = Range.clip(right, 1.0, -1.0);
+
+        backLeftPower = Range.clip(-drive, -1.0, 1.0);
+        frontLeftPower = Range.clip(-drive, -1.0, 1.0);
+        backRightPower = Range.clip(drive, 1.0, -1.0);
+        frontRightPower = Range.clip(drive, 1.0, -1.0);
 
         // if rightstick x > 1 strafe right
         // if rightstick x < 1 strafe left
