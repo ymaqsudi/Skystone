@@ -64,6 +64,7 @@ import com.qualcomm.robotcore.util.Range;
 
 public class BasicOpMode_Iterative extends OpMode
 {
+    Test_Hardware_Old_Bot robot       = new Test_Hardware_Old_Bot();
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor backLeftDrive = null;
@@ -129,76 +130,51 @@ public class BasicOpMode_Iterative extends OpMode
     public void loop() {
 
 
-/*
-        double right = gamepad1.left_stick_y;
-        double left  =  gamepad1.right_stick_y;
-
-        backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
-        backRightPower   = Range.clip(-right, -1.0, 1.0) ;
-        frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
-        frontRightPower   = Range.clip(left, -1.0, 1.0) ;
-*/
-     /*   if (gamepad1.x) {
-            backLeftPower = Range.clip(-left, -1.0, 1.0);
-            frontLeftPower = Range.clip(-left, -1.0, 1.0);
-
-            backRightPower = Range.clip(-right, 1.0, -1.0);
-            frontRightPower = Range.clip(-right, 1.0, -1.0);
-        }
-       */
 
         // Show the elapsed game time and wheel power.
 
-        double forward = gamepad1.right_stick_y;
-        double strafe = gamepad1.right_stick_x;
+       double right_joystickx = gamepad1.right_stick_x;
+       double right_joysticky = gamepad1.right_stick_y;
 
-        double rotate = gamepad1.left_stick_x;
-        double drive = gamepad1.right_stick_y;
+       double left_joystickx = gamepad1.right_stick_x;
 
-    // if the left stick x value > 0 rotate clockwise
-    // if the left stick x value < 0 rotate counter clockwise
+       if(left_joystickx > .2) {
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(-1);
+           frontLeftDrive.setPower(1);
+           frontRightDrive.setPower(1);
+       } else if (left_joystickx < -.2) {
+           backLeftDrive.setPower(-1);
+           backRightDrive.setPower(1);
+           frontLeftDrive.setPower(-1);
+           frontRightDrive.setPower(1);
+       }
 
-        if (rotate > 0) {
-            backLeftDrive.setPower(1);
-            frontLeftDrive.setPower(1);
+       if (right_joysticky < 0) {
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(1);
+           frontLeftDrive.setPower(1);
+           frontRightDrive.setPower(1);
+       } else if (right_joysticky > 0) {
+           backLeftDrive.setPower(-1);
+           backRightDrive.setPower(-1);
+           frontLeftDrive.setPower(-1);
+           frontRightDrive.setPower(-1);
+       }
 
-            backRightDrive.setPower(-1);
-            frontRightDrive.setPower(-1);
-        } else if(rotate < 0){
-            backLeftDrive.setPower(-1);
-            frontLeftDrive.setPower(-1);
+       if (right_joystickx < -.2) {
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(-1);
+           frontLeftDrive.setPower(-1);
+           frontRightDrive.setPower(1);
 
-            backRightDrive.setPower(1);
-            frontRightDrive.setPower(1);
-        }
+       } else if (right_joystickx > .2) {
+           backLeftDrive.setPower(-1);
+           backRightDrive.setPower(1);
+           frontLeftDrive.setPower(1);
+           frontRightDrive.setPower(-1);
+       }
 
-        // set all wheels to gamepad1.rightstick_y
-
-        // make it go forward and backward
-
-
-        backLeftPower = Range.clip(-drive, -1.0, 1.0);
-        frontLeftPower = Range.clip(-drive, -1.0, 1.0);
-        backRightPower = Range.clip(drive, 1.0, -1.0);
-        frontRightPower = Range.clip(drive, 1.0, -1.0);
-
-        // if rightstick x > 1 strafe right
-        // if rightstick x < 1 strafe left
-    /*
-        if (gamepad1.right_stick_x > 1) {
-            frontRightDrive.setPower(-1);
-            backLeftDrive.setPower(-1);
-
-            frontLeftDrive.setPower(1);
-            backRightDrive.setPower(1);
-        } else if (gamepad1.right_stick_x < 1) {
-            frontRightDrive.setPower(1);
-            backLeftDrive.setPower(1);
-
-            frontLeftDrive.setPower(-1);
-            backRightDrive.setPower(-1);
-        }
-*/
         setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower);
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
