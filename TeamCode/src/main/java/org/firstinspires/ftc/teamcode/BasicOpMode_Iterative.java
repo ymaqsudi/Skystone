@@ -33,24 +33,11 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 /**
- * This file contains an example of an iterative (Non-Linear) "OpMode".
- * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
- * The names of OpModes appear on the menu of the FTC Driver Station.
- * When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all iterative OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- *
- * Test-Tank
- *
  * Teleop
  *
  *
@@ -64,14 +51,14 @@ import com.qualcomm.robotcore.util.Range;
 
 public class BasicOpMode_Iterative extends OpMode
 {
-    Test_Hardware_Old_Bot robot       = new Test_Hardware_Old_Bot();
+ //   Test_Hardware_Old_Bot robot       = new Test_Hardware_Old_Bot();
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor backLeftDrive = null;
     private DcMotor backRightDrive = null;
     private DcMotor frontLeftDrive = null;
     private DcMotor frontRightDrive = null;
-
+    private DcMotor armDrive = null;
 
 
     // Setup a variable for each drive wheel to save power level for telemetry
@@ -79,6 +66,8 @@ public class BasicOpMode_Iterative extends OpMode
     private double backRightPower = 0;
     private double frontLeftPower = 0;
     private double frontRightPower = 0;
+
+    private double armPower = 0;
 
 
 
@@ -93,6 +82,7 @@ public class BasicOpMode_Iterative extends OpMode
         backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
         frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
+        armDrive = hardwareMap.get(DcMotor.class, "arm");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -101,6 +91,7 @@ public class BasicOpMode_Iterative extends OpMode
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        armDrive.setDirection(DcMotor.Direction.FORWARD);
 
 
 
@@ -136,51 +127,70 @@ public class BasicOpMode_Iterative extends OpMode
        double right_joystickx = gamepad1.right_stick_x;
        double right_joysticky = gamepad1.right_stick_y;
 
-       double left_joystickx = gamepad1.right_stick_x;
+       double left_joystickx = gamepad1.left_stick_x;
+
+       double right_trigger = gamepad1.right_trigger;
+       double left_trigger = gamepad1.left_trigger;
+
+       if (right_trigger > .5) {
+           armDrive.setPower(1);
+       } else if (right_trigger < .1) {
+           armDrive.setPower(0);
+       }
+
+       if (left_trigger > .5) {
+           armDrive.setPower(-1);
+       } else if (left_trigger < .1) {
+           armDrive.setPower(0);
+       }
+
 
        if(left_joystickx > .2) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(-1);
-           frontLeftDrive.setPower(1);
-           frontRightDrive.setPower(1);
-       } else if (left_joystickx < -.2) {
            backLeftDrive.setPower(-1);
-           backRightDrive.setPower(1);
+           backRightDrive.setPower(-2);
+           frontLeftDrive.setPower(1);
+           frontRightDrive.setPower(-2);
+       } else if (left_joystickx < -.2) {
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(2);
            frontLeftDrive.setPower(-1);
-           frontRightDrive.setPower(1);
+           frontRightDrive.setPower(-2);
        }
 
        if (right_joysticky < 0) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(1);
-           frontLeftDrive.setPower(1);
-           frontRightDrive.setPower(1);
-       } else if (right_joysticky > 0) {
            backLeftDrive.setPower(-1);
-           backRightDrive.setPower(-1);
+           backRightDrive.setPower(2);
+           frontLeftDrive.setPower(1);
+           frontRightDrive.setPower(-2);
+       } else if (right_joysticky > 0) {
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(-2);
            frontLeftDrive.setPower(-1);
-           frontRightDrive.setPower(-1);
+           frontRightDrive.setPower(2);
        }
 
        if (right_joystickx < -.2) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(-1);
+           backLeftDrive.setPower(-1);
+           backRightDrive.setPower(-2);
            frontLeftDrive.setPower(-1);
-           frontRightDrive.setPower(1);
+           frontRightDrive.setPower(-2);
 
        } else if (right_joystickx > .2) {
-           backLeftDrive.setPower(-1);
-           backRightDrive.setPower(1);
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(2);
            frontLeftDrive.setPower(1);
-           frontRightDrive.setPower(-1);
+           frontRightDrive.setPower(2);
        }
 
-        setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower);
+        setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower, armPower);
+
+
+
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
         telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
-        telemetry.addData("right stick x", " : " + gamepad1.right_stick_x);
+        telemetry.addData("right stick x", " : " + gamepad1.left_stick_x);
 
         telemetry.update();
     }
@@ -191,11 +201,12 @@ public class BasicOpMode_Iterative extends OpMode
      * @param frontLeftPower
      * @param frontRightPower
      */
-    public void setDrivePower(double backLeftPower, double backRightPower, double frontLeftPower, double frontRightPower) {
+    public void setDrivePower(double backLeftPower, double backRightPower, double frontLeftPower, double frontRightPower, double armPower) {
         backLeftDrive.setPower(backLeftPower);
         backRightDrive.setPower(backRightPower);
         frontRightDrive.setPower(frontRightPower);
         frontLeftDrive.setPower(frontLeftPower);
+        armDrive.setPower(armPower);
     }
 
     /*
@@ -206,3 +217,4 @@ public class BasicOpMode_Iterative extends OpMode
     }
 
 }
+

@@ -27,14 +27,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+//package org.firstinspires.ftc.teamcode;
 
 //import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+//import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+//import com.qualcomm.robotcore.hardware.DcMotor;
+//import com.qualcomm.robotcore.util.ElapsedTime;
+//import com.qualcomm.robotcore.util.Range;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -60,83 +60,90 @@ import com.qualcomm.robotcore.util.Range;
  * git push
  */
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
+//@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
 
-public class TestRobotIterative extends OpMode
-{
-    Test_Hardware_Old_Bot robot       = new Test_Hardware_Old_Bot();
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    private double MC1_1_power = 0;
-    private double MC1_2_power = 0;
-    private double MC2_1_power = 0;
-    private double MC2_2_power = 0;
-    private double MC3_1_power = 0;
-    private double MC3_2_power = 0;
+//public class TestRobotIterative extends OpMode
+//{
+  //  Test_Hardware_Old_Bot robot       = new Test_Hardware_Old_Bot();
+   //  Declare OpMode members.
+    //private ElapsedTime runtime = new ElapsedTime();
+    //private double MC1_1_power = 0;
+    //private double MC1_2_power = 0;
+    //private double MC2_1_power = 0;
+    //private double MC2_2_power = 0;
+    //private double MC3_1_power = 0;
+    //private double MC3_2_power = 0;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
-    @Override
-    public void init() {
-        telemetry.addData("Status", "Initialized");
-        robot.initHardware(hardwareMap);
+    //@Override
+    //public void init() {
+      //  telemetry.addData("Status", "Initialized");
+        //robot.initHardware(hardwareMap);
 
-        telemetry.addData("Status", "Initialized");
-    }
+//        telemetry.addData("Status", "Initialized");
+    //}
 
     /*
      * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
      */
-    @Override
-    public void init_loop() {
-    }
+  //  @Override
+    //public void init_loop() {
+    //}
 
 
     /* Code to run ONCE when the driver hits PLAY
      */
-    @Override
-    public void start() {
-        runtime.reset();
-    }
+    //@Override
+    //public void start() {
+      //  runtime.reset();
+    //}
 
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
-    @Override
-    public void loop() {
+    //@Override
+    //public void loop() {
         // Ternary Expression
-        // if(gamepad1.a) {MC1_1_power = 1} else {MC1_1_power = 0}
-        MC1_1_power = gamepad1.a ? 1 : 0;
-        MC1_2_power = gamepad1.b ? 1 : 0;
-        MC2_1_power = gamepad1.x ? 1 : 0;
-        MC2_2_power = gamepad1.y ? 1 : 0;
-        MC3_1_power = gamepad1.left_bumper ? 1 : 0;
-        MC3_2_power = gamepad1.right_bumper ? 1 : 0;
+      //   if(gamepad1.a)
+        // {
+        //     MC1_1_power = 1;
+      //   }
+         //else {
+          //   MC1_1_power = 0;
+    //     }
+        //MC1_1_power = gamepad1.a ? 1 : 0;
+        //MC1_2_power = gamepad1.b ? 1 : 0;
+        //MC2_1_power = gamepad1.x ? 1 : 0;
+        //MC2_2_power = gamepad1.y ? 1 : 0;
+        //MC3_1_power = gamepad1.left_bumper ? 1 : 0;
+        //MC3_2_power = gamepad1.right_bumper ? 1 : 0;
 
-        robot.MC1_1.setPower(MC1_1_power);
-        robot.MC1_2.setPower(MC1_2_power);
-        robot.MC2_1.setPower(MC2_1_power);
-        robot.MC2_2.setPower(MC2_2_power);
-        robot.MC3_1.setPower(MC3_1_power);
-        robot.MC3_2.setPower(MC3_2_power);
+        //robot.MC1_1.setPower(MC1_1_power);
+        //robot.MC1_2.setPower(MC1_2_power);
+        //robot.MC2_1.setPower(MC2_1_power);
+        //robot.MC2_2.setPower(MC2_2_power);
+        //robot.MC3_1.setPower(MC3_1_power);
+        //robot.MC3_2.setPower(MC3_2_power);
 
         // TELEMETRY
-        telemetry.addData("MC1_1", MC1_1_power);
-        telemetry.addData("MC1_2", MC1_2_power);
-        telemetry.addData("MC2_1", MC2_1_power);
-        telemetry.addData("MC2_2", MC2_2_power);
-        telemetry.addData("MC3_1", MC3_1_power);
-        telemetry.addData("MC3_2", MC3_2_power);
+  //      telemetry.addData("MC1_1", MC1_1_power);
+//        telemetry.addData("MC1_2", MC1_2_power);
+    //    telemetry.addData("MC2_1", MC2_1_power);
+      //  telemetry.addData("MC2_2", MC2_2_power);
+        //telemetry.addData("MC3_1", MC3_1_power);
+        //telemetry.addData("MC3_2", MC3_2_power);
 
-        telemetry.update();
-    }
+        //telemetry.update();
+  //  }
 
     /*
      * Code to run ONCE after the driver hits STOP
      */
-    @Override
-    public void stop() {
-    }
+    //@Override
+    //public void stop() {
 
-}
+    //}
+
+//}

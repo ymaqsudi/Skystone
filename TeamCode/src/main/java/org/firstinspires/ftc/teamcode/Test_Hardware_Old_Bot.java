@@ -27,12 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+//package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.ElapsedTime;
+//import com.qualcomm.robotcore.hardware.DcMotor;
+//import com.qualcomm.robotcore.hardware.HardwareMap;
+//import com.qualcomm.robotcore.hardware.Servo;
+//import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This is NOT an opmode.
@@ -52,57 +52,60 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  *
  */
-public class Test_Hardware_Old_Bot
-{
+
+
+
+//public class Test_Hardware_Old_Bot
+//{
     /* Public OpMode members. */
-//
-    public DcMotor MC1_1;
-    public DcMotor MC1_2;
-    public DcMotor MC2_1;
-    public DcMotor MC2_2;
-    public DcMotor MC3_1;
-    public DcMotor MC3_2;
+
+  //  public DcMotor MC1_1;
+    //public DcMotor MC1_2;
+    //public DcMotor MC2_1;
+    //public DcMotor MC2_2;
+    //public DcMotor MC3_1;
+    //public DcMotor MC3_2;
 
     /* local OpMode members. */
-    HardwareMap hwMap           =  null;
-    private ElapsedTime period  = new ElapsedTime();
+    //HardwareMap hwMap           =  null;
+//    private ElapsedTime period  = new ElapsedTime();
 
     /* Constructor */
-    public Test_Hardware_Old_Bot(){
+  //  public Test_Hardware_Old_Bot(){
 
-    }
+    //}
 
     /* Initialize standard Hardware interfaces */
-    public void initHardware(HardwareMap ahwMap) {
+    //public void initHardware(HardwareMap ahwMap) {
         // Save reference to Hardware map
-        hwMap = ahwMap;
+      //  hwMap = ahwMap;
 
         // Define and Initialize Motors
-        MC1_1= hwMap.get(DcMotor.class, "MC1_1");
-        MC1_2 = hwMap.get(DcMotor.class, "MC1_2");
-        MC2_1 = hwMap.get(DcMotor.class, "MC2_1");
-        MC2_2 = hwMap.get(DcMotor.class, "MC2_2");
-        MC3_1 = hwMap.get(DcMotor.class, "MC3_1");
-        MC3_2 = hwMap.get(DcMotor.class, "MC3_2");
+        //MC1_1= hwMap.get(DcMotor.class, "MC1_1");
+        //MC1_2 = hwMap.get(DcMotor.class, "MC1_2");
+        //MC2_1 = hwMap.get(DcMotor.class, "MC2_1");
+        //MC2_2 = hwMap.get(DcMotor.class, "MC2_2");
+        //MC3_1 = hwMap.get(DcMotor.class, "MC3_1");
+        //MC3_2 = hwMap.get(DcMotor.class, "MC3_2");
 
         // Set all motors to zero power
-        MC1_1.setPower(0);
-        MC1_2.setPower(0);
-        MC2_1.setPower(0);
-        MC2_2.setPower(0);
-        MC3_1.setPower(0);
-        MC3_2.setPower(0);
+        //MC1_1.setPower(0);
+        //MC1_2.setPower(0);
+        //MC2_1.setPower(0);
+        //MC2_2.setPower(0);
+        //MC3_1.setPower(0);
+        //MC3_2.setPower(0);
 
-//        leftArm.setPower(0);
+        //leftArm.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
-        MC1_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MC1_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MC2_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MC2_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MC3_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        MC3_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-}
+        //MC1_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //MC1_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //MC2_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //MC2_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //MC3_1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //MC3_2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+   // }
+ //}
 

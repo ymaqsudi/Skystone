@@ -60,7 +60,8 @@ public class HardwarePushbot
     public DcMotor frontLeft;
     public DcMotor backRight;
     public DcMotor frontRight;
-//    public DcMotor backLeft;
+    public DcMotor arm;
+
 
     //public
 
@@ -93,6 +94,7 @@ public class HardwarePushbot
         backRight = hwMap.get(DcMotor.class, "backRight");
         frontLeft = hwMap.get(DcMotor.class, "frontLeft");
         frontRight = hwMap.get(DcMotor.class, "frontRight");
+        arm = hwMap.get(DcMotor.class, "arm");
 //        leftArm    = hwMap.get(DcMotor.class, "left_arm");
         backLeft.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -104,6 +106,7 @@ public class HardwarePushbot
         backRight.setPower(0);
         backLeft.setPower(0);
         frontLeft.setPower(0);
+        arm.setPower(0);
 
 //        leftArm.setPower(0);
 
@@ -113,6 +116,7 @@ public class HardwarePushbot
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 //        leftArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
