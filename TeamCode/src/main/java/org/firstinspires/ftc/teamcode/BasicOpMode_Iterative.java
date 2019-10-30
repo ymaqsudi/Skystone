@@ -146,40 +146,22 @@ public class BasicOpMode_Iterative extends OpMode
 
 
        if(left_joystickx > .2) {
-           backLeftDrive.setPower(-1);
-           backRightDrive.setPower(-2);
-           frontLeftDrive.setPower(1);
-           frontRightDrive.setPower(-2);
+           rotateClockwise();
        } else if (left_joystickx < -.2) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(2);
-           frontLeftDrive.setPower(-1);
-           frontRightDrive.setPower(-2);
+            rotateCounterClockWise();
        }
 
        if (right_joysticky < 0) {
-           backLeftDrive.setPower(-1);
-           backRightDrive.setPower(2);
-           frontLeftDrive.setPower(1);
-           frontRightDrive.setPower(-2);
+            forward();
        } else if (right_joysticky > 0) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(-2);
-           frontLeftDrive.setPower(-1);
-           frontRightDrive.setPower(2);
+           backward();
        }
 
        if (right_joystickx < -.2) {
-           backLeftDrive.setPower(-1);
-           backRightDrive.setPower(-2);
-           frontLeftDrive.setPower(-1);
-           frontRightDrive.setPower(-2);
+           strafeLeft();
 
        } else if (right_joystickx > .2) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(2);
-           frontLeftDrive.setPower(1);
-           frontRightDrive.setPower(2);
+           strafeRight();
        }
 
         setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower, armPower);
@@ -207,6 +189,49 @@ public class BasicOpMode_Iterative extends OpMode
         frontRightDrive.setPower(frontRightPower);
         frontLeftDrive.setPower(frontLeftPower);
         armDrive.setPower(armPower);
+    }
+
+
+    public void rotateClockwise() {
+        backLeftDrive.setPower(-1);
+        backRightDrive.setPower(-2);
+        frontLeftDrive.setPower(1);
+        frontRightDrive.setPower(-2);
+    }
+
+    public void rotateCounterClockWise() {
+        backLeftDrive.setPower(1);
+        backRightDrive.setPower(2);
+        frontLeftDrive.setPower(-1);
+        frontRightDrive.setPower(-2);
+    }
+
+    public void forward() {
+        backLeftDrive.setPower(-1);
+        backRightDrive.setPower(2);
+        frontLeftDrive.setPower(1);
+        frontRightDrive.setPower(-2);
+    }
+
+    public void backward() {
+        backLeftDrive.setPower(1);
+        backRightDrive.setPower(-2);
+        frontLeftDrive.setPower(-1);
+        frontRightDrive.setPower(2);
+    }
+
+    public void strafeLeft() {
+        backLeftDrive.setPower(-1);
+        backRightDrive.setPower(-2);
+        frontLeftDrive.setPower(-1);
+        frontRightDrive.setPower(-2);
+    }
+
+    public void strafeRight() {
+        backLeftDrive.setPower(1);
+        backRightDrive.setPower(2);
+        frontLeftDrive.setPower(1);
+        frontRightDrive.setPower(2);
     }
 
     /*
