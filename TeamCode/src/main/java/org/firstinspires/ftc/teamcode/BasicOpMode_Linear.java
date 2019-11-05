@@ -1,129 +1,130 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-
-/**
- * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
- * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
- * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all linear OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
- *
- * Autonomous
- */
-
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
-
+@Autonomous(name="Autonomous", group="Linear OpMode")
+//@Disabled
 public class BasicOpMode_Linear extends LinearOpMode {
+    DcMotor back_left;
+    DcMotor back_right;
+    DcMotor front_left;
+    DcMotor front_right;
 
-    // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor backLeftDrive;
-    public DcMotor frontLeftDrive;
-    public DcMotor backRightDrive;
-    public DcMotor frontRightDrive;
 
     @Override
-    public void runOpMode() {
-        telemetry.addData("Status", "Initialized");
+    public void runOpMode() throws InterruptedException
+    {
+        back_left = hardwareMap.dcMotor.get("backLeft");
+        back_right = hardwareMap.dcMotor.get("backRight");
+        front_left = hardwareMap.dcMotor.get("frontLeft");
+        front_right = hardwareMap.dcMotor.get("frontRight");
+
+        back_left.setDirection(DcMotor.Direction.REVERSE);
+        front_left.setDirection(DcMotor.Direction.REVERSE);
+
+        // reset encoder count kept by left motor.
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // set left motor to run to target encoder position and stop with brakes on.
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        // set right motor to run without regard to an encoder.
+        back_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        front_right.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        telemetry.addData("Mode", "waiting");
         telemetry.update();
 
-        // Initialize the hardware variables. Note that the strings used here as parameters
-        // to 'get' must correspond to the names assigned during the robot configuration
-        // step (using the FTC Robot Controller app on the phone).
-        backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
-        backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
-        frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
+        // wait for start button.
 
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
-        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        backRightDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
-
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
-        runtime.reset();
 
-        // run until the end of the match (driver presses STOP)
-        while (opModeIsActive()) {
+        telemetry.addData("Mode", "running");
+        telemetry.update();
 
-            // Setup a variable for each drive wheel to save power level for telemetry
-            double backLeftPower;
-            double backRightPower;
-            double frontLeftPower;
-            double frontRightPower;
+        // set left motor to run to 5000 encoder counts.
 
-            // Choose to drive using either Tank Mode, or POV Mode
-            // Comment out the method that's not used.  The default below is POV.
+        back_left.setTargetPosition(5000);
+        front_left.setTargetPosition(5000);
+        back_right.setTargetPosition(5000);
+        front_right.setTargetPosition(5000);
 
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
-            double right = gamepad1.left_stick_y;
-            double left  =  gamepad1.right_stick_y;
-            backLeftPower    = Range.clip(-left, -1.0, 1.0) ;
-            backRightPower   = Range.clip(-right, -1.0, 1.0) ;
-            frontLeftPower   = Range.clip(right, -1.0, 1.0) ;
-            frontRightPower   = Range.clip(left, -1.0, 1.0) ;
+        // set both motors to 25% power. Movement will start.
 
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
+        back_left.setPower(0.25);
+        back_right.setPower(0.25);
+        front_right.setPower(0.25);
+        front_left.setPower(0.25);
 
-            // Send calculated power to wheel
+        // wait while opmode is active and left motor is busy running to position.
 
-            backLeftDrive.setPower(backLeftPower);
-            backRightDrive.setPower(backRightPower);
-            frontLeftDrive.setPower(frontLeftPower);
-            frontRightDrive.setPower(frontRightPower);
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
+        while (opModeIsActive() && back_right.isBusy() && back_left.isBusy() && front_right.isBusy() && front_left.isBusy())
+        {
+            telemetry.addData("encoder-fwd", back_right.getCurrentPosition() + "  busy=" + back_right.isBusy());
             telemetry.update();
+            idle();
+        }
+
+        // set motor power to zero to turn off motors. The motors stop on their own but
+        // power is still applied so we turn off the power.
+
+        back_left.setPower(0.0);
+        back_right.setPower(0.0);
+        front_left.setPower(0.0);
+        front_right.setPower(0.0);
+
+        // wait 5 sec so you can observe the final encoder position.
+
+        resetStartTime();
+
+        while (opModeIsActive() && getRuntime() < 5)
+        {
+            telemetry.addData("encoder-fwd-end", front_right.getCurrentPosition() + "  busy=" + front_right.isBusy());
+            telemetry.update();
+            idle();
+        }
+
+        // Now back up to starting point. In this example instead of
+        // having the motor monitor the encoder, we will monitor the encoder ourselves.
+
+        back_left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        back_right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        back_left.setPower(-0.25);
+        back_right.setPower(-0.25);
+        front_left.setPower(-0.25);
+        front_right.setPower(-0.25);
+
+        while (opModeIsActive() && back_left.getCurrentPosition() > 0)
+        {
+            telemetry.addData("encoder-back", back_left.getCurrentPosition());
+            telemetry.update();
+            idle();
+        }
+
+        // set motor power to zero to stop motors.
+
+        back_left.setPower(0.0);
+        back_right.setPower(0.0);
+        front_right.setPower(0.0);
+        front_left.setPower(0.0);
+
+
+        // wait 5 sec so you can observe the final encoder position.
+
+        resetStartTime();
+
+        while (opModeIsActive() && getRuntime() < 5)
+        {
+            telemetry.addData("encoder-back-end", front_left.getCurrentPosition());
+            telemetry.update();
+            idle();
         }
     }
 }

@@ -3,45 +3,24 @@
 3    package="com.qualcomm.ftcrobotcontroller.test" >
 4
 5    <uses-sdk
-<<<<<<< Updated upstream
-5-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:5:5-74
+5-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:5:5-74
 6        android:minSdkVersion="19"
-6-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:5:15-41
+6-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:5:15-41
 7        android:targetSdkVersion="26" />
-7-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:5:42-71
+7-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:5:42-71
 8
 9    <instrumentation
-9-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:11:5-15:86
+9-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:11:5-15:86
 10        android:name="android.test.InstrumentationTestRunner"
-10-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:11:22-75
+10-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:11:22-75
 11        android:functionalTest="false"
-11-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:14:22-52
+11-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:14:22-52
 12        android:handleProfiling="false"
-12-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:13:22-53
+12-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:13:22-53
 13        android:label="Tests for com.qualcomm.ftcrobotcontroller.test"
-13-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:15:22-84
+13-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:15:22-84
 14        android:targetPackage="com.qualcomm.ftcrobotcontroller.test" />
-14-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:12:22-82
-=======
-5-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:5:5-74
-6        android:minSdkVersion="19"
-6-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:5:15-41
-7        android:targetSdkVersion="26" />
-7-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:5:42-71
-8
-9    <instrumentation
-9-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:11:5-15:86
-10        android:name="android.test.InstrumentationTestRunner"
-10-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:11:22-75
-11        android:functionalTest="false"
-11-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:14:22-52
-12        android:handleProfiling="false"
-12-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:13:22-53
-13        android:label="Tests for com.qualcomm.ftcrobotcontroller.test"
-13-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:15:22-84
-14        android:targetPackage="com.qualcomm.ftcrobotcontroller.test" />
-14-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:12:22-82
->>>>>>> Stashed changes
+14-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:12:22-82
 15
 16    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 16-->[__tested_artifact__::FtcRobotController] C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\library_manifest\debug\AndroidManifest.xml:12:5-81
@@ -153,11 +132,7 @@
 74-->[:RobotCore-release:] C:\Users\HHS Robotics\.gradle\caches\transforms-2\files-2.1\0a37125afcdd18ef9772924838cf3d9c\RobotCore-release\AndroidManifest.xml:76:19-57
 75
 76    <application
-<<<<<<< Updated upstream
-76-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:7:5-9:19
-=======
-76-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:7:5-9:19
->>>>>>> Stashed changes
+76-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:7:5-9:19
 77        android:name="org.firstinspires.ftc.robotcore.internal.system.RobotApplication"
 77-->[:RobotCore-release:] C:\Users\HHS Robotics\.gradle\caches\transforms-2\files-2.1\0a37125afcdd18ef9772924838cf3d9c\RobotCore-release\AndroidManifest.xml:78:18-97
 78        android:allowBackup="true"
@@ -165,11 +140,7 @@
 79        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
 79-->[com.android.support:support-compat:28.0.0] C:\Users\HHS Robotics\.gradle\caches\transforms-2\files-2.1\dd1cf78f22bdd94f550130b281f27c97\support-compat-28.0.0\AndroidManifest.xml:22:18-91
 80        android:debuggable="true"
-<<<<<<< Updated upstream
-80-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:7:18-43
-=======
-80-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:7:18-43
->>>>>>> Stashed changes
+80-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:7:18-43
 81        android:icon="@drawable/ic_launcher"
 81-->[__tested_artifact__::FtcRobotController] C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\library_manifest\debug\AndroidManifest.xml:16:9-45
 82        android:label="@string/app_name"
@@ -179,13 +150,8 @@
 84        android:theme="@style/AppThemeRedRC" >
 84-->[__tested_artifact__::FtcRobotController] C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\library_manifest\debug\AndroidManifest.xml:19:9-45
 85        <uses-library android:name="android.test.runner" />
-<<<<<<< Updated upstream
-85-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:8:9-60
-85-->C:\Users\yasee\Desktop\Repositories\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger7921732850016589392.xml:8:23-57
-=======
-85-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:8:9-60
-85-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6927378374495312116.xml:8:23-57
->>>>>>> Stashed changes
+85-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:8:9-60
+85-->C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\tmp\manifest\androidTest\debug\manifestMerger6328946193574735489.xml:8:23-57
 86        <!-- Indicates to the ControlHubUpdater what the latest version of the Control Hub is that this app supports -->
 87        <meta-data
 87-->[__tested_artifact__::FtcRobotController] C:\Users\HHS Robotics\StudioProjects\HHSRobotics\FtcRobotController\build\intermediates\library_manifest\debug\AndroidManifest.xml:22:9-24:33

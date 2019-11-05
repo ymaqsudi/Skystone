@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 //import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -45,6 +46,8 @@ import com.qualcomm.robotcore.util.Range;
  * git add *
  * git commit -m "type a message explaining what the change you made did"
  * git push
+ *
+ *
  */
 
 @TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
@@ -61,6 +64,7 @@ public class BasicOpMode_Iterative extends OpMode
     private DcMotor armDrive = null;
 
 
+
     // Setup a variable for each drive wheel to save power level for telemetry
     private double backLeftPower = 0;
     private double backRightPower = 0;
@@ -73,9 +77,15 @@ public class BasicOpMode_Iterative extends OpMode
 
     /*
      * Code to run ONCE when the driver hits INIT
+     * color_sensor.enableLed(true);
+
+        int sensorValue = color_sensor.alpha();
      */
+
     @Override
     public void init() {
+
+
         telemetry.addData("Status", "Initialized");
 
         backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
@@ -92,6 +102,7 @@ public class BasicOpMode_Iterative extends OpMode
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
         armDrive.setDirection(DcMotor.Direction.FORWARD);
+
 
 
 
@@ -139,9 +150,11 @@ public class BasicOpMode_Iterative extends OpMode
        }
 
        if (left_trigger > .5) {
-           armDrive.setPower(-1);
+           backLeftDrive.setPower(1);
+           backRightDrive.setPower(1);
        } else if (left_trigger < .1) {
-           armDrive.setPower(0);
+           backLeftDrive.setPower(0);
+           backRightDrive.setPower(0);
        }
 
 
@@ -164,6 +177,7 @@ public class BasicOpMode_Iterative extends OpMode
            strafeRight();
        }
 
+
         setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower, armPower);
 
 
@@ -174,6 +188,8 @@ public class BasicOpMode_Iterative extends OpMode
         telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
         telemetry.addData("right stick x", " : " + gamepad1.left_stick_x);
 
+
+        // telemetry.addData("Color distance sensor: " + sensorColarRange.getDistance(DistanceUnit.cm));
         telemetry.update();
     }
 
@@ -240,6 +256,4 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void stop() {
     }
-
 }
-
