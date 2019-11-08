@@ -43,9 +43,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
         front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Rpm for 18 inches - circumference of wheel
-        double circumference = 3.14 * 4;
-        double rotationsNeeded = 18/circumference;
-        int encoderDrivingTarget = (int)(rotationsNeeded*1120); // rotations needed * tick count
+        double desiredDistance = 18;
+        double circumference = 3.14159265358 * 4;
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         front_left.setTargetPosition(encoderDrivingTarget);
         back_left.setTargetPosition(encoderDrivingTarget);
@@ -53,10 +54,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
         back_right.setTargetPosition(encoderDrivingTarget);
 
         // set the power desired for the motors. 1 is very fast
-        back_left.setPower(1);
-        back_right.setPower(1);
-        front_right.setPower(1);
-        front_left.setPower(1);
+        back_left.setPower(.6);
+        back_right.setPower(.6);
+        front_right.setPower(.6);
+        front_left.setPower(.6);
 
         // tell motors to run to position
         back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -69,6 +70,42 @@ public class BasicOpMode_Auto extends LinearOpMode {
             telemetry.addData("Path", "Driving 18 inches");
             telemetry.update();
         }
+
+
+
+        sleep(2000);
+
+        desiredDistance = -100;
+        rotationsNeeded = desiredDistance/circumference;
+        encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        front_right.setTargetPosition(encoderDrivingTarget);
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_right.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+
+
+        front_left.setPower(-1);
+        front_right.setPower(-1);
+        back_left.setPower(-1);
+        back_right.setPower(-1);
+
+
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+
+        /*set power to all motors = 0
+         sleep(5000);
+         DesiredDistances = 10
+         all motors.setTargetPosition(encoderDrivingTarget)
+         set power to all motors = -1
+         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+         */
+
 
         // Stop motors after the job is done
         back_left.setPower(0);
