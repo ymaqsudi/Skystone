@@ -54,14 +54,12 @@ import com.qualcomm.robotcore.util.Range;
 
 public class BasicOpMode_Iterative extends OpMode
 {
- //   Test_Hardware_Old_Bot robot       = new Test_Hardware_Old_Bot();
-    // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor backLeftDrive = null;
-    private DcMotor backRightDrive = null;
-    private DcMotor frontLeftDrive = null;
-    private DcMotor frontRightDrive = null;
-    private DcMotor armDrive = null;
+    private DcMotor backLeftDrive;
+    private DcMotor backRightDrive;
+    private DcMotor frontLeftDrive;
+    private DcMotor frontRightDrive;
+    private DcMotor armDrive;
 
 
 
@@ -74,13 +72,6 @@ public class BasicOpMode_Iterative extends OpMode
     private double armPower = 0;
 
 
-
-    /*
-     * Code to run ONCE when the driver hits INIT
-     * color_sensor.enableLed(true);
-
-        int sensorValue = color_sensor.alpha();
-     */
 
     @Override
     public void init() {
@@ -97,10 +88,10 @@ public class BasicOpMode_Iterative extends OpMode
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
 
-        backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
-        frontRightDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.FORWARD);
 
 
@@ -131,54 +122,36 @@ public class BasicOpMode_Iterative extends OpMode
     @Override
     public void loop() {
 
-
-
-        // Show the elapsed game time and wheel power.
-
-       double right_joystickx = gamepad1.right_stick_x;
-       double right_joysticky = gamepad1.right_stick_y;
-
-       double left_joystickx = gamepad1.left_stick_x;
-
-       double right_trigger = gamepad1.right_trigger;
-       double left_trigger = gamepad1.left_trigger;
-
-       if (right_trigger > .5) {
+       if (gamepad1.right_trigger > .5) {
            armDrive.setPower(1);
-       } else if (right_trigger < .1) {
+       } else if (gamepad1.right_trigger < .1) {
            armDrive.setPower(0);
        }
 
-       if (left_trigger > .5) {
-           backLeftDrive.setPower(1);
-           backRightDrive.setPower(1);
-       } else if (left_trigger < .1) {
-           backLeftDrive.setPower(0);
-           backRightDrive.setPower(0);
+       //gamepad1.right_trigger > .5 ? armDrive.setPower(1) : armDrive.setPower(0);
+
+
+       if (gamepad1.left_stick_x > .2) {
+           rotateClockwise(1);
+       } else if (gamepad1.left_stick_x < -.2) {
+            rotateCounterClockWise(1);
+       }
+
+       if (gamepad1.right_stick_y < 0) {
+            forward(1);
+       } else if (gamepad1.right_stick_y > 0) {
+           backward(1);
+       }
+
+       if (gamepad1.right_stick_x < -.2) {
+           strafeLeft(1);
+
+       } else if (gamepad1.right_stick_x > .2) {
+           strafeRight(1);
        }
 
 
-       if(left_joystickx > .2) {
-           rotateClockwise();
-       } else if (left_joystickx < -.2) {
-            rotateCounterClockWise();
-       }
 
-       if (right_joysticky < 0) {
-            forward();
-       } else if (right_joysticky > 0) {
-           backward();
-       }
-
-       if (right_joystickx < -.2) {
-           strafeLeft();
-
-       } else if (right_joystickx > .2) {
-           strafeRight();
-       }
-
-
-        setDrivePower(backLeftPower, backRightPower, frontLeftPower, frontRightPower, armPower);
 
 
 
@@ -193,61 +166,47 @@ public class BasicOpMode_Iterative extends OpMode
         telemetry.update();
     }
 
-    /**
-     * @param backLeftPower
-     * @param backRightPower
-     * @param frontLeftPower
-     * @param frontRightPower
-     */
-    public void setDrivePower(double backLeftPower, double backRightPower, double frontLeftPower, double frontRightPower, double armPower) {
-        backLeftDrive.setPower(backLeftPower);
-        backRightDrive.setPower(backRightPower);
-        frontRightDrive.setPower(frontRightPower);
-        frontLeftDrive.setPower(frontLeftPower);
-        armDrive.setPower(armPower);
+
+    public void rotateClockwise(double motorSpeed) {
+        backLeftDrive.setPower(motorSpeed);
+        backRightDrive.setPower(-motorSpeed);
+        frontLeftDrive.setPower(motorSpeed);
+        frontRightDrive.setPower(-motorSpeed);
     }
 
-
-    public void rotateClockwise() {
-        backLeftDrive.setPower(-1);
-        backRightDrive.setPower(-2);
-        frontLeftDrive.setPower(1);
-        frontRightDrive.setPower(-2);
+    public void rotateCounterClockWise(double motorSpeed) {
+        backLeftDrive.setPower(-motorSpeed);
+        backRightDrive.setPower(motorSpeed);
+        frontLeftDrive.setPower(-motorSpeed);
+        frontRightDrive.setPower(motorSpeed);
     }
 
-    public void rotateCounterClockWise() {
-        backLeftDrive.setPower(1);
-        backRightDrive.setPower(2);
-        frontLeftDrive.setPower(-1);
-        frontRightDrive.setPower(-2);
+    public void forward(double motorSpeed) {
+        backLeftDrive.setPower(motorSpeed);
+        backRightDrive.setPower(motorSpeed);
+        frontLeftDrive.setPower(motorSpeed);
+        frontRightDrive.setPower(motorSpeed);
     }
 
-    public void forward() {
-        backLeftDrive.setPower(-1);
-        backRightDrive.setPower(2);
-        frontLeftDrive.setPower(1);
-        frontRightDrive.setPower(-2);
+    public void backward(double motorSpeed) {
+        backLeftDrive.setPower(-motorSpeed);
+        backRightDrive.setPower(-motorSpeed);
+        frontLeftDrive.setPower(-motorSpeed);
+        frontRightDrive.setPower(-motorSpeed);
     }
 
-    public void backward() {
-        backLeftDrive.setPower(1);
-        backRightDrive.setPower(-2);
-        frontLeftDrive.setPower(-1);
-        frontRightDrive.setPower(2);
+    public void strafeLeft(double motorSpeed) {
+        backLeftDrive.setPower(motorSpeed);
+        backRightDrive.setPower(-motorSpeed);
+        frontLeftDrive.setPower(-motorSpeed);
+        frontRightDrive.setPower(motorSpeed);
     }
 
-    public void strafeLeft() {
-        backLeftDrive.setPower(-1);
-        backRightDrive.setPower(-2);
-        frontLeftDrive.setPower(-1);
-        frontRightDrive.setPower(-2);
-    }
-
-    public void strafeRight() {
-        backLeftDrive.setPower(1);
-        backRightDrive.setPower(2);
-        frontLeftDrive.setPower(1);
-        frontRightDrive.setPower(2);
+    public void strafeRight(double motorSpeed) {
+        backLeftDrive.setPower(-motorSpeed);
+        backRightDrive.setPower(motorSpeed);
+        frontLeftDrive.setPower(motorSpeed);
+        frontRightDrive.setPower(-motorSpeed);
     }
 
     /*
