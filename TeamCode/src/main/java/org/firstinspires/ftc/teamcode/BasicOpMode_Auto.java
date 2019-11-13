@@ -38,63 +38,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
         // wait for start button.
         waitForStart();
 
-        // Reset encoders
-        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        forward(18,.5);
+        sleep(1000);
+        backward(18, 1);
 
-        // Rpm for 18 inches - circumference of wheel
-        double desiredDistance = 18;
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
-        double rotationsNeeded = desiredDistance/circumference;
-        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
-
-        // Sets the target position to the rotations needed * motor tick count
-        front_left.setTargetPosition(encoderDrivingTarget);
-        back_left.setTargetPosition(encoderDrivingTarget);
-        front_right.setTargetPosition(encoderDrivingTarget);
-        back_right.setTargetPosition(encoderDrivingTarget);
-
-        // set the power desired for the motors. 1 is very fast
-        forward(.5);
-
-        // tell motors to run to position
-        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // While all motors are running, do nothing and display info to the phone
-        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
-            // stop doing stuff when the robot is driving
-            telemetry.addData("Path", "Driving 18 inches");
-            telemetry.update();
-        }
-
-
-        // sleep for 2 seconds so that the hardware has time to catch up
-        sleep(2000);
-
-        // new desired distance and rotations needed
-        desiredDistance = 10;
-        rotationsNeeded = desiredDistance/circumference;
-        encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
-
-        // Sets the target position to the rotations needed * motor tick count
-        front_right.setTargetPosition(encoderDrivingTarget);
-        front_left.setTargetPosition(encoderDrivingTarget);
-        back_right.setTargetPosition(encoderDrivingTarget);
-        back_left.setTargetPosition(encoderDrivingTarget);
-
-        // Method that sets the motor value to the -(parameter)
-        backward(.5);
-
-        // Tells motor to run to position specified by encoder value
-        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         // Stop motors after the job is done
@@ -105,7 +52,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
     }
 
+
+
     // Methods
+
     public void rotateClockwise(double motorSpeed) {
         back_left.setPower(motorSpeed);
         back_right.setPower(-motorSpeed);
@@ -147,4 +97,191 @@ public class BasicOpMode_Auto extends LinearOpMode {
         front_left.setPower(motorSpeed);
         front_right.setPower(-motorSpeed);
     }
+
+    public void forward(double desiredDistance, double speed) {
+        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+        front_right.setTargetPosition(encoderDrivingTarget);
+        back_right.setTargetPosition(encoderDrivingTarget);
+
+        forward(speed);
+
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
+            // stop doing stuff when the robot is driving
+            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.update();
+        }
+
+    }
+    public void backward(double desiredDistance, double speed) {
+        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+        front_right.setTargetPosition(encoderDrivingTarget);
+        back_right.setTargetPosition(encoderDrivingTarget);
+
+        backward(speed);
+
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
+            // stop doing stuff when the robot is driving
+            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.update();
+        }
+
+    }
+
+    public void strafeRight(double desiredDistance, double speed) {
+        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+        front_right.setTargetPosition(encoderDrivingTarget);
+        back_right.setTargetPosition(encoderDrivingTarget);
+
+        strafeRight(speed);
+
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
+            // stop doing stuff when the robot is driving
+            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.update();
+        }
+
+    }
+
+    public void strafeLeft(double desiredDistance, double speed) {
+        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+        front_right.setTargetPosition(encoderDrivingTarget);
+        back_right.setTargetPosition(encoderDrivingTarget);
+
+        strafeLeft(speed);
+
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
+            // stop doing stuff when the robot is driving
+            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.update();
+        }
+
+    }
+
+    public void rotateClockwise(double desiredDistance, double speed) {
+        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+        front_right.setTargetPosition(-encoderDrivingTarget);
+        back_right.setTargetPosition(-encoderDrivingTarget);
+
+        rotateClockwise(speed);
+
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
+            // stop doing stuff when the robot is driving
+            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.update();
+        }
+
+    }
+
+    public void rotateCounterClockwise(double desiredDistance, double speed) {
+        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+        double rotationsNeeded = desiredDistance/circumference;
+        int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
+        back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        front_left.setTargetPosition(encoderDrivingTarget);
+        back_left.setTargetPosition(encoderDrivingTarget);
+        front_right.setTargetPosition(-encoderDrivingTarget);
+        back_right.setTargetPosition(-encoderDrivingTarget);
+
+        rotateCounterClockWise(speed);
+
+        back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
+            // stop doing stuff when the robot is driving
+            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.update();
+        }
+
+    }
+
+
+
+
+
+
+
 }
+
