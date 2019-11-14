@@ -116,7 +116,7 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
         // Calculations for all the variables we use in this method
         double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
-        double rotationsNeeded = desiredDistance/circumference;
+        double rotationsNeeded = desiredDistance/circumference;     // You may need to multiply
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         // Resets encoders before use. You need to do this to clear any values the encoders might
