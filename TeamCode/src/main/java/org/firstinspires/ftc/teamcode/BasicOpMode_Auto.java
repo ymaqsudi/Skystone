@@ -38,9 +38,14 @@ public class BasicOpMode_Auto extends LinearOpMode {
         // wait for start button.
         waitForStart();
 
+
         forward(18,.5);
-        sleep(1000);
-        backward(18, 1);
+        strafeRight(10, 1);
+        forward(4, .2);
+        strafeLeft(10, .5);
+        rotateCounterClockwise(5, 1);
+        rotateClockwise(5, 1);
+        backward(22, 1);
 
 
 

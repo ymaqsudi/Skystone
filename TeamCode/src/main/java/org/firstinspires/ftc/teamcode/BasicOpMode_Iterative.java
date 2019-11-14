@@ -29,7 +29,6 @@
 
 package org.firstinspires.ftc.teamcode;
 
-//import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -44,13 +43,13 @@ import com.qualcomm.robotcore.util.Range;
  *
  * If you make a change to this file, type the following code into terminal
  * git add *
- * git commit -m "type a message explaining what the change you made did"
+ * git commit -m "type a message explaining what changes you made"
  * git push
  *
  *
  */
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
+@TeleOp(name="TeleOp", group="Iterative Opmode")
 
 public class BasicOpMode_Iterative extends OpMode
 {
@@ -85,7 +84,7 @@ public class BasicOpMode_Iterative extends OpMode
         frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
         armDrive = hardwareMap.get(DcMotor.class, "arm");
 
-        // Most robots need the motor on one side to be reversed to drive forward
+        // Robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
 
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -157,12 +156,13 @@ public class BasicOpMode_Iterative extends OpMode
 
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
+        telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
         telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
-        telemetry.addData("right stick x", " : " + gamepad1.left_stick_x);
+        telemetry.addData("right stick x", " : " + gamepad1.right_stick_x);
+        telemetry.addData("left stick x", " : " + gamepad1.left_stick_x);
+        telemetry.addData("left stick y", " : " + gamepad1.left_stick_y);
 
 
-        // telemetry.addData("Color distance sensor: " + sensorColarRange.getDistance(DistanceUnit.cm));
         telemetry.update();
     }
 
@@ -209,9 +209,6 @@ public class BasicOpMode_Iterative extends OpMode
         frontRightDrive.setPower(-motorSpeed);
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
     @Override
     public void stop() {
     }
