@@ -56,6 +56,11 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
     // Methods
 
+
+    /*
+    The following 6 methods only take one parameter (speed). We made this in order to call
+    these methods later on when we make better methods using encoders.
+     */
     public void rotateClockwise(double motorSpeed) {
         back_left.setPower(motorSpeed);
         back_right.setPower(-motorSpeed);
@@ -98,28 +103,41 @@ public class BasicOpMode_Auto extends LinearOpMode {
         front_right.setPower(-motorSpeed);
     }
 
+    /*
+    These methods are the encoder methods. They calculate the driving target using the desiredDistance
+    parameter value, and call upon the methods listed above in order to invoke the speed method
+     */
     public void forward(double desiredDistance, double speed) {
+
+        // Calculations for all the variables we use in this method
         double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
+        // Resets encoders before use. You need to do this to clear any values the encoders might
+        // have stored.
         back_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         back_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        // Tells the motors to drive to the specific target, a variable that was defined in the
+        // beginning of the program. It is made using the parameter values given.
         front_left.setTargetPosition(encoderDrivingTarget);
         back_left.setTargetPosition(encoderDrivingTarget);
         front_right.setTargetPosition(encoderDrivingTarget);
         back_right.setTargetPosition(encoderDrivingTarget);
 
+        // calls on one of the primitive methods to move the wheels at the speed of the second parameter
         forward(speed);
 
+        // Built in methods that tell the motor to run to the target position
         back_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         back_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         front_left.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         front_right.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        // While the motors are moving, don't do anything except telemetry
         while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
             // stop doing stuff when the robot is driving
             telemetry.addData("Path", "Driving 18 inches");
@@ -127,6 +145,7 @@ public class BasicOpMode_Auto extends LinearOpMode {
         }
 
     }
+
     public void backward(double desiredDistance, double speed) {
         double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
@@ -277,11 +296,4 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
     }
 
-
-
-
-
-
-
 }
-
