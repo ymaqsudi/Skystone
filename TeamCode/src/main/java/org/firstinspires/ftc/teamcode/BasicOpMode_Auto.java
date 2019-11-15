@@ -175,7 +175,7 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
         while (front_left.isBusy() & front_right.isBusy() & back_left.isBusy() & back_right.isBusy()) {
             // stop doing stuff when the robot is driving
-            telemetry.addData("Path", "Driving 18 inches");
+            telemetry.addData("Path", "Driving");
             telemetry.update();
         }
 
