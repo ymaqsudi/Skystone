@@ -67,6 +67,10 @@ public class BasicOpMode_TeleOp extends OpMode
 
     private double armPower = 0;
 
+    private double leftStickX = gamepad1.left_stick_x;
+    private double rightStickY = gamepad1.right_stick_y;
+    private double rightStickX = gamepad1.right_stick_x;
+    private double rightTrigger = gamepad1.right_trigger;
 
 
     @Override
@@ -118,39 +122,36 @@ public class BasicOpMode_TeleOp extends OpMode
     @Override
     public void loop() {
 
-       if (gamepad1.right_trigger > .5) {
+       if (rightTrigger > .5)
            armDrive.setPower(1);
-       } else if (gamepad1.right_trigger < .1) {
+        else if (rightTrigger < .1)
            armDrive.setPower(0);
-       }
+
 
        //gamepad1.right_trigger > .5 ? armDrive.setPower(1) : armDrive.setPower(0);
 
 
-       if (gamepad1.left_stick_x > .2) {
+       if (leftStickX > .2)
            rotateClockwise(1);
-       } else if (gamepad1.left_stick_x < -.2) {
+        else if (leftStickX < -.2)
             rotateCounterClockWise(1);
-       }
+        else
+           stationary();
 
-       if (gamepad1.right_stick_y < 0) {
+       if (rightStickY < 0)
             forward(1);
-       } else if (gamepad1.right_stick_y > 0) {
+        else if (rightStickY > 0)
            backward(1);
-       }
+        else
+           stationary();
 
-       if (gamepad1.right_stick_x < -.2) {
+
+       if (rightStickX < -.2)
            strafeLeft(1);
-
-       } else if (gamepad1.right_stick_x > .2) {
+        else if (rightStickX > .2)
            strafeRight(1);
-       }
-
-
-
-
-
-
+        else
+           stationary();
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
@@ -204,6 +205,13 @@ public class BasicOpMode_TeleOp extends OpMode
         backRightDrive.setPower(motorSpeed);
         frontLeftDrive.setPower(motorSpeed);
         frontRightDrive.setPower(-motorSpeed);
+    }
+
+    public void stationary() {
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
     }
 
     @Override

@@ -161,10 +161,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
         front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        front_left.setTargetPosition(encoderDrivingTarget);
-        back_left.setTargetPosition(encoderDrivingTarget);
-        front_right.setTargetPosition(encoderDrivingTarget);
-        back_right.setTargetPosition(encoderDrivingTarget);
+        front_left.setTargetPosition(-encoderDrivingTarget);
+        back_left.setTargetPosition(-encoderDrivingTarget);
+        front_right.setTargetPosition(-encoderDrivingTarget);
+        back_right.setTargetPosition(-encoderDrivingTarget);
 
         backward(speed);
 
@@ -281,10 +281,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
         front_right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         front_left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        front_left.setTargetPosition(encoderDrivingTarget);
-        back_left.setTargetPosition(encoderDrivingTarget);
-        front_right.setTargetPosition(-encoderDrivingTarget);
-        back_right.setTargetPosition(-encoderDrivingTarget);
+        front_left.setTargetPosition(-encoderDrivingTarget);
+        back_left.setTargetPosition(-encoderDrivingTarget);
+        front_right.setTargetPosition(encoderDrivingTarget);
+        back_right.setTargetPosition(encoderDrivingTarget);
 
         rotateCounterClockWise(speed);
 
