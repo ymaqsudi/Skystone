@@ -12,6 +12,7 @@ public class BasicOpMode_Auto extends LinearOpMode {
     DcMotor front_left;
     DcMotor front_right;
     static final int MOTOR_TICK_COUNTS = 1120;
+    private double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
 
     @Override
     public void runOpMode() throws InterruptedException
@@ -40,9 +41,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
 
         forward(18,.5);
-        strafeRight(10, 1);
-        forward(4, .2);
-        strafeLeft(10, .5);
         rotateCounterClockwise(5, 1);
         rotateClockwise(5, 1);
         backward(22, 1);
@@ -115,7 +113,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
     public void forward(double desiredDistance, double speed) {
 
         // Calculations for all the variables we use in this method
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;     // You may need to multiply
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
@@ -152,7 +149,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void backward(double desiredDistance, double speed) {
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
@@ -182,7 +178,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void strafeRight(double desiredDistance, double speed) {
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
@@ -212,7 +207,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void strafeLeft(double desiredDistance, double speed) {
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
@@ -242,7 +236,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void rotateClockwise(double desiredDistance, double speed) {
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
@@ -272,7 +265,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void rotateCounterClockwise(double desiredDistance, double speed) {
-        double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
         double rotationsNeeded = desiredDistance/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
