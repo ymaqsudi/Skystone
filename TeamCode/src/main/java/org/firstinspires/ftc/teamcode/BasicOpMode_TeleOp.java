@@ -58,6 +58,14 @@ public class BasicOpMode_TeleOp extends OpMode
     private DcMotor frontRightDrive;
     private DcMotor armDrive;
 
+
+    double backLeftPower = 0;
+    double backRightPower = 0;
+    double frontLeftPower = 0;
+    double frontRightPower = 0;
+
+    double armPower = 0;
+
     // Setup a variable for each drive wheel to save power level for telemetry
 
 
@@ -109,12 +117,6 @@ public class BasicOpMode_TeleOp extends OpMode
     @Override
     public void loop() {
 
-        double backLeftPower = 0;
-        double backRightPower = 0;
-        double frontLeftPower = 0;
-        double frontRightPower = 0;
-
-        double armPower = 0;
 
         if (gamepad1.right_trigger > .5)
            armDrive.setPower(1);
@@ -126,15 +128,23 @@ public class BasicOpMode_TeleOp extends OpMode
         // forward/backward
         //if (gamepad1.right_stick_y > .2 || gamepad1.right_stick_y > -.2)
 
-        forwardBackward(-gamepad1.right_stick_y);
+      //  forwardBackward(-gamepad1.right_stick_y);
 
         // rotation
         //if (gamepad1.left_stick_x > .2 || gamepad1.left_stick_x < -.2)
-        rotate(gamepad1.left_stick_x);
+      //  rotate(gamepad1.left_stick_x);
 
         // strafing
         //if (gamepad1.right_stick_x < .2 || gamepad1.right_stick_x > -.2)
-        strafe(gamepad1.right_stick_x);
+      //  strafe(gamepad1.right_stick_x);
+
+        if ((gamepad1.right_stick_y < -.2 || gamepad1.right_stick_y > .2) && gamepad1.right_stick_x < .2 && gamepad1.right_stick_x > .2) {
+            forwardBackward(-gamepad1.right_stick_y);
+        } else if (gamepad1.right_stick_y < -.2 && gamepad1.right_stick_y > .2 && (gamepad1.right_stick_x < .2 || gamepad1.right_stick_x > -.2)) {
+            rotate(gamepad1.right_stick_x);
+        } else if (gamepad1.right_stick_y < -.2 && gamepad1.right_stick_y > .2 && gamepad1.right_stick_x < .2 && gamepad1.right_stick_x > -.2 && (gamepad1.left_stick_x < -.2 || gamepad1.left_stick_x > .2)) {
+            strafe(gamepad1.left_stick_x);
+        }
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
