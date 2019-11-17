@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -52,12 +53,29 @@ import com.qualcomm.robotcore.util.Range;
 public class BasicOpMode_TeleOp extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
+
     private DcMotor backLeftDrive;
     private DcMotor backRightDrive;
     private DcMotor frontLeftDrive;
     private DcMotor frontRightDrive;
+
     private DcMotor armDrive;
 
+
+    private Servo wristDrive;
+    private Servo clawDrive;
+
+
+    public final static double WRIST_HOME = 0;
+
+
+    public final static double CLAW_HOME = 0;
+
+    final double WRIST_SPEED = .01;
+    double wristPosition = WRIST_HOME;
+
+    final double CLAW_SPEED = .01;
+    double clawPosition = CLAW_HOME;
 
     double backLeftPower = 0;
     double backRightPower = 0;
@@ -65,6 +83,10 @@ public class BasicOpMode_TeleOp extends OpMode
     double frontRightPower = 0;
 
     double armPower = 0;
+
+
+
+
 
     // Setup a variable for each drive wheel to save power level for telemetry
 
@@ -74,12 +96,17 @@ public class BasicOpMode_TeleOp extends OpMode
 
 
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("wrist", "%.2f", wristPosition);
+        telemetry.addData("claw", "%.2f", clawPosition);
+
 
         backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
         frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
         armDrive = hardwareMap.get(DcMotor.class, "arm");
+        wristDrive = hardwareMap.get(Servo.class, "wrist");
+        clawDrive = hardwareMap.get(Servo.class, "claw");
 
         // Robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -89,6 +116,10 @@ public class BasicOpMode_TeleOp extends OpMode
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.FORWARD);
+        wristDrive.setDirection(Servo.Direction.FORWARD);
+
+        wristDrive.setPosition(WRIST_HOME);
+        clawDrive.setPosition(CLAW_HOME);
 
 
 
@@ -116,35 +147,57 @@ public class BasicOpMode_TeleOp extends OpMode
      */
     @Override
     public void loop() {
+/*
+        if (gamepad1.a)
+            wristPosition += WRIST_SPEED;
+        else if (gamepad1.y)
+            wristPosition -= WRIST_SPEED;
+
+
+        if (gamepad1.x)
+            clawPosition += CLAW_SPEED;
+        else if (gamepad1.a)
+            clawPosition -= WRIST_SPEED;
+
+  */
+
+        if (shouldWrist(gamepad1.y))
+            wristPosition += WRIST_SPEED;
+        else if (shouldWrist(gamepad1.a))
+            wristPosition -= WRIST_SPEED;
+
+        wristDrive.setPosition(wristPosition);
+
+        if (shouldClaw(gamepad1.x))
+            clawPosition += CLAW_SPEED;
+        else if (shouldClaw(gamepad1.b))
+            clawPosition -= CLAW_SPEED;
+
+        clawDrive.setPosition(clawPosition);
 
 
         if (gamepad1.right_trigger > .5)
-           armDrive.setPower(1);
+           armDrive.setPower(.5);
         else if (gamepad1.right_trigger < .1)
            armDrive.setPower(0);
 
-       //gamepad1.right_trigger > .5 ? armDrive.setPower(1) : armDrive.setPower(0);
-
-        // forward/backward
-        //if (gamepad1.right_stick_y > .2 || gamepad1.right_stick_y > -.2)
-
-      //  forwardBackward(-gamepad1.right_stick_y);
-
-        // rotation
-        //if (gamepad1.left_stick_x > .2 || gamepad1.left_stick_x < -.2)
-      //  rotate(gamepad1.left_stick_x);
-
-        // strafing
-        //if (gamepad1.right_stick_x < .2 || gamepad1.right_stick_x > -.2)
-      //  strafe(gamepad1.right_stick_x);
-
-        if ((gamepad1.right_stick_y < -.2 || gamepad1.right_stick_y > .2) && gamepad1.right_stick_x < .2 && gamepad1.right_stick_x > .2) {
-            forwardBackward(-gamepad1.right_stick_y);
-        } else if (gamepad1.right_stick_y < -.2 && gamepad1.right_stick_y > .2 && (gamepad1.right_stick_x < .2 || gamepad1.right_stick_x > -.2)) {
-            rotate(gamepad1.right_stick_x);
-        } else if (gamepad1.right_stick_y < -.2 && gamepad1.right_stick_y > .2 && gamepad1.right_stick_x < .2 && gamepad1.right_stick_x > -.2 && (gamepad1.left_stick_x < -.2 || gamepad1.left_stick_x > .2)) {
-            strafe(gamepad1.left_stick_x);
+        if (gamepad1.left_trigger > .5)
+            armDrive.setPower(-.5);
+        else if (gamepad1.left_trigger < .1) {
+            armDrive.setPower(0);
         }
+
+
+        if (shouldRotate(gamepad1.right_stick_x)) {
+            rotate(gamepad1.right_stick_x);
+        } else if (shouldDriveOrReverse(gamepad1.right_stick_y)) {
+            driveOrReverse(-gamepad1.right_stick_y);
+        } else if (shouldStrafe(gamepad1.left_stick_x)) {
+            strafe(gamepad1.left_stick_x);
+        } else {
+            stopRobot();
+        }
+
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
@@ -153,17 +206,20 @@ public class BasicOpMode_TeleOp extends OpMode
         telemetry.addData("left stick x", " : " + gamepad1.left_stick_x);
         telemetry.addData("left stick y", " : " + gamepad1.left_stick_y);
 
+        telemetry.addData("wrist", "%.2f", wristPosition);
+        telemetry.addData("claw", "%.2f", clawPosition);
+
         telemetry.update();
     }
 
     public void rotate(double motorSpeed) {
         backLeftDrive.setPower(motorSpeed);
-        backRightDrive.setPower(-motorSpeed);
-        frontLeftDrive.setPower(motorSpeed);
+        backRightDrive.setPower(motorSpeed);
+        frontLeftDrive.setPower(-motorSpeed);
         frontRightDrive.setPower(-motorSpeed);
     }
 
-    public void forwardBackward(double motorSpeed) {
+    public void driveOrReverse(double motorSpeed) {
         backLeftDrive.setPower(motorSpeed);
         backRightDrive.setPower(motorSpeed);
         frontLeftDrive.setPower(motorSpeed);
@@ -177,11 +233,28 @@ public class BasicOpMode_TeleOp extends OpMode
         frontRightDrive.setPower(motorSpeed);
     }
 
-    public void stationary() {
-        backLeftDrive.setPower(0);
-        backRightDrive.setPower(0);
-        frontLeftDrive.setPower(0);
-        frontRightDrive.setPower(0);
+    public void stopRobot() {
+
+    }
+
+    public boolean shouldRotate (double controllerValue) {
+        return controllerValue > .2 || controllerValue < -.2;
+    }
+
+    public boolean shouldDriveOrReverse (double controllerValue) {
+        return controllerValue > .2 || controllerValue < .2;
+    }
+
+    public boolean shouldStrafe (double controllerValue) {
+        return controllerValue > .2 || controllerValue < -.2;
+    }
+
+    public boolean shouldWrist (boolean button) {
+        return button;
+    }
+
+    public boolean shouldClaw (boolean button) {
+        return button;
     }
 
     @Override

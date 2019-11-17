@@ -50,6 +50,13 @@ public class HardwarePushbot
     public DcMotor frontRight;
     public DcMotor arm;
 
+    public Servo wrist;
+
+
+    public final static double WRIST_HOME = 1;
+    public final static double WRIST_MIN_RANGE = 1;
+    public final static double WRIST_MAX_RANGE = 0;
+
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
 
@@ -72,6 +79,12 @@ public class HardwarePushbot
         
         arm = hwMap.get(DcMotor.class, "arm");
 
+        wrist = hwMap.get(Servo.class, "wrist");
+
+        wrist.setPosition(WRIST_HOME);
+
+
+
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
@@ -90,6 +103,8 @@ public class HardwarePushbot
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
 
     }
  }
