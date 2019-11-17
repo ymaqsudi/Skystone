@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -66,10 +67,14 @@ public class BasicOpMode_TeleOp extends OpMode
     private Servo clawDrive;
 
 
-    public final static double WRIST_HOME = 0;
+    public final static double WRIST_HOME = .5;     // middle position
+    public final static double WRIST_MIN = .4;      // lowest position
+    public final static double WRIST_MAX = .6;      // highest position
 
 
-    public final static double CLAW_HOME = 0;
+    public final static double CLAW_HOME = 0;       // have the claw open when starting
+    public final static double CLAW_MIN = 0;       // claw when opened
+    public final static double CLAW_MAX = .5;      // claw when closed
 
     final double WRIST_SPEED = .01;
     double wristPosition = WRIST_HOME;
@@ -83,6 +88,7 @@ public class BasicOpMode_TeleOp extends OpMode
     double frontRightPower = 0;
 
     double armPower = 0;
+
 
 
 
@@ -116,11 +122,6 @@ public class BasicOpMode_TeleOp extends OpMode
         frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         armDrive.setDirection(DcMotor.Direction.FORWARD);
-        wristDrive.setDirection(Servo.Direction.FORWARD);
-
-        wristDrive.setPosition(WRIST_HOME);
-        clawDrive.setPosition(CLAW_HOME);
-
 
 
         // Tell the driver that initialization is complete.
@@ -161,21 +162,18 @@ public class BasicOpMode_TeleOp extends OpMode
 
   */
 
-        if (shouldWrist(gamepad1.y))
-            wristPosition += WRIST_SPEED;
-        else if (shouldWrist(gamepad1.a))
-            wristPosition -= WRIST_SPEED;
-
-        wristDrive.setPosition(wristPosition);
-
-        if (shouldClaw(gamepad1.x))
-            clawPosition += CLAW_SPEED;
-        else if (shouldClaw(gamepad1.b))
-            clawPosition -= CLAW_SPEED;
-
-        clawDrive.setPosition(clawPosition);
+        // moving the servos on the arm - claw and wrist
+        if(gamepad1.y)
+            wristDrive.setPosition(.55);
+         else if (gamepad1.x)
+            wristDrive.setPosition(.45);
+         else if (gamepad1.a)
+             clawDrive.setPosition(.55);
+         else if (gamepad1.b)
+             clawDrive.setPosition(.45);
 
 
+         // moving the arm
         if (gamepad1.right_trigger > .5)
            armDrive.setPower(.5);
         else if (gamepad1.right_trigger < .1)
@@ -199,6 +197,9 @@ public class BasicOpMode_TeleOp extends OpMode
         }
 
 
+
+        telemetry.addData("wrist", "%.2f", wristPosition);
+        telemetry.addData("claw", "%.2f", clawPosition);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
         telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
@@ -206,8 +207,6 @@ public class BasicOpMode_TeleOp extends OpMode
         telemetry.addData("left stick x", " : " + gamepad1.left_stick_x);
         telemetry.addData("left stick y", " : " + gamepad1.left_stick_y);
 
-        telemetry.addData("wrist", "%.2f", wristPosition);
-        telemetry.addData("claw", "%.2f", clawPosition);
 
         telemetry.update();
     }
@@ -249,13 +248,6 @@ public class BasicOpMode_TeleOp extends OpMode
         return controllerValue > .2 || controllerValue < -.2;
     }
 
-    public boolean shouldWrist (boolean button) {
-        return button;
-    }
-
-    public boolean shouldClaw (boolean button) {
-        return button;
-    }
 
     @Override
     public void stop() {
