@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -50,7 +51,8 @@ public class HardwarePushbot
     public DcMotor frontRight;
     public DcMotor arm;
 
-    public Servo wrist;
+    public CRServo wrist;
+    public Servo claw;
 
 
     public final static double WRIST_HOME = 1;
@@ -79,9 +81,11 @@ public class HardwarePushbot
         
         arm = hwMap.get(DcMotor.class, "arm");
 
-        wrist = hwMap.get(Servo.class, "wrist");
+        wrist = hwMap.get(CRServo.class, "wrist");
 
-        wrist.setPosition(WRIST_HOME);
+        claw = hwMap.get(Servo.class, "claw");
+
+
 
 
 

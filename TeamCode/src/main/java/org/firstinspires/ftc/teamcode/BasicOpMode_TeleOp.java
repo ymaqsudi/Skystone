@@ -29,6 +29,7 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -50,10 +51,10 @@ import com.qualcomm.robotcore.util.Range;
  */
 
 @TeleOp(name="TeleOp", group="Iterative Opmode")
-
 public class BasicOpMode_TeleOp extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
+    HardwarePushbot robot = new HardwarePushbot();
 
     private DcMotor backLeftDrive;
     private DcMotor backRightDrive;
@@ -63,24 +64,12 @@ public class BasicOpMode_TeleOp extends OpMode
     private DcMotor armDrive;
 
 
-    private Servo wristDrive;
-    private Servo clawDrive;
+    private CRServo wristDrive;
+    private CRServo clawDrive;
 
 
-    public final static double WRIST_HOME = .5;     // middle position
-    public final static double WRIST_MIN = .4;      // lowest position
-    public final static double WRIST_MAX = .6;      // highest position
 
 
-    public final static double CLAW_HOME = 0;       // have the claw open when starting
-    public final static double CLAW_MIN = 0;       // claw when opened
-    public final static double CLAW_MAX = .5;      // claw when closed
-
-    final double WRIST_SPEED = .01;
-    double wristPosition = WRIST_HOME;
-
-    final double CLAW_SPEED = .01;
-    double clawPosition = CLAW_HOME;
 
     double backLeftPower = 0;
     double backRightPower = 0;
@@ -88,6 +77,9 @@ public class BasicOpMode_TeleOp extends OpMode
     double frontRightPower = 0;
 
     double armPower = 0;
+
+    double wristPower = 0;
+    double clawPower = 0;
 
 
 
@@ -100,10 +92,10 @@ public class BasicOpMode_TeleOp extends OpMode
     @Override
     public void init() {
 
+        robot.init(hardwareMap);
 
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("wrist", "%.2f", wristPosition);
-        telemetry.addData("claw", "%.2f", clawPosition);
+
 
 
         backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
@@ -111,8 +103,8 @@ public class BasicOpMode_TeleOp extends OpMode
         frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRightDrive = hardwareMap.get(DcMotor.class, "frontRight");
         armDrive = hardwareMap.get(DcMotor.class, "arm");
-        wristDrive = hardwareMap.get(Servo.class, "wrist");
-        clawDrive = hardwareMap.get(Servo.class, "claw");
+        wristDrive = hardwareMap.get(CRServo.class, "wrist");
+        clawDrive = hardwareMap.get(CRServo.class, "claw");
 
         // Robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -126,6 +118,8 @@ public class BasicOpMode_TeleOp extends OpMode
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
+
     }
 
     /*
@@ -148,29 +142,25 @@ public class BasicOpMode_TeleOp extends OpMode
      */
     @Override
     public void loop() {
-/*
-        if (gamepad1.a)
-            wristPosition += WRIST_SPEED;
-        else if (gamepad1.y)
-            wristPosition -= WRIST_SPEED;
 
-
-        if (gamepad1.x)
-            clawPosition += CLAW_SPEED;
-        else if (gamepad1.a)
-            clawPosition -= WRIST_SPEED;
-
-  */
 
         // moving the servos on the arm - claw and wrist
-        if(gamepad1.y)
-            wristDrive.setPosition(.55);
-         else if (gamepad1.x)
-            wristDrive.setPosition(.45);
-         else if (gamepad1.a)
-             clawDrive.setPosition(.55);
-         else if (gamepad1.b)
-             clawDrive.setPosition(.45);
+        if (gamepad1.dpad_left)
+            wristPower = .20;
+        else if (gamepad1.dpad_right)
+            wristPower = -.20;
+        else
+            wristPower = 0.0;
+
+        wristDrive.setPower(wristPower);
+
+        if (gamepad1.dpad_up)
+            clawPower = -0.85;
+        else
+            clawPower = -0.42;
+
+        clawDrive.setPower(clawPower);
+
 
 
          // moving the arm
@@ -185,6 +175,11 @@ public class BasicOpMode_TeleOp extends OpMode
             armDrive.setPower(0);
         }
 
+        if (shouldExtendArm(gamepad1.right_trigger)) {
+            armDrive.setPower(.2);
+        } else if (shouldRetractArm(gamepad1.left_trigger)) {
+            armDrive.setPower(-0.25);
+        }
 
         if (shouldRotate(gamepad1.right_stick_x)) {
             rotate(gamepad1.right_stick_x);
@@ -197,9 +192,6 @@ public class BasicOpMode_TeleOp extends OpMode
         }
 
 
-
-        telemetry.addData("wrist", "%.2f", wristPosition);
-        telemetry.addData("claw", "%.2f", clawPosition);
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
         telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
@@ -246,6 +238,14 @@ public class BasicOpMode_TeleOp extends OpMode
 
     public boolean shouldStrafe (double controllerValue) {
         return controllerValue > .2 || controllerValue < -.2;
+    }
+
+    public boolean shouldExtendArm (double rightTrigger) {
+        return rightTrigger > .5;
+    }
+
+    public boolean shouldRetractArm(double leftTrigger) {
+        return leftTrigger > .5;
     }
 
 
