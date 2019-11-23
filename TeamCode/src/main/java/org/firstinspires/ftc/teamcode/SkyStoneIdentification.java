@@ -82,7 +82,6 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
  * is explained below.
  */
 
-
 @Autonomous(name="SKYSTONE Vuforia Nav", group ="Concept")
 
 public class SkyStoneIdentification extends LinearOpMode {

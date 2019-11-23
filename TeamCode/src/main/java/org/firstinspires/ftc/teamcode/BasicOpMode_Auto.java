@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+// http://www.copperliarrobotics.com/
 
 @Autonomous(name="Autonomous", group="Linear OpMode")
 //@Disabled
@@ -29,7 +30,6 @@ public class BasicOpMode_Auto extends LinearOpMode {
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
 
-
         // set right motor to run with an encoder.
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -39,13 +39,60 @@ public class BasicOpMode_Auto extends LinearOpMode {
         // wait for start button.
         waitForStart();
 
+        /**
+         * MAIN OBJECTIVES:
+         *  - Find the skystones, transport them FROM the loading zone TO the building zone.
+         *
+         *  **** You DO NOT need the robot or the physical game field to create autonomous.
+         *       Instead, call the movement functions defined in this class with those measurements (inches)
+         *       from the FTC Skystone Manual Guide #2.
+         *
+         */
 
-        forward(18,.1);
-        rotateCounterClockwise(10, .1);
-        rotateClockwise(10, .1);
-        backward(18, .1);
+        /**
+         * MOVE FORWARD TO BLOCKS
+         * distance (in):
+         */
 
+        /**
+         * SEARCH FOR SKYSTONE
+         * distance (in)
+         */
 
+        /**
+         * PICKUP SKYSTONE
+         */
+
+        /**
+         * MOVE FROM LOADING AREA TO BUILDING AREA
+         * distance (in)
+         */
+
+        /**
+         * DROP SKYSTONE INTO BUILDING AREA
+         */
+
+        /**
+         * RETURN TO LOADING AREA
+         * distance (in)
+         *  ***** Use pictures along the walls to position robot into the corner of loading zone.
+         *       Now that the robot is oriented in a predictable spot, we can naviagate using VuForia/sensors
+         *
+         *  **** This spot is presumably different from the initial starting position. Account for this change,
+         *        or reposition the robot at this time to return to the starting position.
+         */
+
+        // REPEAT ...
+
+        /*
+        strafeLeft(convertInchesToCM(10),.25);
+        strafeRight(convertInchesToCM(10),.25);
+
+        forward(convertInchesToCM(25),.25);
+        rotateCounterClockwise(convertInchesToCM(25), .25);
+        rotateClockwise(convertInchesToCM(25), .25);
+        backward(convertInchesToCM(25), .25);
+        */
 
         // Stop motors after the job is done
         backLeft.setPower(0);
@@ -58,6 +105,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
 
     // Methods
+    public double convertInchesToCM(double in) {
+        return in * 2.54;
+    }
+
 
 
     /*
@@ -128,10 +179,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
     parameter value, and call upon the methods listed above in order to invoke the speed method
      */
     public void forward(double desiredDistance, double speed) {
-
         // Calculations for all the variables we use in this method
-        double rotationsNeeded = desiredDistance/circumference;     // You may need to multiply
+        double rotationsNeeded = (desiredDistance*0.23778)/circumference;     // You may need to multiply
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
+
 
         // Resets encoders before use. You need to do this to clear any values the encoders might
         // have stored.
@@ -153,7 +204,7 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void backward(double desiredDistance, double speed) {
-        double rotationsNeeded = desiredDistance/circumference;
+        double rotationsNeeded = (desiredDistance*0.23778)/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         resetEncoders();
@@ -169,12 +220,15 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void strafeRight(double desiredDistance, double speed) {
-        double rotationsNeeded = desiredDistance/circumference;
+        double rotationsNeeded = (desiredDistance*0.23778)/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         resetEncoders();
 
-        specifyTarget(encoderDrivingTarget);
+        backLeft.setTargetPosition(-encoderDrivingTarget);
+        backRight.setTargetPosition(encoderDrivingTarget);
+        frontLeft.setTargetPosition(encoderDrivingTarget);
+        frontRight.setTargetPosition(-encoderDrivingTarget);
 
         strafe(speed);
 
@@ -185,12 +239,15 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void strafeLeft(double desiredDistance, double speed) {
-        double rotationsNeeded = desiredDistance/circumference;
+        double rotationsNeeded = (desiredDistance*0.23778)/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         resetEncoders();
 
-        specifyTarget(encoderDrivingTarget);
+        backLeft.setTargetPosition(encoderDrivingTarget);
+        backRight.setTargetPosition(-encoderDrivingTarget);
+        frontLeft.setTargetPosition(-encoderDrivingTarget);
+        frontRight.setTargetPosition(encoderDrivingTarget);
 
         strafe(-speed);
 
@@ -201,12 +258,15 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void rotateClockwise(double desiredDistance, double speed) {
-        double rotationsNeeded = desiredDistance/circumference;
+        double rotationsNeeded = (desiredDistance*0.23778)/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         resetEncoders();
 
-        specifyTarget(encoderDrivingTarget);
+        backLeft.setTargetPosition(-encoderDrivingTarget);
+        backRight.setTargetPosition(encoderDrivingTarget);
+        frontLeft.setTargetPosition(-encoderDrivingTarget);
+        frontRight.setTargetPosition(encoderDrivingTarget);
 
         rotate(speed);
 
@@ -217,12 +277,15 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void rotateCounterClockwise(double desiredDistance, double speed) {
-        double rotationsNeeded = desiredDistance/circumference;
+        double rotationsNeeded = (desiredDistance*0.23778)/circumference;
         int encoderDrivingTarget = (int)(rotationsNeeded*MOTOR_TICK_COUNTS); // rotations needed * tick count
 
         resetEncoders();
 
-        specifyTarget(encoderDrivingTarget);
+        backLeft.setTargetPosition(encoderDrivingTarget);
+        backRight.setTargetPosition(-encoderDrivingTarget);
+        frontLeft.setTargetPosition(encoderDrivingTarget);
+        frontRight.setTargetPosition(-encoderDrivingTarget);
 
         rotate(-speed);
 
