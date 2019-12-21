@@ -64,12 +64,8 @@ public class BasicOpMode_TeleOp extends OpMode
 
     private DcMotor armDrive;
 
-
     private CRServo wristDrive;
     private CRServo clawDrive;
-
-
-
 
 
     double backLeftPower = 0;
@@ -97,8 +93,6 @@ public class BasicOpMode_TeleOp extends OpMode
 
         telemetry.addData("Status", "Initialized");
 
-
-
         backLeftDrive  = hardwareMap.get(DcMotor.class, "backLeft");
         backRightDrive = hardwareMap.get(DcMotor.class, "backRight");
         frontLeftDrive  = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -119,7 +113,6 @@ public class BasicOpMode_TeleOp extends OpMode
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
-
 
     }
 
@@ -144,7 +137,6 @@ public class BasicOpMode_TeleOp extends OpMode
     @Override
     public void loop() {
 
-
         // moving the servos on the arm - claw and wrist
         if (gamepad1.dpad_left)
             wristPower = .20;
@@ -161,8 +153,6 @@ public class BasicOpMode_TeleOp extends OpMode
             clawPower = -0.42;
 
         clawDrive.setPower(clawPower);
-
-
 
          // moving the arm
         if (gamepad1.right_trigger > .5)
@@ -192,14 +182,12 @@ public class BasicOpMode_TeleOp extends OpMode
             stopRobot();
         }
 
-
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight(%.2f) ", frontLeftPower, frontRightPower, backLeftPower, backRightPower, armPower);
         telemetry.addData("right stick y", " : " + gamepad1.right_stick_y);
         telemetry.addData("right stick x", " : " + gamepad1.right_stick_x);
         telemetry.addData("left stick x", " : " + gamepad1.left_stick_x);
         telemetry.addData("left stick y", " : " + gamepad1.left_stick_y);
-
 
         telemetry.update();
     }
