@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 // http://www.copperliarrobotics.com/
 
 @Autonomous(name="Autonomous", group="Linear OpMode")
@@ -12,6 +13,14 @@ public class BasicOpMode_Auto extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
+
+    private Servo armRight;
+    private Servo armLeft;
+
+    private Servo handRight;
+    private Servo handLeft;
+
+
     static final int MOTOR_TICK_COUNTS = 1120;
     private double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
 
@@ -23,6 +32,11 @@ public class BasicOpMode_Auto extends LinearOpMode {
         backRight = hardwareMap.dcMotor.get("backRight");
         frontLeft = hardwareMap.dcMotor.get("frontLeft");
         frontRight = hardwareMap.dcMotor.get("frontRight");
+
+        armRight = hardwareMap.get(Servo.class, "armRight");
+        armLeft = hardwareMap.get(Servo.class, "armLeft");
+        handRight = hardwareMap.get(Servo.class, "handRight");
+        handLeft = hardwareMap.get(Servo.class, "handLeft");
 
         // Set motor direction
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -54,45 +68,72 @@ public class BasicOpMode_Auto extends LinearOpMode {
          * distance (in):
          */
 
+        forward(convertInchesToCM(24), .5);
+
         /**
          * SEARCH FOR SKYSTONE
          * distance (in)
          */
+        // strafe left until color sensor hue is the same as the skystone
+
 
         /**
          * PICKUP SKYSTONE
          */
 
+        // both arm servos come in to grab the block. Hand servos spin while arms come in. How we intake if block orientation is long?
+        intake();
+
         /**
-         * MOVE FROM LOADING AREA TO BUILDING AREA
+         * MOVE FROM LOADING AREA TO FOUNDATION
          * distance (in)
          */
+
+        strafeRight(96, .5);
 
         /**
          * DROP SKYSTONE INTO BUILDING AREA
          */
 
+        // Outtake servos?
+
         /**
-         * RETURN TO LOADING AREA
-         * distance (in)
-         *  ***** Use pictures along the walls to position robot into the corner of loading zone.
-         *       Now that the robot is oriented in a predictable spot, we can naviagate using VuForia/sensors
-         *
-         *  **** This spot is presumably different from the initial starting position. Account for this change,
-         *        or reposition the robot at this time to return to the starting position.
+         * MOVE FROM FOUNDATION TO LOADING AREA
          */
 
-        // REPEAT ...
+        strafeLeft(96, .5);
 
-        /*
-        strafeLeft(convertInchesToCM(10),.25);
-        strafeRight(convertInchesToCM(10),.25);
+        /**
+         * SEARCH FOR SKYSTONE
+         */
 
-        forward(convertInchesToCM(25),.25);
-        rotateCounterClockwise(convertInchesToCM(25), .25);
-        rotateClockwise(convertInchesToCM(25), .25);
-        backward(convertInchesToCM(25), .25);
-        */
+        // strafe left until color sensor hue is the same as the skystone
+
+        /**
+         * PICKUP SKYSTONE
+         */
+
+        intake();
+
+        /**
+         * MOVE FROM LOADING AREA TO FOUNDATION
+         * distance (in)
+         */
+
+        strafeRight(96, .5);
+
+        /**
+         * DROP SKYSTONE INTO BUILDING AREA
+         */
+
+        // Outtake servos?
+
+        /**
+         * PARK UNDERNEATH BRIDGE
+         */
+
+        backward(48, 1);
+        strafeLeft(48, 1);
 
         // Stop motors after the job is done
         backLeft.setPower(0);
@@ -293,6 +334,13 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
         allowMotorsToFinish();
 
+    }
+
+    public void intake() {
+        armLeft.setPosition(90);
+        armRight.setPosition(90);
+        handLeft.setPosition(handLeft.getPosition() + 15);
+        handRight.setPosition(handRight.getPosition() - 15);
     }
 
 }

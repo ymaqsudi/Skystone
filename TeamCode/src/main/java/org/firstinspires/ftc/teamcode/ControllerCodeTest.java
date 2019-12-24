@@ -55,10 +55,12 @@ public class ControllerCodeTest extends LinearOpMode {
     private DcMotor backRight;
     private DcMotor frontLeft;
     private DcMotor frontRight;
-    private DcMotor arm;
 
-    private CRServo wrist;
-    private Servo claw;
+    private Servo armRight;
+    private Servo armLeft;
+
+    private Servo handRight;
+    private Servo handLeft;
 
     public void rotate(double motorSpeed) {
         backLeft.setPower(motorSpeed);
@@ -80,11 +82,11 @@ public class ControllerCodeTest extends LinearOpMode {
         frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
-        arm = hardwareMap.get(DcMotor.class, "arm");
+        armRight = hardwareMap.get(Servo.class, "armRight");
+        armLeft = hardwareMap.get(Servo.class, "armLeft");
+        handRight = hardwareMap.get(Servo.class, "handRight");
+        handLeft = hardwareMap.get(Servo.class, "handLeft");
 
-        wrist = hardwareMap.get(CRServo.class, "wrist");
-
-        claw = hardwareMap.get(Servo.class, "claw");
 
         // Robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -117,7 +119,6 @@ public class ControllerCodeTest extends LinearOpMode {
             double BackLeftVal = -gamepad1.left_stick_y  + (-gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
             double BackRightVal = -gamepad1.left_stick_y - (-gamepad1.left_stick_x) - -gamepad1.right_stick_x;
 
-            double armVal = (gamepad1.right_trigger - gamepad1.left_trigger) / 5;
 
             double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal};
             Arrays.sort(wheelPowers);
@@ -131,7 +132,6 @@ public class ControllerCodeTest extends LinearOpMode {
             frontRight.setPower(FrontRightVal);
             backLeft.setPower(BackLeftVal);
             backRight.setPower(BackRightVal);
-            arm.setPower(armVal);
 
             if((gamepad1.right_stick_x > 0 || gamepad1.right_stick_x < 0) & gamepad1.left_stick_x == 0 & gamepad1.left_stick_y == 0) {
                 rotate(gamepad1.right_stick_x);
@@ -140,22 +140,28 @@ public class ControllerCodeTest extends LinearOpMode {
 
 
 
-            if (gamepad1.dpad_left)
-                wrist.setPower(.2);
-            else if (gamepad1.dpad_right)
-                wrist.setPower(-.2);
-            else
-                wrist.setPower(0);
+            if (gamepad1.left_trigger > .5) {
+                armRight.setPosition(69);
+                armLeft.setPosition(69);
+                handRight.setPosition(handRight.getPosition() - 10);
+                handLeft.setPosition(handLeft.getPosition() + 10);
+            }
+
+            else {
+                handRight.setPosition(15);
+                handLeft.setPosition(15);
+            }
 
 
-            if (gamepad1.dpad_up)
-                claw.setPosition(.4);
-            else
-                claw.setPosition(.2);
+            if (gamepad1.right_trigger > .5) {
+                armRight.setPosition(15);
+                armLeft.setPosition(15);
+            }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Claw Pos:", + claw.getPosition());
+            telemetry.addData("Right Arm: ", + armRight.getPosition());
+            telemetry.addData("Left Arm: ", + armLeft.getPosition());
 
             telemetry.update();
         }
