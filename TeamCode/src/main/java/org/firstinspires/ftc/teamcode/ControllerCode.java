@@ -36,15 +36,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import java.lang.reflect.Array;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import java.util.Arrays;
 
 
 
-
 @TeleOp(name="Controller", group="Linear Opmode")
-public class ControllerCodeTest extends LinearOpMode {
+
+public class ControllerCode extends LinearOpMode {
 
     // Declare OpMode members.
     HardwarePushbot robot = new HardwarePushbot();
@@ -59,8 +58,12 @@ public class ControllerCodeTest extends LinearOpMode {
     private Servo armRight;
     private Servo armLeft;
 
-    private Servo handRight;
-    private Servo handLeft;
+    private CRServo handRight;
+    private CRServo handLeft;
+
+    private ColorSensor colorSensor;
+
+    double armServoPos, handServoSpeed;
 
     public void rotate(double motorSpeed) {
         backLeft.setPower(motorSpeed);
@@ -84,8 +87,10 @@ public class ControllerCodeTest extends LinearOpMode {
 
         armRight = hardwareMap.get(Servo.class, "armRight");
         armLeft = hardwareMap.get(Servo.class, "armLeft");
-        handRight = hardwareMap.get(Servo.class, "handRight");
-        handLeft = hardwareMap.get(Servo.class, "handLeft");
+        handRight = hardwareMap.get(CRServo.class, "handRight");
+        handLeft = hardwareMap.get(CRServo.class, "handLeft");
+
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
 
         // Robots need the motor on one side to be reversed to drive forward
@@ -108,10 +113,15 @@ public class ControllerCodeTest extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
+
         runtime.reset();
+
+        armServoPos = .5;
+        handServoSpeed = 0;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
+
 
 
             double FrontLeftVal =  -gamepad1.left_stick_y - (-gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
@@ -141,27 +151,35 @@ public class ControllerCodeTest extends LinearOpMode {
 
 
             if (gamepad1.left_trigger > .5) {
-                armRight.setPosition(69);
-                armLeft.setPosition(69);
-                handRight.setPosition(handRight.getPosition() - 10);
-                handLeft.setPosition(handLeft.getPosition() + 10);
+                armServoPos += .1;
+                handServoSpeed = 1;
             }
 
-            else {
-                handRight.setPosition(15);
-                handLeft.setPosition(15);
-            }
+            else
+                handServoSpeed = 0;
+
+            if (gamepad1.right_trigger > .5)
+                armServoPos -= 0.1;
 
 
-            if (gamepad1.right_trigger > .5) {
-                armRight.setPosition(15);
-                armLeft.setPosition(15);
-            }
+            armRight.setPosition(Range.clip(armServoPos, 0, 1));
+            armLeft.setPosition(Range.clip(-armServoPos, 0, 1));
+
+            handRight.setPower(handServoSpeed);
+            handLeft.setPower(-handServoSpeed);
+
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Right Arm: ", + armRight.getPosition());
             telemetry.addData("Left Arm: ", + armLeft.getPosition());
+
+            telemetry.addData("Red:", colorSensor.red());
+            telemetry.addData("Green:", colorSensor.green());
+            telemetry.addData("Blue:", colorSensor.blue());
+            telemetry.addData("Alpha", colorSensor.alpha()); // total lumosity
+            telemetry.addData("Argb:", colorSensor.argb()); // combined color value
 
             telemetry.update();
         }

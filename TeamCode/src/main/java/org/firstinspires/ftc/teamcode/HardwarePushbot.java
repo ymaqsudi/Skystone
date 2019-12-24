@@ -45,19 +45,19 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class HardwarePushbot
 {
 
-    public DcMotor backLeft;
-    public DcMotor frontLeft;
-    public DcMotor backRight;
-    public DcMotor frontRight;
-    public DcMotor arm;
+    private DcMotor backLeft;
+    private DcMotor backRight;
+    private DcMotor frontLeft;
+    private DcMotor frontRight;
 
-    public CRServo wrist;
-    public Servo claw;
+    private Servo armRight;
+    private Servo armLeft;
 
+    private CRServo handRight;
+    private CRServo handLeft;
 
-    public final static double WRIST_HOME = 1;
-    public final static double WRIST_MIN_RANGE = 1;
-    public final static double WRIST_MAX_RANGE = 0;
+    private ColorSensor colorSensor;
+
 
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -75,17 +75,15 @@ public class HardwarePushbot
         // Define and Initialize Motors
         backLeft  = hwMap.get(DcMotor.class, "backLeft");
         backRight = hwMap.get(DcMotor.class, "backRight");
-        frontLeft = hwMap.get(DcMotor.class, "frontLeft");
+        frontLeft  = hwMap.get(DcMotor.class, "frontLeft");
         frontRight = hwMap.get(DcMotor.class, "frontRight");
 
-        
-        arm = hwMap.get(DcMotor.class, "arm");
+        armRight = hwMap.get(Servo.class, "armRight");
+        armLeft = hwMap.get(Servo.class, "armLeft");
+        handRight = hwMap.get(CRServo.class, "handRight");
+        handLeft = hwMap.get(CRServo.class, "handLeft");
 
-        wrist = hwMap.get(CRServo.class, "wrist");
-
-        claw = hwMap.get(Servo.class, "claw");
-
-
+        colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
 
 
 
@@ -99,14 +97,14 @@ public class HardwarePushbot
         backRight.setPower(0);
         backLeft.setPower(0);
         frontLeft.setPower(0);
-        arm.setPower(0);
+
 
         // set motors to either using or not using encoders
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
 
 

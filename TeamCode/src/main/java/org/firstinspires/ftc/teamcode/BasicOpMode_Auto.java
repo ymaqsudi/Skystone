@@ -2,12 +2,14 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 // http://www.copperliarrobotics.com/
 
 @Autonomous(name="Autonomous", group="Linear OpMode")
-//@Disabled
+
 public class BasicOpMode_Auto extends LinearOpMode {
     private DcMotor backLeft;
     private DcMotor backRight;
@@ -17,8 +19,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
     private Servo armRight;
     private Servo armLeft;
 
-    private Servo handRight;
-    private Servo handLeft;
+    private CRServo handRight;
+    private CRServo handLeft;
+
+    private ColorSensor colorSensor;
 
 
     static final int MOTOR_TICK_COUNTS = 1120;
@@ -35,8 +39,10 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
         armRight = hardwareMap.get(Servo.class, "armRight");
         armLeft = hardwareMap.get(Servo.class, "armLeft");
-        handRight = hardwareMap.get(Servo.class, "handRight");
-        handLeft = hardwareMap.get(Servo.class, "handLeft");
+        handRight = hardwareMap.get(CRServo.class, "handRight");
+        handLeft = hardwareMap.get(CRServo.class, "handLeft");
+
+        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         // Set motor direction
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -54,12 +60,19 @@ public class BasicOpMode_Auto extends LinearOpMode {
         waitForStart();
 
         /**
-         * MAIN OBJECTIVES:
-         *  - Find the skystones, transport them FROM the loading zone TO the building zone.
+         * COLOR SENSOR VALUES
          *
-         *  **** You DO NOT need the robot or the physical game field to create autonomous.
-         *       Instead, call the movement functions defined in this class with those measurements (inches)
-         *       from the FTC Skystone Manual Guide #2.
+         * color_sensor.red();   // Red channel value
+         * color_sensor.green(); // Green channel value
+         * color_sensor.blue();  // Blue channel value
+         *
+         * color_sensor.alpha(); // Total luminosity
+         * color_sensor.argb();  // Combined color value
+         */
+
+        /**
+         * MAIN OBJECTIVES:
+         *  Find skystones, place on foundation, park underneath bridge
          *
          */
 
@@ -75,7 +88,8 @@ public class BasicOpMode_Auto extends LinearOpMode {
          * distance (in)
          */
         // strafe left until color sensor hue is the same as the skystone
-
+        while(colorSensor.argb() != 0)
+            strafeLeft(15, .2);
 
         /**
          * PICKUP SKYSTONE
@@ -108,6 +122,8 @@ public class BasicOpMode_Auto extends LinearOpMode {
          */
 
         // strafe left until color sensor hue is the same as the skystone
+        while (colorSensor.argb() != 0)
+            strafeLeft(15, .2);
 
         /**
          * PICKUP SKYSTONE
@@ -339,8 +355,8 @@ public class BasicOpMode_Auto extends LinearOpMode {
     public void intake() {
         armLeft.setPosition(90);
         armRight.setPosition(90);
-        handLeft.setPosition(handLeft.getPosition() + 15);
-        handRight.setPosition(handRight.getPosition() - 15);
+        handLeft.setPower(1);
+        handRight.setPower(1);
     }
 
 }
