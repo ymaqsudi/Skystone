@@ -58,12 +58,12 @@ public class ControllerCode extends LinearOpMode {
     private Servo armRight;
     private Servo armLeft;
 
-    private CRServo handRight;
-    private CRServo handLeft;
+    private Servo handRight;
+    private Servo handLeft;
 
-    private ColorSensor colorSensor;
+//    private ColorSensor colorSensor;
 
-    double armServoPos, handServoSpeed;
+    double rightArmServoPos, leftArmServoPos, handServoSpeed;
 
     public void rotate(double motorSpeed) {
         backLeft.setPower(motorSpeed);
@@ -87,10 +87,10 @@ public class ControllerCode extends LinearOpMode {
 
         armRight = hardwareMap.get(Servo.class, "armRight");
         armLeft = hardwareMap.get(Servo.class, "armLeft");
-        handRight = hardwareMap.get(CRServo.class, "handRight");
-        handLeft = hardwareMap.get(CRServo.class, "handLeft");
+        handRight = hardwareMap.get(Servo.class, "handRight");
+        handLeft = hardwareMap.get(Servo.class, "handLeft");
 
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+//        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
 
         // Robots need the motor on one side to be reversed to drive forward
@@ -116,8 +116,10 @@ public class ControllerCode extends LinearOpMode {
 
         runtime.reset();
 
-        armServoPos = .5;
+
         handServoSpeed = 0;
+        rightArmServoPos = .393;
+        leftArmServoPos = .216;
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -148,38 +150,35 @@ public class ControllerCode extends LinearOpMode {
             }
 
 
+           if (gamepad1.left_trigger > 0.1) {
+               leftArmServoPos += 0.01;
+               rightArmServoPos -= 0.01;
+           }
+
+           if (gamepad1.right_trigger > 0.1) {
+               leftArmServoPos -= 0.01;
+               rightArmServoPos += 0.01;
+           }
 
 
-            if (gamepad1.left_trigger > .5) {
-                armServoPos += .1;
-                handServoSpeed = 1;
-            }
+            armRight.setPosition(rightArmServoPos);
+            armLeft.setPosition(leftArmServoPos);
 
-            else
-                handServoSpeed = 0;
-
-            if (gamepad1.right_trigger > .5)
-                armServoPos -= 0.1;
-
-
-            armRight.setPosition(Range.clip(armServoPos, 0, 1));
-            armLeft.setPosition(Range.clip(-armServoPos, 0, 1));
-
-            handRight.setPower(handServoSpeed);
-            handLeft.setPower(-handServoSpeed);
-
-
+            handLeft.setPosition(handLeft.getPosition() + 0.1);
+            handRight.setPosition(handRight.getPosition() - 0.1);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Right Arm: ", + armRight.getPosition());
             telemetry.addData("Left Arm: ", + armLeft.getPosition());
 
-            telemetry.addData("Red:", colorSensor.red());
+            /*telemetry.addData("Red:", colorSensor.red());
             telemetry.addData("Green:", colorSensor.green());
             telemetry.addData("Blue:", colorSensor.blue());
             telemetry.addData("Alpha", colorSensor.alpha()); // total lumosity
             telemetry.addData("Argb:", colorSensor.argb()); // combined color value
+            */
+
 
             telemetry.update();
         }

@@ -53,10 +53,10 @@ public class HardwarePushbot
     private Servo armRight;
     private Servo armLeft;
 
-    private CRServo handRight;
-    private CRServo handLeft;
+    private Servo handRight;
+    private Servo handLeft;
 
-    private ColorSensor colorSensor;
+  //  private ColorSensor colorSensor;
 
 
     HardwareMap hwMap           =  null;
@@ -80,10 +80,10 @@ public class HardwarePushbot
 
         armRight = hwMap.get(Servo.class, "armRight");
         armLeft = hwMap.get(Servo.class, "armLeft");
-        handRight = hwMap.get(CRServo.class, "handRight");
-        handLeft = hwMap.get(CRServo.class, "handLeft");
+        handRight = hwMap.get(Servo.class, "handRight");
+        handLeft = hwMap.get(Servo.class, "handLeft");
 
-        colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
+       // colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
 
 
 

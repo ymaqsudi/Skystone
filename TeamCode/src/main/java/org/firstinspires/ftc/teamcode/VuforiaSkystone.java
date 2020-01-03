@@ -56,33 +56,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 /**
- * This 2019-2020 OpMode illustrates the basics of using the Vuforia localizer to determine
- * positioning and orientation of robot on the SKYSTONE FTC field.
- * The code is structured as a LinearOpMode
- *
- * When images are located, Vuforia is able to determine the position and orientation of the
- * image relative to the camera.  This sample code then combines that information with a
- * knowledge of where the target images are on the field, to determine the location of the camera.
- *
- * From the Audience perspective, the Red Alliance station is on the right and the
- * Blue Alliance Station is on the left.
-
- * Eight perimeter targets are distributed evenly around the four perimeter walls
- * Four Bridge targets are located on the bridge uprights.
- * Refer to the Field Setup manual for more specific location details
- *
- * A final calculation then uses the location of the camera on the robot to determine the
- * robot's location and orientation on the field.
- *
- * @see VuforiaLocalizer
- * @see VuforiaTrackableDefaultListener
- * see  skystone/doc/tutorial/FTC_FieldCoordinateSystemDefinition.pdf
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
+ * Autonomous OP mode using Vuforia vision processing
  */
 
 
@@ -98,18 +72,7 @@ public class VuforiaSkystone extends LinearOpMode {
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
     private static final boolean PHONE_IS_PORTRAIT = false  ;
 
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
+
     private static final String VUFORIA_KEY =
             "AZ7ucbb/////AAABmcrFbwpgA0yHrBn1jQ5G9pNXBWF6LHxJ9ZPV1jgOAlzKXOKydflfRavtDdBlTTbPucklk+R/3Hsdvrng7xsbqVa+tKuBiOeujsdnjmNiiRpLh4kuEr8V7KkCdF9sPhmGnSySCAmnd3aNqK1TWlVAf/8NJF7Lkzih8XvcpEVI8dTo0HXFHNUa9Bc8ucWXj/dUuDMyWK98gMctdqSgkQsp0eyN4EdvsvPOt6gXnJ7beMCmsfyuaBpEU9idLbBzmhbs4Xf7t307BJuKWnu9OmpYj84v5sTCaLG+/gKQ3L5903TBwnDXIDRg1w6xK3Pvt95qfXtfI01qghBwx35cLVJpC4XkI+ITCfFwY1f6NFPCsRxW";
 
@@ -350,7 +313,7 @@ public class VuforiaSkystone extends LinearOpMode {
         // CONSEQUENTLY do not put any driving commands in this loop.
         // To restore the normal opmode structure, just un-comment the following line:
 
-        // waitForStart();
+         waitForStart();
 
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
@@ -678,9 +641,9 @@ public class VuforiaSkystone extends LinearOpMode {
     }
 
     public void intake() {
-        armLeft.setPosition(90);
-        armRight.setPosition(90);
-        handLeft.setPower(1);
+        armLeft.setPosition(.1);
+        armRight.setPosition(.1);
+        handLeft.setPower(-1);
         handRight.setPower(1);
     }
 }
