@@ -35,8 +35,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import java.util.Arrays;
 
 
@@ -58,12 +56,13 @@ public class ControllerCode extends LinearOpMode {
     private Servo armRight;
     private Servo armLeft;
 
-    private Servo handRight;
-    private Servo handLeft;
+    private CRServo handRight;
+    private CRServo handLeft;
 
 //    private ColorSensor colorSensor;
 
-    double rightArmServoPos, leftArmServoPos, handServoSpeed;
+    double rightArmServoPos;
+    double leftArmServoPos;
 
     public void rotate(double motorSpeed) {
         backLeft.setPower(motorSpeed);
@@ -78,8 +77,6 @@ public class ControllerCode extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
 
-
-
         backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
@@ -87,8 +84,8 @@ public class ControllerCode extends LinearOpMode {
 
         armRight = hardwareMap.get(Servo.class, "armRight");
         armLeft = hardwareMap.get(Servo.class, "armLeft");
-        handRight = hardwareMap.get(Servo.class, "handRight");
-        handLeft = hardwareMap.get(Servo.class, "handLeft");
+        handRight = hardwareMap.get(CRServo.class, "handRight");
+        handLeft = hardwareMap.get(CRServo.class, "handLeft");
 
 //        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
@@ -117,19 +114,18 @@ public class ControllerCode extends LinearOpMode {
         runtime.reset();
 
 
-        handServoSpeed = 0;
-        rightArmServoPos = .393;
-        leftArmServoPos = .216;
+        rightArmServoPos = .393;        // open values
+        leftArmServoPos = .216;         // open values
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
 
 
-            double FrontLeftVal =  -gamepad1.left_stick_y - (-gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
-            double FrontRightVal =  -gamepad1.left_stick_y  + (-gamepad1.left_stick_x) - -gamepad1.right_stick_x;
-            double BackLeftVal = -gamepad1.left_stick_y  + (-gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
-            double BackRightVal = -gamepad1.left_stick_y - (-gamepad1.left_stick_x) - -gamepad1.right_stick_x;
+            double FrontLeftVal =  -gamepad1.left_stick_x - (-gamepad1.left_stick_y)  + -gamepad1.right_stick_y;
+            double FrontRightVal =  -gamepad1.left_stick_x  + (-gamepad1.left_stick_y) - -gamepad1.right_stick_y;
+            double BackLeftVal = -gamepad1.left_stick_x  + (-gamepad1.left_stick_y)  + -gamepad1.right_stick_y;
+            double BackRightVal = -gamepad1.left_stick_x - (-gamepad1.left_stick_y) - -gamepad1.right_stick_y;
 
 
             double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal};
@@ -153,6 +149,8 @@ public class ControllerCode extends LinearOpMode {
            if (gamepad1.left_trigger > 0.1) {
                leftArmServoPos += 0.01;
                rightArmServoPos -= 0.01;
+               handLeft.setPower(0);    // inward rotation
+               handRight.setPower(1);   // inward rotation
            }
 
            if (gamepad1.right_trigger > 0.1) {
@@ -164,13 +162,13 @@ public class ControllerCode extends LinearOpMode {
             armRight.setPosition(rightArmServoPos);
             armLeft.setPosition(leftArmServoPos);
 
-            handLeft.setPosition(handLeft.getPosition() + 0.1);
-            handRight.setPosition(handRight.getPosition() - 0.1);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Right Arm: ", + armRight.getPosition());
             telemetry.addData("Left Arm: ", + armLeft.getPosition());
+            telemetry.addData("Right Hand: ", handRight.getPower());
+            telemetry.addData("Left Hand: ", handLeft.getPower());
 
             /*telemetry.addData("Red:", colorSensor.red());
             telemetry.addData("Green:", colorSensor.green());

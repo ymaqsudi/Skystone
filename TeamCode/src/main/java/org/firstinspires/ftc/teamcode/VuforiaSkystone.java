@@ -315,6 +315,9 @@ public class VuforiaSkystone extends LinearOpMode {
 
          waitForStart();
 
+        armLeft.setPosition(.216);
+        armRight.setPosition(.396);
+
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
         // Tap the preview window to receive a fresh image.
@@ -641,8 +644,8 @@ public class VuforiaSkystone extends LinearOpMode {
     }
 
     public void intake() {
-        armLeft.setPosition(.1);
-        armRight.setPosition(.1);
+        armLeft.setPosition(.2);
+        armRight.setPosition(.2);
         handLeft.setPower(-1);
         handRight.setPower(1);
     }

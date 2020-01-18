@@ -353,9 +353,9 @@ public class BasicOpMode_Auto extends LinearOpMode {
     }
 
     public void intake() {
-        armLeft.setPosition(90);
-        armRight.setPosition(90);
-        handLeft.setPower(1);
+        armLeft.setPosition(.2);
+        armRight.setPosition(.2);
+        handLeft.setPower(-1);
         handRight.setPower(1);
     }
 
