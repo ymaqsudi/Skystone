@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.CRServo;
 
 /**
  * This is NOT an opmode.
@@ -53,8 +54,10 @@ public class HardwarePushbot
     private Servo armRight;
     private Servo armLeft;
 
-    private Servo handRight;
-    private Servo handLeft;
+    private CRServo handRight;
+    private CRServo handLeft;
+
+    private DcMotor linearLift1, linearLift2;
 
   //  private ColorSensor colorSensor;
 
@@ -80,8 +83,11 @@ public class HardwarePushbot
 
         armRight = hwMap.get(Servo.class, "armRight");
         armLeft = hwMap.get(Servo.class, "armLeft");
-        handRight = hwMap.get(Servo.class, "handRight");
-        handLeft = hwMap.get(Servo.class, "handLeft");
+        handRight = hwMap.get(CRServo.class, "handRight");
+        handLeft = hwMap.get(CRServo.class, "handLeft");
+
+        linearLift1 = hwMap.get (DcMotor.class, "linearLift1");
+        linearLift2 = hwMap.get (DcMotor.class, "linearLift2");
 
        // colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
 
