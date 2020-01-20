@@ -4,11 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 // http://www.copperliarrobotics.com/
 
-@Autonomous(name="Autonomous", group="Linear OpMode")
+@Autonomous(name="Avikarmous", group="Linear OpMode")
 
 public class BasicOpMode_Auto extends LinearOpMode {
     private DcMotor backLeft;
@@ -22,7 +23,7 @@ public class BasicOpMode_Auto extends LinearOpMode {
     private CRServo handRight;
     private CRServo handLeft;
 
-    private ColorSensor colorSensor;
+   // private ColorSensor colorSensor;
 
 
     static final int MOTOR_TICK_COUNTS = 1120;
@@ -42,13 +43,13 @@ public class BasicOpMode_Auto extends LinearOpMode {
         handRight = hardwareMap.get(CRServo.class, "handRight");
         handLeft = hardwareMap.get(CRServo.class, "handLeft");
 
-        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
+     //   colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         // Set motor direction
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
 
         // set right motor to run with an encoder.
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -58,98 +59,19 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
         // wait for start button.
         waitForStart();
-
-        /**
-         * COLOR SENSOR VALUES
-         *
-         * color_sensor.red();   // Red channel value
-         * color_sensor.green(); // Green channel value
-         * color_sensor.blue();  // Blue channel value
-         *
-         * color_sensor.alpha(); // Total luminosity
-         * color_sensor.argb();  // Combined color value
-         */
-
-        /**
-         * MAIN OBJECTIVES:
-         *  Find skystones, place on foundation, park underneath bridge
-         *
-         */
-
-        /**
-         * MOVE FORWARD TO BLOCKS
-         * distance (in):
-         */
-
-        forward(convertInchesToCM(24), .5);
-
-        /**
-         * SEARCH FOR SKYSTONE
-         * distance (in)
-         */
-        // strafe left until color sensor hue is the same as the skystone
-        while(colorSensor.argb() != 0)
-            strafeLeft(15, .2);
-
-        /**
-         * PICKUP SKYSTONE
-         */
-
-        // both arm servos come in to grab the block. Hand servos spin while arms come in. How we intake if block orientation is long?
+        armRight.setPosition(.393);
+        armLeft.setPosition(.216);
+        forward(convertInchesToCM(5), .1);
+        wait(1000);
+        backward(convertInchesToCM(5), .1);
+        wait(1000);
+        strafeLeft(convertInchesToCM(5), .1);
+        wait(1000);
+        strafeRight(convertInchesToCM(5), .1);
+        wait(1000);
         intake();
+        outtake();
 
-        /**
-         * MOVE FROM LOADING AREA TO FOUNDATION
-         * distance (in)
-         */
-
-        strafeRight(96, .5);
-
-        /**
-         * DROP SKYSTONE INTO BUILDING AREA
-         */
-
-        // Outtake servos?
-
-        /**
-         * MOVE FROM FOUNDATION TO LOADING AREA
-         */
-
-        strafeLeft(96, .5);
-
-        /**
-         * SEARCH FOR SKYSTONE
-         */
-
-        // strafe left until color sensor hue is the same as the skystone
-        while (colorSensor.argb() != 0)
-            strafeLeft(15, .2);
-
-        /**
-         * PICKUP SKYSTONE
-         */
-
-        intake();
-
-        /**
-         * MOVE FROM LOADING AREA TO FOUNDATION
-         * distance (in)
-         */
-
-        strafeRight(96, .5);
-
-        /**
-         * DROP SKYSTONE INTO BUILDING AREA
-         */
-
-        // Outtake servos?
-
-        /**
-         * PARK UNDERNEATH BRIDGE
-         */
-
-        backward(48, 1);
-        strafeLeft(48, 1);
 
         // Stop motors after the job is done
         backLeft.setPower(0);
@@ -174,16 +96,16 @@ public class BasicOpMode_Auto extends LinearOpMode {
      */
     public void rotate(double motorSpeed) {
         backLeft.setPower(motorSpeed);
-        backRight.setPower(motorSpeed);
+        backRight.setPower(-motorSpeed);
         frontLeft.setPower(-motorSpeed);
-        frontRight.setPower(-motorSpeed);
+        frontRight.setPower(motorSpeed);
     }
 
 
     public void driveOrReverse(double motorSpeed) {
-        backLeft.setPower(motorSpeed);
+        backLeft.setPower(-motorSpeed);
         backRight.setPower(motorSpeed);
-        frontLeft.setPower(motorSpeed);
+        frontLeft.setPower(-motorSpeed);
         frontRight.setPower(motorSpeed);
     }
 
@@ -192,6 +114,13 @@ public class BasicOpMode_Auto extends LinearOpMode {
         backRight.setPower(-motorSpeed);
         frontLeft.setPower(-motorSpeed);
         frontRight.setPower(motorSpeed);
+    }
+
+    public void strafe2 (double motorSpeed) {
+        backLeft.setPower(-motorSpeed);
+        backRight.setPower(motorSpeed);
+        frontLeft.setPower(motorSpeed);
+        frontRight.setPower(-motorSpeed);
     }
 
     /**
@@ -282,12 +211,12 @@ public class BasicOpMode_Auto extends LinearOpMode {
 
         resetEncoders();
 
-        backLeft.setTargetPosition(-encoderDrivingTarget);
+        backLeft.setTargetPosition(encoderDrivingTarget);
         backRight.setTargetPosition(encoderDrivingTarget);
         frontLeft.setTargetPosition(encoderDrivingTarget);
-        frontRight.setTargetPosition(-encoderDrivingTarget);
+        frontRight.setTargetPosition(encoderDrivingTarget);
 
-        strafe(speed);
+        strafe2(speed);
 
         runToTargetPosition();
 
@@ -302,8 +231,8 @@ public class BasicOpMode_Auto extends LinearOpMode {
         resetEncoders();
 
         backLeft.setTargetPosition(encoderDrivingTarget);
-        backRight.setTargetPosition(-encoderDrivingTarget);
-        frontLeft.setTargetPosition(-encoderDrivingTarget);
+        backRight.setTargetPosition(encoderDrivingTarget);
+        frontLeft.setTargetPosition(encoderDrivingTarget);
         frontRight.setTargetPosition(encoderDrivingTarget);
 
         strafe(-speed);
@@ -356,7 +285,12 @@ public class BasicOpMode_Auto extends LinearOpMode {
         armLeft.setPosition(90);
         armRight.setPosition(90);
         handLeft.setPower(1);
-        handRight.setPower(1);
+        handRight.setPower(0);
+    }
+
+    public void outtake() {
+        armLeft.setPosition(.216);
+        armRight.setPosition(.393);
     }
 
 }

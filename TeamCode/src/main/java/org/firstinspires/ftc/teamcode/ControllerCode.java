@@ -159,16 +159,30 @@ public class ControllerCode extends LinearOpMode {
                 rotate(gamepad1.right_stick_x);
             }
 
-            leftArmServoPos = gamepad1.left_trigger;
-            rightArmServoPos = -gamepad1.left_trigger;
+            if (gamepad1.left_trigger > 0.1) {
+                leftArmServoPos += 0.005;
+                rightArmServoPos -= 0.005;
+            }
 
-            armLeft.setPosition(leftArmServoPos);
+            if (gamepad1.right_trigger > 0.1) {
+                leftArmServoPos -= 0.005;
+                rightArmServoPos += 0.005;
+            }
+
+            if (gamepad1.left_bumper) {
+                handLeft.setPower(1);
+                handRight.setPower(0);
+            }
+             else {
+                 handLeft.setPower(.5);
+                 handRight.setPower(.5);
+            }
+
+
+
+
             armRight.setPosition(rightArmServoPos);
-
-
-            handLeft.setPower(handServoSpeed);
-            handRight.setPower(handServoSpeed);
-
+            armLeft.setPosition(leftArmServoPos);
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Right Arm: ", + armRight.getPosition());

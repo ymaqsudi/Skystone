@@ -641,9 +641,7 @@ public class VuforiaSkystone extends LinearOpMode {
     }
 
     public void intake() {
-        armLeft.setPosition(.1);
-        armRight.setPosition(.1);
-        handLeft.setPower(-1);
-        handRight.setPower(1);
+        armRight.setPosition(0.092999);
+        armLeft.setPosition(0.516000);
     }
 }
