@@ -37,8 +37,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import java.util.Arrays;
 
-
-
 @TeleOp(name="Controller", group="Linear Opmode")
 
 public class ControllerCode extends LinearOpMode {
@@ -58,6 +56,11 @@ public class ControllerCode extends LinearOpMode {
 
     private CRServo handRight;
     private CRServo handLeft;
+<<<<<<< HEAD
+=======
+
+    private DcMotor linearLift1, linearLift2;
+>>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
 
 //    private ColorSensor colorSensor;
 
@@ -86,7 +89,13 @@ public class ControllerCode extends LinearOpMode {
         armLeft = hardwareMap.get(Servo.class, "armLeft");
         handRight = hardwareMap.get(CRServo.class, "handRight");
         handLeft = hardwareMap.get(CRServo.class, "handLeft");
+<<<<<<< HEAD
+=======
 
+>>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
+
+        linearLift1 = hardwareMap.get (DcMotor.class, "linearLift1");
+        linearLift2 = hardwareMap.get (DcMotor.class, "linearLift2");
 //        colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
 
@@ -121,11 +130,26 @@ public class ControllerCode extends LinearOpMode {
         while (opModeIsActive()) {
 
 
+<<<<<<< HEAD
 
             double FrontLeftVal =  -gamepad1.left_stick_x - (-gamepad1.left_stick_y)  + -gamepad1.right_stick_y;
             double FrontRightVal =  -gamepad1.left_stick_x  + (-gamepad1.left_stick_y) - -gamepad1.right_stick_y;
             double BackLeftVal = -gamepad1.left_stick_x  + (-gamepad1.left_stick_y)  + -gamepad1.right_stick_y;
             double BackRightVal = -gamepad1.left_stick_x - (-gamepad1.left_stick_y) - -gamepad1.right_stick_y;
+=======
+            /*
+            double FrontLeftVal =  -gamepad1.left_stick_y - (-gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
+            double FrontRightVal =  -gamepad1.left_stick_y  + (-gamepad1.left_stick_x) - -gamepad1.right_stick_x;
+            double BackLeftVal = -gamepad1.left_stick_y  + (-gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
+            double BackRightVal = -gamepad1.left_stick_y - (-gamepad1.left_stick_x) - -gamepad1.right_stick_x;
+            */
+
+            double FrontLeftVal =  gamepad1.left_stick_x + (+gamepad1.left_stick_y)  - +gamepad1.right_stick_y;
+            double FrontRightVal =  +gamepad1.left_stick_x  - (+gamepad1.left_stick_y) + +gamepad1.right_stick_y;
+            double BackLeftVal = +gamepad1.left_stick_x  - (+gamepad1.left_stick_y)  - +gamepad1.right_stick_y;
+            double BackRightVal = +gamepad1.left_stick_x + (+gamepad1.left_stick_y) + +gamepad1.right_stick_y;
+
+>>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
 
 
             double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal};
@@ -145,24 +169,44 @@ public class ControllerCode extends LinearOpMode {
                 rotate(gamepad1.right_stick_x);
             }
 
+            if (gamepad1.left_trigger > 0.1) {
+                leftArmServoPos += 0.005;
+                rightArmServoPos -= 0.005;
+            }
 
+            if (gamepad1.right_trigger > 0.1) {
+                leftArmServoPos -= 0.005;
+                rightArmServoPos += 0.005;
+            }
+
+            if (gamepad1.left_bumper) {
+                handLeft.setPower(1);
+                handRight.setPower(0);
+            }
+             else {
+                 handLeft.setPower(.5);
+                 handRight.setPower(.5);
+            }
+
+<<<<<<< HEAD
            if (gamepad1.left_trigger > 0.1) {
                leftArmServoPos += 0.01;
                rightArmServoPos -= 0.01;
                handLeft.setPower(0);    // inward rotation
                handRight.setPower(1);   // inward rotation
            }
+=======
+>>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
 
-           if (gamepad1.right_trigger > 0.1) {
-               leftArmServoPos -= 0.01;
-               rightArmServoPos += 0.01;
-           }
 
 
             armRight.setPosition(rightArmServoPos);
             armLeft.setPosition(leftArmServoPos);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Right Arm: ", + armRight.getPosition());
