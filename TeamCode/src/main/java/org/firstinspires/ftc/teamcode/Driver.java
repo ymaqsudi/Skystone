@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Driver {
 
-    HardwarePushbot robot = new HardwarePushbot();
+    HardwarePushbot hardware = new HardwarePushbot();
 
     private static final int MOTOR_TICK_COUNTS = 1120;
     private static final double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
@@ -12,39 +12,43 @@ public class Driver {
     private double rotationsNeeded;
     private int encoderDrivingTarget;
 
+    public Driver() {
+
+    }
+
     public void driveOrReverse(double power) {
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(power);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(power);
+        hardware.backLeft.setPower(power);
+        hardware.backRight.setPower(power);
+        hardware.frontLeft.setPower(power);
+        hardware.frontRight.setPower(power);
     }
 
     public void strafeLeft(double power) {
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(-power);
-        robot.frontLeft.setPower(-power);
-        robot.frontRight.setPower(power);
+        hardware.backLeft.setPower(power);
+        hardware.backRight.setPower(-power);
+        hardware.frontLeft.setPower(-power);
+        hardware.frontRight.setPower(power);
     }
 
     public void strafeRight(double power) {
-        robot.backLeft.setPower(-power);
-        robot.backRight.setPower(power);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(-power);
+        hardware.backLeft.setPower(-power);
+        hardware.backRight.setPower(power);
+        hardware.frontLeft.setPower(power);
+        hardware.frontRight.setPower(-power);
     }
 
     public void rotateClockwise(double power) {
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(-power);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(-power);
+        hardware.backLeft.setPower(power);
+        hardware.backRight.setPower(-power);
+        hardware.frontLeft.setPower(power);
+        hardware.frontRight.setPower(-power);
     }
 
     public void rotateCounterClockwise(double power) {
-        robot.backLeft.setPower(-power);
-        robot.backRight.setPower(power);
-        robot.frontLeft.setPower(-power);
-        robot.frontRight.setPower(power);
+        hardware.backLeft.setPower(-power);
+        hardware.backRight.setPower(power);
+        hardware.frontLeft.setPower(-power);
+        hardware.frontRight.setPower(power);
     }
 
 
@@ -57,36 +61,36 @@ public class Driver {
     }
 
     public void stopAndResetEncoder() {
-        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        hardware.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     public void setTargetPosition (int distance) {
-        robot.backLeft.setTargetPosition(distance);
-        robot.backRight.setTargetPosition(distance);
-        robot.frontLeft.setTargetPosition(distance);
-        robot.frontRight.setTargetPosition(distance);
+        hardware.backLeft.setTargetPosition(distance);
+        hardware.backRight.setTargetPosition(distance);
+        hardware.frontLeft.setTargetPosition(distance);
+        hardware.frontRight.setTargetPosition(distance);
     }
 
     public void runToPosition() {
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        hardware.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        hardware.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        hardware.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        hardware.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void busy() {
-        while (robot.backLeft.isBusy() && robot.backRight.isBusy() && robot.frontRight.isBusy() && robot.frontLeft.isBusy()) {
+        while (hardware.backLeft.isBusy() && hardware.backRight.isBusy() && hardware.frontRight.isBusy() && hardware.frontLeft.isBusy()) {
         }
     }
 
     public void runUsingEncoder() {
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        hardware.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void getEncoderDrivingTarget(int distance) {
@@ -190,13 +194,13 @@ public class Driver {
     }
 
     public void intake() {
-        robot.armLeft.setPosition(.481000000000002);
-        robot.armRight.setPosition(.12799999);
+        hardware.armLeft.setPosition(.481000000000002);
+        hardware.armRight.setPosition(.12799999);
     }
 
     public void outtake() {
-        robot.armLeft.setPosition(0.13099999999999999);
-        robot.armRight.setPosition(0.478000000000001);
+        hardware.armLeft.setPosition(0.13099999999999999);
+        hardware.armRight.setPosition(0.478000000000001);
     }
 
 }

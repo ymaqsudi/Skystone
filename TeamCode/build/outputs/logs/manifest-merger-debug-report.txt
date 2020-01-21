@@ -11,13 +11,16 @@ MERGED from [:FtcCommon-release:] /Users/Yaseen/.gradle/caches/transforms-2/file
 MERGED from [:WirelessP2p-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/efbb00219c1555546d06b1cbbaf36ba6/WirelessP2p-release/AndroidManifest.xml:2:1-11:12
 MERGED from [:tfod-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/732762c53b2616e8aad790f9099d6c5a/tfod-release/AndroidManifest.xml:2:1-11:12
 MERGED from [:tensorflow-lite-0.0.0-nightly:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/f36f1519eb99b161bb770e5fc9552dc5/tensorflow-lite-0.0.0-nightly/AndroidManifest.xml:2:1-6:12
+MERGED from [com.github.dogecv:dogecv:2020.4-alpha] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/507efc144667e4c634f98a58359630bd/dogecv-2020.4-alpha/AndroidManifest.xml:2:1-17:12
 MERGED from [:Inspection-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/8fbcda4bc1e922f9077bcb3ae9c5de35/Inspection-release/AndroidManifest.xml:2:1-32:12
 MERGED from [:Blocks-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/0d4fa3eb72ed1a83113bd973e1171787/Blocks-release/AndroidManifest.xml:2:1-41:12
 MERGED from [:RobotServer-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/0619248c333b84b7cc3bb74c23145352/RobotServer-release/AndroidManifest.xml:2:1-11:12
 MERGED from [:OnBotJava-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/7065808d15d9c23912581dee86e75f96/OnBotJava-release/AndroidManifest.xml:34:1-43:12
 MERGED from [com.android.support:support-compat:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b73d0db3c489aeab8b531c92b0313ef9/support-compat-28.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [org.openftc:easyopencv:1.2] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/7c7051c63f2158b605ee3cb782bf2b96/easyopencv-1.2/AndroidManifest.xml:2:1-11:12
 MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b93ddaf99704c9896c23344bb8a6cc5b/versionedparcelable-28.0.0/AndroidManifest.xml:17:1-25:12
 MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/912d14cf8b7da59afd70a06b1ab8df17/runtime-1.1.1/AndroidManifest.xml:17:1-22:12
+MERGED from [org.openftc:opencv-repackaged:4.1.0-A] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/038fd6af2f36c459fc9f97e6d20ed802/opencv-repackaged-4.1.0-A/AndroidManifest.xml:2:1-11:12
 INJECTED from /Users/Yaseen/Desktop/repositories/HHSRobotics/TeamCode/src/main/AndroidManifest.xml:8:1-12:12
 INJECTED from /Users/Yaseen/Desktop/repositories/HHSRobotics/TeamCode/src/main/AndroidManifest.xml:8:1-12:12
 INJECTED from /Users/Yaseen/Desktop/repositories/HHSRobotics/TeamCode/src/main/AndroidManifest.xml:8:1-12:12
@@ -45,6 +48,8 @@ MERGED from [:FtcCommon-release:] /Users/Yaseen/.gradle/caches/transforms-2/file
 MERGED from [:FtcCommon-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/45d5c5a8f2db7cb81f7a0b5164d0142a/FtcCommon-release/AndroidManifest.xml:23:5-233:19
 MERGED from [:tensorflow-lite-0.0.0-nightly:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/f36f1519eb99b161bb770e5fc9552dc5/tensorflow-lite-0.0.0-nightly/AndroidManifest.xml:4:5-5:19
 MERGED from [:tensorflow-lite-0.0.0-nightly:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/f36f1519eb99b161bb770e5fc9552dc5/tensorflow-lite-0.0.0-nightly/AndroidManifest.xml:4:5-5:19
+MERGED from [com.github.dogecv:dogecv:2020.4-alpha] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/507efc144667e4c634f98a58359630bd/dogecv-2020.4-alpha/AndroidManifest.xml:11:5-15:19
+MERGED from [com.github.dogecv:dogecv:2020.4-alpha] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/507efc144667e4c634f98a58359630bd/dogecv-2020.4-alpha/AndroidManifest.xml:11:5-15:19
 MERGED from [:Inspection-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/8fbcda4bc1e922f9077bcb3ae9c5de35/Inspection-release/AndroidManifest.xml:19:5-30:19
 MERGED from [:Inspection-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/8fbcda4bc1e922f9077bcb3ae9c5de35/Inspection-release/AndroidManifest.xml:19:5-30:19
 MERGED from [:Blocks-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/0d4fa3eb72ed1a83113bd973e1171787/Blocks-release/AndroidManifest.xml:18:5-39:19
@@ -55,6 +60,8 @@ MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/Yaseen/.grad
 MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b93ddaf99704c9896c23344bb8a6cc5b/versionedparcelable-28.0.0/AndroidManifest.xml:22:5-23:19
 	android:appComponentFactory
 		ADDED from [com.android.support:support-compat:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b73d0db3c489aeab8b531c92b0313ef9/support-compat-28.0.0/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from [com.github.dogecv:dogecv:2020.4-alpha] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/507efc144667e4c634f98a58359630bd/dogecv-2020.4-alpha/AndroidManifest.xml:14:9-35
 	android:label
 		ADDED from [:FtcRobotController] /Users/Yaseen/Desktop/repositories/HHSRobotics/FtcRobotController/build/intermediates/library_manifest/debug/AndroidManifest.xml:17:9-41
 	android:largeHeap
@@ -83,6 +90,8 @@ MERGED from [:WirelessP2p-release:] /Users/Yaseen/.gradle/caches/transforms-2/fi
 MERGED from [:WirelessP2p-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/efbb00219c1555546d06b1cbbaf36ba6/WirelessP2p-release/AndroidManifest.xml:5:5-7:41
 MERGED from [:tfod-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/732762c53b2616e8aad790f9099d6c5a/tfod-release/AndroidManifest.xml:7:5-9:41
 MERGED from [:tfod-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/732762c53b2616e8aad790f9099d6c5a/tfod-release/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.dogecv:dogecv:2020.4-alpha] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/507efc144667e4c634f98a58359630bd/dogecv-2020.4-alpha/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.dogecv:dogecv:2020.4-alpha] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/507efc144667e4c634f98a58359630bd/dogecv-2020.4-alpha/AndroidManifest.xml:7:5-9:41
 MERGED from [:Inspection-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/8fbcda4bc1e922f9077bcb3ae9c5de35/Inspection-release/AndroidManifest.xml:7:5-9:41
 MERGED from [:Inspection-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/8fbcda4bc1e922f9077bcb3ae9c5de35/Inspection-release/AndroidManifest.xml:7:5-9:41
 MERGED from [:Blocks-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/0d4fa3eb72ed1a83113bd973e1171787/Blocks-release/AndroidManifest.xml:7:5-9:41
@@ -93,10 +102,14 @@ MERGED from [:OnBotJava-release:] /Users/Yaseen/.gradle/caches/transforms-2/file
 MERGED from [:OnBotJava-release:] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/7065808d15d9c23912581dee86e75f96/OnBotJava-release/AndroidManifest.xml:39:5-41:41
 MERGED from [com.android.support:support-compat:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b73d0db3c489aeab8b531c92b0313ef9/support-compat-28.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:support-compat:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b73d0db3c489aeab8b531c92b0313ef9/support-compat-28.0.0/AndroidManifest.xml:20:5-44
+MERGED from [org.openftc:easyopencv:1.2] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/7c7051c63f2158b605ee3cb782bf2b96/easyopencv-1.2/AndroidManifest.xml:7:5-9:41
+MERGED from [org.openftc:easyopencv:1.2] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/7c7051c63f2158b605ee3cb782bf2b96/easyopencv-1.2/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b93ddaf99704c9896c23344bb8a6cc5b/versionedparcelable-28.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/b93ddaf99704c9896c23344bb8a6cc5b/versionedparcelable-28.0.0/AndroidManifest.xml:20:5-44
 MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/912d14cf8b7da59afd70a06b1ab8df17/runtime-1.1.1/AndroidManifest.xml:20:5-44
 MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/912d14cf8b7da59afd70a06b1ab8df17/runtime-1.1.1/AndroidManifest.xml:20:5-44
+MERGED from [org.openftc:opencv-repackaged:4.1.0-A] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/038fd6af2f36c459fc9f97e6d20ed802/opencv-repackaged-4.1.0-A/AndroidManifest.xml:7:5-9:41
+MERGED from [org.openftc:opencv-repackaged:4.1.0-A] /Users/Yaseen/.gradle/caches/transforms-2/files-2.1/038fd6af2f36c459fc9f97e6d20ed802/opencv-repackaged-4.1.0-A/AndroidManifest.xml:7:5-9:41
 INJECTED from /Users/Yaseen/Desktop/repositories/HHSRobotics/TeamCode/src/main/AndroidManifest.xml
 INJECTED from /Users/Yaseen/Desktop/repositories/HHSRobotics/TeamCode/src/main/AndroidManifest.xml
 	android:targetSdkVersion
