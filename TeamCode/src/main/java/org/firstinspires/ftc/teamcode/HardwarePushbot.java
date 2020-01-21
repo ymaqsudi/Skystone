@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -46,21 +47,19 @@ import com.qualcomm.robotcore.hardware.CRServo;
 public class HardwarePushbot
 {
 
-    private DcMotor backLeft;
-    private DcMotor backRight;
-    private DcMotor frontLeft;
-    private DcMotor frontRight;
+    public DcMotor backLeft;
+    public DcMotor backRight;
+    public DcMotor frontLeft;
+    public DcMotor frontRight;
 
-    private Servo armRight;
-    private Servo armLeft;
+    public Servo armRight;
+    public Servo armLeft;
 
-    private CRServo handRight;
-    private CRServo handLeft;
-<<<<<<< HEAD
-=======
+    public CRServo handRight;
+    public CRServo handLeft;
 
-    private DcMotor linearLift1, linearLift2;
->>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
+
+    public DcMotor linearLift1, linearLift2;
 
   //  private ColorSensor colorSensor;
 
@@ -88,20 +87,16 @@ public class HardwarePushbot
         armLeft = hwMap.get(Servo.class, "armLeft");
         handRight = hwMap.get(CRServo.class, "handRight");
         handLeft = hwMap.get(CRServo.class, "handLeft");
-<<<<<<< HEAD
-=======
+
 
         linearLift1 = hwMap.get (DcMotor.class, "linearLift1");
         linearLift2 = hwMap.get (DcMotor.class, "linearLift2");
->>>>>>> 4bf21039d57f83d3a71ec6edfb5ecee7f82ae15e
-
-       // colorSensor = hwMap.get(ColorSensor.class, "colorSensor");
 
 
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power

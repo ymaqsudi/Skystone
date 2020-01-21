@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
@@ -88,10 +89,10 @@ public class AutoTest extends LinearOpMode {
         //   colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
 
         // Set motor direction
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.FORWARD);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
 
         // set right motor to run with an encoder.
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
