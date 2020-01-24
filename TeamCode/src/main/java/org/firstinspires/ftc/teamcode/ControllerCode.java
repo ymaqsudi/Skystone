@@ -24,10 +24,8 @@ public class ControllerCode extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
 
 
-        // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
 
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
         runtime.reset();
@@ -43,17 +41,20 @@ public class ControllerCode extends LinearOpMode {
             double BackRightVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) - -gamepad1.right_stick_x;
 
             double linearLiftVal = gamepad1.left_trigger;
+            double linearLiftVal2 = -gamepad1.right_trigger;
 
 
 
-            double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal, linearLiftVal};
+            double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal, linearLiftVal, linearLiftVal2};
             Arrays.sort(wheelPowers);
             if (wheelPowers[3] > 1) {
                 FrontLeftVal /= wheelPowers[3];
                 FrontRightVal /= wheelPowers[3];
                 BackLeftVal /= wheelPowers[3];
                 BackRightVal /= wheelPowers[3];
+
                 linearLiftVal /= wheelPowers[3];
+                linearLiftVal2 /= wheelPowers[3];
             }
 
             hardware.frontLeft.setPower(FrontLeftVal/2);
@@ -63,6 +64,9 @@ public class ControllerCode extends LinearOpMode {
 
             hardware.linearLift1.setPower(linearLiftVal/3);
             hardware.linearLift2.setPower(linearLiftVal/3);
+
+            hardware.linearLift1.setPower(linearLiftVal2/3);
+            hardware.linearLift2.setPower(linearLiftVal2/3);
 
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());

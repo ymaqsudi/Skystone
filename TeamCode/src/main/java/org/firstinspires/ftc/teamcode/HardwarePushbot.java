@@ -24,6 +24,8 @@ public class HardwarePushbot
 
 
 
+
+
     public DcMotor linearLift1, linearLift2;
 
 
@@ -53,6 +55,9 @@ public class HardwarePushbot
         backRight.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
+
+        linearLift1.setDirection(DcMotor.Direction.REVERSE);
+        linearLift2.setDirection(DcMotor.Direction.FORWARD);
 
         frontLeft.setPower(0);
         backRight.setPower(0);
