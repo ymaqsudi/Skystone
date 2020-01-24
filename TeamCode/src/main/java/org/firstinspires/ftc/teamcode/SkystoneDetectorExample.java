@@ -42,7 +42,7 @@ public class SkystoneDetectorExample extends LinearOpMode {
 
         waitForStart();
 
-        robot.outtake();
+       // robot.outtake();
 
         while (opModeIsActive())
         {
@@ -59,23 +59,11 @@ public class SkystoneDetectorExample extends LinearOpMode {
 
             // skystone is in the "right" position
             if (skyStoneDetector.getScreenPosition().x > 110) {
-                rightSkystonePos();
+                robot.rightSkystonePos();
             }
 
         }
     }
 
-        public void rightSkystonePos() {
-            robot.strafeLeftEncoder(.01, 6);
 
-            robot.driveOrReverseEncoder(.01, 48);
-
-            robot.intake();
-
-            robot.driveOrReverseEncoder(-.01, 18);
-
-            robot.strafeLeftEncoder(.01, 96);
-
-            robot.outtake();
-        }
 }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -20,11 +21,7 @@ public class HardwarePushbot
     public DcMotor frontLeft;
     public DcMotor frontRight;
 
-    public Servo armRight;
-    public Servo armLeft;
 
-    public CRServo handRight;
-    public CRServo handLeft;
 
 
     public DcMotor linearLift1, linearLift2;
@@ -46,19 +43,14 @@ public class HardwarePushbot
         frontLeft  = hwMap.get(DcMotor.class, "frontLeft");
         frontRight = hwMap.get(DcMotor.class, "frontRight");
 
-        armRight = hwMap.get(Servo.class, "armRight");
-        armLeft = hwMap.get(Servo.class, "armLeft");
-        handRight = hwMap.get(CRServo.class, "handRight");
-        handLeft = hwMap.get(CRServo.class, "handLeft");
-
 
         linearLift1 = hwMap.get (DcMotor.class, "linearLift1");
         linearLift2 = hwMap.get (DcMotor.class, "linearLift2");
 
 
 
-        backLeft.setDirection(DcMotor.Direction.REVERSE);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
 

@@ -193,6 +193,34 @@ public class Driver {
         runUsingEncoder();
     }
 
+    public void rightSkystonePos() {
+        strafeLeftEncoder(.01, 6);
+
+        driveOrReverseEncoder(.01, 48);
+
+        //intake();
+
+        driveOrReverseEncoder(-.01, 18);
+
+        strafeLeftEncoder(.01, 96);
+
+        //outtake();
+    }
+
+    public void centerSkystonePos() {
+
+        driveOrReverseEncoder(.01, 48);
+
+       // intake();
+
+        driveOrReverseEncoder(-.01, 18);
+
+        strafeLeftEncoder(.01, 96);
+
+        //outtake();
+    }
+
+    /*
     public void intake() {
         hardware.armLeft.setPosition(.481000000000002);
         hardware.armRight.setPosition(.12799999);
@@ -201,6 +229,7 @@ public class Driver {
     public void outtake() {
         hardware.armLeft.setPosition(0.13099999999999999);
         hardware.armRight.setPosition(0.478000000000001);
+
+     */
     }
 
-}

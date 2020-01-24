@@ -20,26 +20,28 @@ public class NewAutonomous extends LinearOpMode {
 
         waitForStart(); // start
 
-        robot.outtake();
+//        robot.outtake();
+//
+//        robot.driveOrReverseEncoder(.01, 48);
+//
+//        robot.intake();
+//
+//        robot.driveOrReverseEncoder(-.01, 18);
+//
+//        robot.strafeLeftEncoder(.01, 96);
+//
+//        robot.outtake();
+//
+//        robot.strafeRightEncoder(.1, 26);
+//
+//        robot.intake();
+//
+//        robot.rotateCounterClockwiseEncoder(.01, 5);
+//
+//        robot.rotateClockwiseEncoder(.01, 5);
+//
+//        robot.intake();
 
-        robot.driveOrReverseEncoder(.01, 48);
-
-        robot.intake();
-
-        robot.driveOrReverseEncoder(-.01, 18);
-
-        robot.strafeLeftEncoder(.01, 96);
-
-        robot.outtake();
-
-        robot.strafeRightEncoder(.1, 26);
-
-        robot.intake();
-
-        robot.rotateCounterClockwiseEncoder(.01, 5);
-
-        robot.rotateClockwiseEncoder(.01, 5);
-
-        robot.intake();
+        robot.driveOrReverseEncoder(.01, 24);
     }
 }

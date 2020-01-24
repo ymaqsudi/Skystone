@@ -104,48 +104,18 @@ public class VuforiaSkystone extends LinearOpMode {
     private float phoneZRotate = 0;
 
 
-    HardwarePushbot robot = new HardwarePushbot();
-
-    private static final int MOTOR_TICK_COUNTS = 1120;
-    private static final double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
-
-    private double rotationsNeeded;
-    private int encoderDrivingTarget;
+    HardwarePushbot hardware = new HardwarePushbot();
+    Driver robot = new Driver();
 
 
     @Override
     public void runOpMode() {
 
-        robot.init(hardwareMap);
+        hardware.init(hardwareMap);
 
-//        backLeft = hardwareMap.dcMotor.get("backLeft");
-//        backRight = hardwareMap.dcMotor.get("backRight");
-//        frontLeft = hardwareMap.dcMotor.get("frontLeft");
-//        frontRight = hardwareMap.dcMotor.get("frontRight");
-//
-//        armRight = hardwareMap.get(Servo.class, "armRight");
-//        armLeft = hardwareMap.get(Servo.class, "armLeft");
-//        handRight = hardwareMap.get(CRServo.class, "handRight");
-//        handLeft = hardwareMap.get(CRServo.class, "handLeft");
-//
-//        backLeft.setDirection(DcMotor.Direction.REVERSE);
-//        backRight.setDirection(DcMotor.Direction.REVERSE);
-//        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-//        frontRight.setDirection(DcMotor.Direction.FORWARD);
-//
-//        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        /*
-         * Configure Vuforia by creating a Parameter object, and passing it to the Vuforia engine.
-         * We can pass Vuforia the handle to a camera preview resource (on the RC phone);
-         * If no camera monitor is desired, use the parameter-less constructor instead (commented out below).
-         */
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters(cameraMonitorViewId);
 
-        // VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraDirection = CAMERA_CHOICE;
@@ -312,8 +282,8 @@ public class VuforiaSkystone extends LinearOpMode {
 
         waitForStart();
 
-        robot.armLeft.setPosition(.216);
-        robot.armRight.setPosition(.396);
+        //hardware.armLeft.setPosition(.216);
+        //hardware.armRight.setPosition(.396);
 
         // Note: To use the remote camera preview:
         // AFTER you hit Init on the Driver Station, use the "options menu" to select "Camera Stream"
@@ -345,7 +315,9 @@ public class VuforiaSkystone extends LinearOpMode {
 
 
             // Provide feedback as to where the robot is located (if we know).
-
+            /**
+             * FIRST SKYSTONE
+             */
             String positionSkystone = "";
             if (targetVisible) {
                 // express position (translation) of robot in inches.
@@ -358,15 +330,12 @@ public class VuforiaSkystone extends LinearOpMode {
                 if (xPosition < -10) {
                     positionSkystone = "left";
 
-                    strafeLeftEncoder(.01, 1);
-                    driveOrReverseEncoder(.01, 1);
-                    intake();
+                    // pos left
 
                 } else {
                     positionSkystone = "center";
 
-                    driveOrReverseEncoder(.01, 1);
-                    intake();
+                    // center position
 
                 }
 
@@ -377,22 +346,15 @@ public class VuforiaSkystone extends LinearOpMode {
             } else {
                 positionSkystone = "right";
 
-                strafeRightEncoder(5, 1);
-                driveOrReverseEncoder(48, 1);
-                intake();
 
                 telemetry.addData("Visible Target", "none");
             }
             telemetry.addData("Skystone Position: ", positionSkystone);
             telemetry.update();
 
-            driveOrReverseEncoder(-1, 1);
-            strafeRightEncoder(96, 1);
-            // OUTTAKE
-            strafeLeftEncoder(96, 1);
-            driveOrReverseEncoder(24, 1);
-            strafeLeftEncoder(24, 1);
-
+            /**
+             * SECOND SKYSTONE
+             */
             if (targetVisible) {
                 // express position (translation) of robot in inches.
                 VectorF translation = lastLocation.getTranslation();
@@ -404,15 +366,12 @@ public class VuforiaSkystone extends LinearOpMode {
                 if (xPosition < -10) {
                     positionSkystone = "left";
 
-                    strafeLeftEncoder(5, 1);
-                    driveOrReverseEncoder(48, 1);
-                    intake();
+                   // left
 
                 } else {
                     positionSkystone = "center";
 
-                    driveOrReverseEncoder(48, 1);
-                    intake();
+                  //center
 
                 }
 
@@ -423,20 +382,14 @@ public class VuforiaSkystone extends LinearOpMode {
             } else {
                 positionSkystone = "right";
 
-                strafeRightEncoder(5, 1);
-                driveOrReverseEncoder(48, 1);
-                intake();
+                // right pos
 
                 telemetry.addData("Visible Target", "none");
             }
             telemetry.addData("Skystone Position 2: ", positionSkystone);
             telemetry.update();
 
-            driveOrReverseEncoder(2, 1);
-            strafeRightEncoder(96, 1);
-            // OUTTAKE
-            driveOrReverseEncoder(10, 1);
-            strafeLeftEncoder(48, 1);
+
 
 
         }
@@ -445,201 +398,5 @@ public class VuforiaSkystone extends LinearOpMode {
         targetsSkyStone.deactivate();
     }
 
-    // Methods
-    public double convertInchesToCM(double in) {
-        return in * 2.54;
-    }
 
-
-    /*
-    The following 6 methods only take one parameter (speed). We made this in order to call
-    these methods later on when we make better methods using encoders.
-     */
-    public void driveOrReverse(double power) {
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(power);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(power);
-    }
-
-    public void strafeLeft(double power) {
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(-power);
-        robot.frontLeft.setPower(-power);
-        robot.frontRight.setPower(power);
-    }
-
-    public void strafeRight(double power) {
-        robot.backLeft.setPower(-power);
-        robot.backRight.setPower(power);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(-power);
-    }
-
-    public void rotateClockwise(double power) {
-        robot.backLeft.setPower(power);
-        robot.backRight.setPower(-power);
-        robot.frontLeft.setPower(power);
-        robot.frontRight.setPower(-power);
-    }
-
-    public void rotateCounterClockwise(double power) {
-        robot.backLeft.setPower(-power);
-        robot.backRight.setPower(power);
-        robot.frontLeft.setPower(-power);
-        robot.frontRight.setPower(power);
-    }
-
-
-    /**
-     * Primitive Encoder methods
-     */
-
-    public void stopDriving() {
-        driveOrReverse(0);
-    }
-
-    public void stopAndResetEncoder() {
-        robot.backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void setTargetPosition(int distance) {
-        robot.backLeft.setTargetPosition(distance);
-        robot.backRight.setTargetPosition(distance);
-        robot.frontLeft.setTargetPosition(distance);
-        robot.frontRight.setTargetPosition(distance);
-    }
-
-    public void runToPosition() {
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    public void busy() {
-        while (robot.backLeft.isBusy() && robot.backRight.isBusy() && robot.frontRight.isBusy() && robot.frontLeft.isBusy()) {
-            telemetry.addLine("Driving");
-        }
-    }
-
-    public void runUsingEncoder() {
-        robot.backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void getEncoderDrivingTarget(int distance) {
-        rotationsNeeded = distance / circumference;
-        encoderDrivingTarget = (int) (rotationsNeeded * MOTOR_TICK_COUNTS);
-    }
-
-
-    /**
-     * ENCODER METHODS
-     */
-    public void driveOrReverseEncoder(double power, int distance) {
-
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        driveOrReverse(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();  // may need to comment out?
-    }
-
-    public void strafeLeftEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        strafeLeft(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void strafeRightEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        strafeRight(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void rotateClockwiseEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        rotateClockwise(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void rotateCounterClockwiseEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        rotateCounterClockwise(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void intake() {
-        robot.armLeft.setPosition(.481000000000002);
-        robot.armRight.setPosition(.12799999);
-    }
-
-    public void outtake() {
-        robot.armLeft.setPosition(0.13099999999999999);
-        robot.armRight.setPosition(0.478000000000001);
-    }
 }
