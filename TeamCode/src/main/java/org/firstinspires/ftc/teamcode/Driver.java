@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Driver {
 
-    HardwarePushbot hardware = new HardwarePushbot();
+    private HardwarePushbot hardware;
 
     private static final int MOTOR_TICK_COUNTS = 1120;
     private static final double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
@@ -12,8 +12,8 @@ public class Driver {
     private double rotationsNeeded;
     private int encoderDrivingTarget;
 
-    public Driver() {
-
+    public Driver(HardwarePushbot hwmap) {
+        hardware = hwmap;
     }
 
     public void driveOrReverse(double power) {

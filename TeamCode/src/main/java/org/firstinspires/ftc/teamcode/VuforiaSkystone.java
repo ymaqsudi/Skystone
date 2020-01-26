@@ -105,7 +105,7 @@ public class VuforiaSkystone extends LinearOpMode {
 
 
     HardwarePushbot hardware = new HardwarePushbot();
-    Driver robot = new Driver();
+    Driver robot = new Driver(hardware);
 
 
     @Override

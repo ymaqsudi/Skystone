@@ -27,7 +27,7 @@ public class AutoTest extends LinearOpMode {
 //    private double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
 
     HardwarePushbot hardware = new HardwarePushbot();
-    Driver robot = new Driver();
+    Driver robot = new Driver(hardware);
 
 
     @Override

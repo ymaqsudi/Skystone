@@ -12,7 +12,7 @@ public class ControllerCode extends LinearOpMode {
 
     HardwarePushbot hardware = new HardwarePushbot();
 
-    Driver robot = new Driver();
+    private Driver robot;
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -20,6 +20,7 @@ public class ControllerCode extends LinearOpMode {
     @Override
     public void runOpMode() {
         hardware.init(hardwareMap);
+        robot= new Driver(hardware);
 
         telemetry.addData("Status", "Initialized");
 
