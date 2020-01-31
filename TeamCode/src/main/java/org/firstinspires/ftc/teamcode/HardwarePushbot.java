@@ -21,13 +21,11 @@ public class HardwarePushbot
     public DcMotor frontLeft;
     public DcMotor frontRight;
 
-//    public Servo intakeServo;
+    public Servo intakeXLeft;
+    public Servo intakeXRight;
 
-
-
-
-
-    public DcMotor linearLift1, linearLift2;
+    public Servo intakeYLeft;
+    public Servo intakeYRight;
 
 
 
@@ -46,22 +44,18 @@ public class HardwarePushbot
         frontLeft  = hwMap.get(DcMotor.class, "frontLeft");
         frontRight = hwMap.get(DcMotor.class, "frontRight");
 
-//        intakeServo = hwMap.get(Servo.class, "intakeServo");
+        intakeXLeft = hwMap.get(Servo.class, "xLeft");
+        intakeXRight = hwMap.get(Servo.class, "xRight");
 
-        linearLift1 = hwMap.get (DcMotor.class, "linearLift1");
-        linearLift2 = hwMap.get (DcMotor.class, "linearLift2");
-
+        intakeYLeft = hwMap.get(Servo.class, "yLeft");
+        intakeYRight = hwMap.get(Servo.class, "yRight");
 
 
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
 
-//        intakeServo.setDirection(Servo.Direction.FORWARD);
-
-        linearLift1.setDirection(DcMotor.Direction.REVERSE);
-        linearLift2.setDirection(DcMotor.Direction.FORWARD);
 
         frontLeft.setPower(0);
         backRight.setPower(0);

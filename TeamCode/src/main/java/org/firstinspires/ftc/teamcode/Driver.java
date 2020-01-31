@@ -12,8 +12,7 @@ public class Driver {
     private double rotationsNeeded;
     private int encoderDrivingTarget;
 
-    public Driver(HardwarePushbot hwmap) {
-        hardware = hwmap;
+    public Driver() {
     }
 
     public void driveOrReverse(double power) {

@@ -17,10 +17,11 @@ public class ControllerCode extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
 
+
     @Override
     public void runOpMode() {
         hardware.init(hardwareMap);
-        robot= new Driver(hardware);
+        robot = new Driver();
 
         telemetry.addData("Status", "Initialized");
 
@@ -31,9 +32,15 @@ public class ControllerCode extends LinearOpMode {
 
         runtime.reset();
 
+        init();
+
+        telemetry.addData("Left Servo: ", hardware.intakeXLeft.getPosition());
+
+
 
 
         while (opModeIsActive()) {
+
 
 
             double FrontLeftVal =  gamepad1.left_stick_y - (gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
@@ -41,12 +48,10 @@ public class ControllerCode extends LinearOpMode {
             double BackLeftVal = gamepad1.left_stick_y  + (gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
             double BackRightVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) - -gamepad1.right_stick_x;
 
-            double linearLiftVal = gamepad1.left_trigger;
-            double linearLiftVal2 = -gamepad1.right_trigger;
 
 
 
-            double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal, linearLiftVal, linearLiftVal2};
+            double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal};
             Arrays.sort(wheelPowers);
             if (wheelPowers[3] > 1) {
                 FrontLeftVal /= wheelPowers[3];
@@ -54,29 +59,29 @@ public class ControllerCode extends LinearOpMode {
                 BackLeftVal /= wheelPowers[3];
                 BackRightVal /= wheelPowers[3];
 
-                linearLiftVal /= wheelPowers[3];
-                linearLiftVal2 /= wheelPowers[3];
             }
 
-            hardware.frontLeft.setPower(FrontLeftVal/2);
-            hardware.frontRight.setPower(FrontRightVal/2);
-            hardware.backLeft.setPower(BackLeftVal/2);
-            hardware.backRight.setPower(BackRightVal/2);
+            hardware.frontLeft.setPower(FrontLeftVal/3);
+            hardware.frontRight.setPower(FrontRightVal/3);
+            hardware.backLeft.setPower(BackLeftVal/3);
+            hardware.backRight.setPower(BackRightVal/3);
 
-            hardware.linearLift1.setPower(linearLiftVal/3);
-            hardware.linearLift2.setPower(linearLiftVal/3);
 
-            hardware.linearLift1.setPower(linearLiftVal2/3);
-            hardware.linearLift2.setPower(linearLiftVal2/3);
+            hardware.intakeXLeft.setPosition(gamepad1.left_trigger);
+
+
+
+
+
+
+
 
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Left Pos: ", hardware.intakeXLeft.getPosition());
+            telemetry.addData("Right Pos: ", hardware.intakeXRight.getPosition());
             telemetry.update();
 
-
-
         }
-
-
     }
 }

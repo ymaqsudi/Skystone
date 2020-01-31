@@ -11,55 +11,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Autonomous(name="Briananomous", group="Linear Opmode")
 public class AutoTest extends LinearOpMode {
 
-//    // Declare OpMode members.
-//    private DcMotor backLeft;
-//    private DcMotor backRight;
-//    private DcMotor frontLeft;
-//    private DcMotor frontRight;
-//
-//    private Servo armRight;
-//    private Servo armLeft;
-//
-//    private CRServo handRight;
-//    private CRServo handLeft;
-//
-//    static final int MOTOR_TICK_COUNTS = 1120;
-//    private double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
-
     HardwarePushbot hardware = new HardwarePushbot();
-    Driver robot = new Driver(hardware);
+    private Driver robot = new Driver();
 
 
     @Override
     public void runOpMode() {
-        hardware.init(hardwareMap);
+        hardware.init(hardwareMap);  // initialize hardware map and set up robot object
 
-//        backLeft = hardwareMap.dcMotor.get("backLeft");
-//        backRight = hardwareMap.dcMotor.get("backRight");
-//        frontLeft = hardwareMap.dcMotor.get("frontLeft");
-//        frontRight = hardwareMap.dcMotor.get("frontRight");
-//
-//        armRight = hardwareMap.get(Servo.class, "armRight");
-//        armLeft = hardwareMap.get(Servo.class, "armLeft");
-//        handRight = hardwareMap.get(CRServo.class, "handRight");
-//        handLeft = hardwareMap.get(CRServo.class, "handLeft");
-//
-//        //   colorSensor = hardwareMap.get(ColorSensor.class, "colorSensor");
-//
-//        // Set motor direction
-//        backLeft.setDirection(DcMotor.Direction.REVERSE);
-//        backRight.setDirection(DcMotor.Direction.FORWARD);
-//        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-//        frontRight.setDirection(DcMotor.Direction.FORWARD);
-//
-//        // set right motor to run with an encoder.
-//        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-
-        // Run until the end of the match (driver presses STOP)
 
         waitForStart();
 
