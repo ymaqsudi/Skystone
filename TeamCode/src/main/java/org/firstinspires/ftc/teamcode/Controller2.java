@@ -86,10 +86,11 @@ public class Controller2 extends LinearOpMode {
 
 
         intakeYLeftPos = 1;
-        intakeYRightPos = 0;
 
-        intakeXLeftPos = .5;
-        intakeXRightPos = .6;
+        intakeYRightPos = 0.168999;
+
+        intakeXLeftPos = .577;
+        intakeXRightPos = .571;
 
         waitForStart();
         runtime.reset();
@@ -114,35 +115,70 @@ public class Controller2 extends LinearOpMode {
 
             }
 
-            frontLeft.setPower(FrontLeftVal/3);
-            frontRight.setPower(FrontRightVal/3);
-            backLeft.setPower(BackLeftVal/3);
-            backRight.setPower(BackRightVal/3);
+            frontLeft.setPower(FrontLeftVal/2);
+            frontRight.setPower(FrontRightVal/2);
+            backLeft.setPower(BackLeftVal/2);
+            backRight.setPower(BackRightVal/2);
 
 
-            // pressing b button will lift the servos to the appropriate height of a 1 block stack
-            if (gamepad1.b) {
-                intakeYRightPos = 0.35;
-                intakeYLeftPos = 0.8;
+            // left x - 0.973
+            // right x - 0.45999
+            // left y - 1.0
+            // right y - 0.1570
+
+            // intake
+            if (gamepad1.left_bumper) {
+                intakeXLeftPos = 0.973;
+                intakeXRightPos = 0.45999;
+                intakeYLeftPos = 1.0;
+                intakeYRightPos = 0.1570;
             }
 
-            // pressing dpad up will intake a block
-            if (gamepad1.dpad_up) {
-                intakeXRightPos = 0.4;
-                intakeXLeftPos = 1;
-            }
-
-            // pressing dpad down will return the servos to their original x position
-            if (gamepad1.dpad_down) {
-                intakeXRightPos = 0.6;
-                intakeXLeftPos = 0.5;
-            }
-
-            // pressing a button will return servos to their original y position
-            if (gamepad1.a) {
+            // outtake
+            if (gamepad1.right_bumper) {
                 intakeYLeftPos = 1;
-                intakeYRightPos = 0;
+                intakeYRightPos = 0.168999;
+                intakeXLeftPos = .577;
+                intakeXRightPos = .571;
             }
+
+            // up on servo arms
+            if (gamepad1.a) {
+                intakeYLeftPos -= 0.001;
+                intakeYRightPos += 0.001;
+            }
+
+            // down on servo arms
+            if (gamepad1.b) {
+                intakeYLeftPos += 0.001;
+                intakeYRightPos -= 0.001;
+            }
+
+
+
+//            if (gamepad1.a)
+//                intakeXLeftPos += 0.001;
+//
+//            if (gamepad1.dpad_up)
+//                intakeXLeftPos -= 0.001;
+//
+//            if (gamepad1.b)
+//                intakeXRightPos += 0.001;
+//
+//            if (gamepad1.dpad_down)
+//                intakeXRightPos -= 0.001;
+//
+//            if (gamepad1.x)
+//                intakeYLeftPos += 0.001;
+//
+//            if (gamepad1.dpad_left)
+//                intakeYLeftPos -= 0.001;
+//
+//            if (gamepad1.y)
+//                intakeYRightPos += 0.001;
+//
+//            if (gamepad1.dpad_right)
+//                intakeYRightPos -= 0.001;
 
             intakeXLeft.setPosition(intakeXLeftPos);
             intakeXRight.setPosition(intakeXRightPos);

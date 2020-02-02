@@ -5,10 +5,11 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="TEST ENCODER DRIVE", group="Linear Opmode")
+@Autonomous(name="RUN THIS ONE", group="Linear Opmode")
 
 public class testEncoderDrive extends LinearOpMode {
 
@@ -17,15 +18,17 @@ public class testEncoderDrive extends LinearOpMode {
     public DcMotor frontLeft;
     public DcMotor frontRight;
 
-    public Servo intake;
+    public Servo intakeXLeft;
+    public Servo intakeXRight;
 
-    public DcMotor linearLift1, linearLift2;
+    public Servo intakeYLeft;
+    public Servo intakeYRight;
 
-    private static final int MOTOR_TICK_COUNTS = 1120;
-    private static final double circumference = 3.141592653589793238462643383 * 4;   // PI * diameter
+    double intakeXLeftPos;
+    double intakeXRightPos;
 
-    private double rotationsNeeded;
-    private int encoderDrivingTarget;
+    double intakeYLeftPos;
+    double intakeYRightPos;
     
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -33,29 +36,25 @@ public class testEncoderDrive extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
-        frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
 //        intakeServo = hwMap.get(Servo.class, "intakeServo");
 
-        linearLift1 = hardwareMap.get (DcMotor.class, "linearLift1");
-        linearLift2 = hardwareMap.get (DcMotor.class, "linearLift2");
 
-        intake = hardwareMap.get (Servo.class, "intake");
+        intakeXLeft = hardwareMap.get(Servo.class, "xLeft");
+        intakeXRight = hardwareMap.get(Servo.class, "xRight");
 
+        intakeYLeft = hardwareMap.get(Servo.class, "yLeft");
+        intakeYRight = hardwareMap.get(Servo.class, "yRight");
 
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
 
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-
-//        intakeServo.setDirection(Servo.Direction.FORWARD);
-
-        linearLift1.setDirection(DcMotor.Direction.REVERSE);
-        linearLift2.setDirection(DcMotor.Direction.FORWARD);
 
         frontLeft.setPower(0);
         backRight.setPower(0);
@@ -67,17 +66,129 @@ public class testEncoderDrive extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        
-        linearLift2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         waitForStart();
 
         runtime.reset();
 
 
+
         waitForStart();
 
-        linearLiftMotor2Forward(.01, 6);
+        telemetry.addData("Mode", "Start");
+
+
+        intakeYLeftPos = 1;
+
+        intakeYRightPos = 0.168999;
+
+        intakeXLeftPos = .577;
+        intakeXRightPos = .571;
+
+        intakeYRight.setPosition(intakeYRightPos);
+        intakeYLeft.setPosition(intakeYLeftPos);
+        intakeXRight.setPosition(intakeXRightPos);
+        intakeXLeft.setPosition(intakeXLeftPos);
+
+        sleep(3000);
+
+        driveOrReverse(.25);    // 72 inches forward
+        sleep(2000);
+        stopDriving();
+
+        intake();
+        sleep(500);
+
+        driveOrReverse(-.25);
+        sleep(333);
+
+        rotateClockwise(.33);
+        sleep(2000);
+        stopDriving();
+
+        driveOrReverse(.25);    // 168 inches forward
+        sleep(4567);
+        stopDriving();
+
+        outtake();
+        sleep(500);
+
+
+//
+//        outtake();  // sets arms to outtake "starting" position
+//
+//        driveOrReverse(.25);   // goes forward for 48 inches
+//        sleep(706);
+//        stopDriving();
+//
+//        intake();       // intakes center block
+//        sleep(500);
+//
+//        intakeYLeft.setPosition(0.89599);
+//        intakeYRight.setPosition(0.2610000);
+//
+//        driveOrReverse(-.125);  // goes backward for 12 inches
+//        sleep(800);
+//        stopDriving();
+
+//
+//        rotateClockwise(.33);
+//        sleep(1900);
+//        stopDriving();
+//
+//        driveOrReverse(.125);
+//        sleep(11407);
+//        // sleep(13145);
+//        stopDriving();
+//
+//        rotateCounterClockwise(.25);
+//        sleep(2000);
+//        stopDriving();
+//
+//        outtake();
+//        sleep(1000);
+
+        //outtake();
+
+
+    }
+
+    public void up() {
+        intakeYRightPos = 0.2610000;
+        intakeYLeftPos = 0.89599;
+
+        intakeYRight.setPosition(intakeYRightPos);
+        intakeYLeft.setPosition(intakeYLeftPos);
+    }
+
+    public void outtake() {
+        intakeYLeftPos = 1;
+        intakeYRightPos = 0.168999;
+
+        intakeXLeftPos = .577;
+        intakeXRightPos = .571;
+
+        intakeXLeft.setPosition(intakeXLeftPos);
+        intakeXRight.setPosition(intakeXRightPos);
+
+        intakeYLeft.setPosition(intakeYLeftPos);
+        intakeYRight.setPosition(intakeYRightPos);
+    }
+
+    public void intake() {
+        intakeXLeftPos = 0.973;
+        intakeXRightPos = 0.45999;
+        
+        intakeYLeftPos = 1.0;
+        intakeYRightPos = 0.1570;
+
+
+        intakeXLeft.setPosition(intakeXLeftPos);
+        intakeXRight.setPosition(intakeXRightPos);
+
+        intakeYLeft.setPosition(intakeYLeftPos);
+        intakeYRight.setPosition(intakeYRightPos);
     }
 
     public void driveOrReverse(double power) {
@@ -115,192 +226,9 @@ public class testEncoderDrive extends LinearOpMode {
         frontRight.setPower(power);
     }
 
-
-    /**
-     * Primitive Encoder methods
-     */
-
-    public void stopDriving() {
+        public void stopDriving() {
         driveOrReverse(0);
     }
 
-    public void stopAndResetEncoder() {
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-    }
-
-    public void setTargetPosition (int distance) {
-        backLeft.setTargetPosition(distance);
-        backRight.setTargetPosition(distance);
-        frontLeft.setTargetPosition(distance);
-        frontRight.setTargetPosition(distance);
-    }
-
-    public void runToPosition() {
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    public void busy() {
-        while (backLeft.isBusy() && backRight.isBusy() && frontRight.isBusy() && frontLeft.isBusy()) {
-        }
-    }
-
-    public void runUsingEncoder() {
-        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void getEncoderDrivingTarget(int distance) {
-        rotationsNeeded = distance/circumference;
-        encoderDrivingTarget = (int) (rotationsNeeded * MOTOR_TICK_COUNTS);
-    }
-
-
-    /**
-     * ENCODER METHODS
-     */
-    public void driveOrReverseEncoder(double power, int distance) {
-
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        driveOrReverse(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();  // may need to comment out?
-    }
-
-    public void linearLiftMotor2Forward(double power, int distance) {
-
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        linearLift2.setPower(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void strafeLeftEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        strafeLeft(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void strafeRightEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        strafeRight(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void rotateClockwiseEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        rotateClockwise(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void rotateCounterClockwiseEncoder(double power, int distance) {
-        getEncoderDrivingTarget(distance);
-
-        stopAndResetEncoder();
-
-        setTargetPosition(encoderDrivingTarget);
-
-        rotateCounterClockwise(power);
-
-        runToPosition();
-
-        busy();
-
-        stopDriving();
-
-        runUsingEncoder();
-    }
-
-    public void rightSkystonePos() {
-        strafeLeftEncoder(.01, 6);
-
-        driveOrReverseEncoder(.01, 48);
-
-        //intake();
-
-        driveOrReverseEncoder(-.01, 18);
-
-        strafeLeftEncoder(.01, 96);
-
-        //outtake();
-    }
-
-    public void centerSkystonePos() {
-
-        driveOrReverseEncoder(.01, 48);
-
-        // intake();
-
-        driveOrReverseEncoder(-.01, 18);
-
-        strafeLeftEncoder(.01, 96);
-
-        //outtake();
-    }
 
 }

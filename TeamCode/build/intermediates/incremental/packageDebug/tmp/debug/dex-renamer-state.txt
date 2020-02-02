@@ -1,4 +1,4 @@
-#Thu Jan 30 21:31:32 EST 2020
-base.0=/Users/Yaseen/Desktop/repositories/HHSRobotics/TeamCode/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+#Sat Feb 01 16:32:46 EST 2020
+base.0=C\:\\Users\\HHS Robotics\\StudioProjects\\HHSRobotics\\TeamCode\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
