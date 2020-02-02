@@ -90,7 +90,10 @@ public class TESTAUTONOMOUS extends LinearOpMode {
 
 
         driveOrReverseEncoder(.1, 1);
-
+        telemetry.addData("Back Left", backLeft.getCurrentPosition());
+        telemetry.addData("Back Right", backRight.getCurrentPosition());
+        telemetry.addData("Front Left", frontLeft.getCurrentPosition());
+        telemetry.addData("Front Right", frontRight.getCurrentPosition());
 
     }
 
