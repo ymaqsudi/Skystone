@@ -105,7 +105,6 @@ public class VuforiaSkystone extends LinearOpMode {
 
 
     HardwarePushbot hardware = new HardwarePushbot();
-    Driver robot = new Driver();
 
 
     @Override
@@ -290,6 +289,14 @@ public class VuforiaSkystone extends LinearOpMode {
         // Tap the preview window to receive a fresh image.
 
         targetsSkyStone.activate();
+
+        //Turn the flash on
+        com.vuforia.CameraDevice.getInstance().setFlashTorchMode(true);
+
+        //Set zoom of the camera
+        com.vuforia.CameraDevice.getInstance().setField("opti-zoom", "opti-zoom-on");
+        com.vuforia.CameraDevice.getInstance().setField("zoom", "30");
+
         while (!isStopRequested()) {
 
             // check all the trackable targets to see which one (if any) is visible.
@@ -395,7 +402,10 @@ public class VuforiaSkystone extends LinearOpMode {
         }
 
         // Disable Tracking when we are done;
+        com.vuforia.CameraDevice.getInstance().setFlashTorchMode(false);
+
         targetsSkyStone.deactivate();
+        //Turn the flash on
     }
 
 

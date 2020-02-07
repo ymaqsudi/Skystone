@@ -44,16 +44,8 @@ public class Controller2 extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    public DcMotor backLeft;
-    public DcMotor backRight;
-    public DcMotor frontLeft;
-    public DcMotor frontRight;
+    HardwarePushbot hardware = new HardwarePushbot();
 
-    public Servo intakeXLeft;
-    public Servo intakeXRight;
-
-    public Servo intakeYLeft;
-    public Servo intakeYRight;
 
     double intakeXLeftPos;
     double intakeXRightPos;
@@ -63,44 +55,29 @@ public class Controller2 extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        hardware.init(hardwareMap);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
-        backLeft  = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        frontLeft  = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-
-        intakeXLeft = hardwareMap.get(Servo.class, "xLeft");
-        intakeXRight = hardwareMap.get(Servo.class, "xRight");
-
-        intakeYLeft = hardwareMap.get(Servo.class, "yLeft");
-        intakeYRight = hardwareMap.get(Servo.class, "yRight");
-
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-
-        telemetry.addData("left servo pos: ", intakeXLeft.getPosition());
 
 
         intakeYLeftPos = 1;
 
-        intakeYRightPos = 0.168999;
+        intakeYRightPos = 0.178999;
 
         intakeXLeftPos = .577;
         intakeXRightPos = .571;
 
         waitForStart();
+
         runtime.reset();
 
         while (opModeIsActive()) {
 
-            double FrontLeftVal =  gamepad1.left_stick_y - (gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
-            double FrontRightVal =  gamepad1.left_stick_y  + (gamepad1.left_stick_x) - -gamepad1.right_stick_x;
-            double BackLeftVal = gamepad1.left_stick_y  + (gamepad1.left_stick_x)  + -gamepad1.right_stick_x;
-            double BackRightVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) - -gamepad1.right_stick_x;
+            double FrontLeftVal =  gamepad1.left_stick_y - (gamepad1.left_stick_x)  + -gamepad1.right_stick_x + gamepad2.left_stick_y - gamepad2.left_stick_x + -gamepad2.right_stick_x;
+            double FrontRightVal =  gamepad1.left_stick_y  + (gamepad1.left_stick_x) - -gamepad1.right_stick_x + gamepad2.left_stick_y + gamepad2.left_stick_x - -gamepad2.right_stick_x;
+            double BackLeftVal = gamepad1.left_stick_y  + (gamepad1.left_stick_x)  + -gamepad1.right_stick_x + gamepad2.left_stick_y + gamepad2.left_stick_x + -gamepad2.right_stick_x;
+            double BackRightVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) - -gamepad1.right_stick_x + gamepad2.left_stick_y - gamepad2.left_stick_x - -gamepad2.right_stick_x;
 
 
 
@@ -115,88 +92,57 @@ public class Controller2 extends LinearOpMode {
 
             }
 
-            frontLeft.setPower(FrontLeftVal/2);
-            frontRight.setPower(FrontRightVal/2);
-            backLeft.setPower(BackLeftVal/2);
-            backRight.setPower(BackRightVal/2);
+            hardware.frontLeft.setPower(FrontLeftVal/2);
+            hardware.frontRight.setPower(FrontRightVal/2);
+            hardware.backLeft.setPower(BackLeftVal/2);
+            hardware.backRight.setPower(BackRightVal/2);
 
-
-            // left x - 0.973
-            // right x - 0.45999
-            // left y - 1.0
-            // right y - 0.1570
 
             // intake
-            if (gamepad1.left_bumper) {
-                intakeXLeftPos = 0.973;
-                intakeXRightPos = 0.45999;
+            if ((gamepad1.right_trigger > 0.5) || gamepad2.right_trigger > 0.5) {
+                intakeXLeftPos = 0.668;
+                intakeXRightPos = 0.391999;
                 intakeYLeftPos = 1.0;
                 intakeYRightPos = 0.1570;
             }
 
             // outtake
-            if (gamepad1.right_bumper) {
+            if ((gamepad1.left_trigger > 0.5) || gamepad2.left_trigger > 0.5) {
                 intakeYLeftPos = 1;
                 intakeYRightPos = 0.168999;
                 intakeXLeftPos = .577;
                 intakeXRightPos = .571;
             }
 
+
             // up on servo arms
-            if (gamepad1.a) {
+            if (gamepad1.a || gamepad2.a) {
                 intakeYLeftPos -= 0.001;
                 intakeYRightPos += 0.001;
             }
 
             // down on servo arms
-            if (gamepad1.b) {
+            if (gamepad1.b || gamepad2.b) {
                 intakeYLeftPos += 0.001;
                 intakeYRightPos -= 0.001;
             }
 
+            // sets servo positions = servoPos variable
+            hardware.intakeXLeft.setPosition(intakeXLeftPos);
+            hardware.intakeXRight.setPosition(intakeXRightPos);
 
-
-//            if (gamepad1.a)
-//                intakeXLeftPos += 0.001;
-//
-//            if (gamepad1.dpad_up)
-//                intakeXLeftPos -= 0.001;
-//
-//            if (gamepad1.b)
-//                intakeXRightPos += 0.001;
-//
-//            if (gamepad1.dpad_down)
-//                intakeXRightPos -= 0.001;
-//
-//            if (gamepad1.x)
-//                intakeYLeftPos += 0.001;
-//
-//            if (gamepad1.dpad_left)
-//                intakeYLeftPos -= 0.001;
-//
-//            if (gamepad1.y)
-//                intakeYRightPos += 0.001;
-//
-//            if (gamepad1.dpad_right)
-//                intakeYRightPos -= 0.001;
-
-            intakeXLeft.setPosition(intakeXLeftPos);
-            intakeXRight.setPosition(intakeXRightPos);
-
-            intakeYLeft.setPosition(intakeYLeftPos);
-            intakeYRight.setPosition(intakeYRightPos);
+            hardware.intakeYLeft.setPosition(intakeYLeftPos);
+            hardware.intakeYRight.setPosition(intakeYRightPos);
 
 
 
 
-
-
-
+            // information to print to the phones
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Left X Pos: ", intakeXLeft.getPosition());
-            telemetry.addData("Right X Pos: ", intakeXRight.getPosition());
-            telemetry.addData("Left Y Pos: ", intakeYLeft.getPosition());
-            telemetry.addData("Right Y Pos: ", intakeYRight.getPosition());
+            telemetry.addData("Left X Pos: ", hardware.intakeXLeft.getPosition());
+            telemetry.addData("Right X Pos: ", hardware.intakeXRight.getPosition());
+            telemetry.addData("Left Y Pos: ", hardware.intakeYLeft.getPosition());
+            telemetry.addData("Right Y Pos: ", hardware.intakeYRight.getPosition());
             telemetry.update();
 
         }
