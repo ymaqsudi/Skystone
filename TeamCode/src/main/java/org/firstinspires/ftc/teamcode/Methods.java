@@ -2,10 +2,10 @@ package org.firstinspires.ftc.teamcode;
 
 public class Methods {
 
-    HardwarePushbot hardware = new HardwarePushbot();
+    HardwarePushbot hardware;
 
-    public Methods() {
-
+    public Methods(HardwarePushbot hw) {
+        hardware = hw;
     }
 
     public void driveOrReverse(double power) {

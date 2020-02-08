@@ -56,7 +56,6 @@ public class HardwarePushbot
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.REVERSE);
 
-
         frontLeft.setPower(0);
         backRight.setPower(0);
         backLeft.setPower(0);

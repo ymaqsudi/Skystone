@@ -21,10 +21,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
+import java.lang.Math;
+
 @Autonomous(name="IMU TEST", group="Linear Opmode")
 //@Disabled
-public class GyroTest extends LinearOpMode
-{
+public class GyroTest extends LinearOpMode {
 
     BNO055IMU imu;
 
@@ -38,7 +39,7 @@ public class GyroTest extends LinearOpMode
     boolean bButton = gamepad1.b;
 
     HardwarePushbot hardware = new HardwarePushbot();
-    Methods robot = new Methods();
+    Methods robot = new Methods(hardware);
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -49,7 +50,7 @@ public class GyroTest extends LinearOpMode
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
         parameters.mode                = BNO055IMU.SensorMode.IMU;
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.RADIANS;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.loggingEnabled      = false;
 
@@ -64,8 +65,7 @@ public class GyroTest extends LinearOpMode
         telemetry.update();
 
         // make sure the imu gyro is calibrated before continuing.
-        while (!isStopRequested() && !imu.isGyroCalibrated())
-        {
+        while (!isStopRequested() && !imu.isGyroCalibrated()) {
             sleep(50);
             idle();
         }
@@ -85,8 +85,7 @@ public class GyroTest extends LinearOpMode
 
         // drive until end of period.
 
-        while (opModeIsActive())
-        {
+        while (opModeIsActive()) {
             // Use gyro to drive in a straight line.
             correction = checkDirection();
 
@@ -101,8 +100,7 @@ public class GyroTest extends LinearOpMode
 
 
 
-            if (aButton || bButton)
-            {
+            if (aButton || bButton) {
                 // backup.
 
                 robot.driveOrReverse(-power);
@@ -112,11 +110,11 @@ public class GyroTest extends LinearOpMode
                 // stop.
                 robot.stopDriving();
 
-                // turn 90 degrees right.
-                if (aButton) rotate(-90, power);
+                // turn PI/2 radians right.
+                if (aButton) rotate(-(int)(3.14/2), power);
 
-                // turn 90 degrees left.
-                if (bButton) rotate(90, power);
+                // turn PI/2 radians left.
+                if (bButton) rotate((int)(3.14/2), power);
             }
         }
 
@@ -127,9 +125,8 @@ public class GyroTest extends LinearOpMode
     /**
      * Resets the cumulative angle tracking to zero.
      */
-    private void resetAngle()
-    {
-        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+    private void resetAngle() {
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
         globalAngle = 0;
     }
@@ -138,22 +135,21 @@ public class GyroTest extends LinearOpMode
      * Get current cumulative angle rotation from last reset.
      * @return Angle in degrees. + = left, - = right.
      */
-    private double getAngle()
-    {
+    private double getAngle() {
         // We experimentally determined the Z axis is the axis we want to use for heading angle.
         // We have to process the angle because the imu works in euler angles so the Z axis is
         // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
         // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
         // Basically we can't measure anything > 180 degrees
 
-        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
 
         double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
 
-        if (deltaAngle < -180)
-            deltaAngle += 360;
-        else if (deltaAngle > 180)
-            deltaAngle -= 360;
+        if (deltaAngle < -3.14)
+            deltaAngle += (2*3.14);
+        else if (deltaAngle > 3.14)
+            deltaAngle -= (2*3.14);
 
         globalAngle += deltaAngle;
 
@@ -166,8 +162,7 @@ public class GyroTest extends LinearOpMode
      * See if we are moving in a straight line and if not return a power correction value.
      * @return Power adjustment, + is adjust left - is adjust right.
      */
-    private double checkDirection()
-    {
+    private double checkDirection() {
         // The gain value determines how sensitive the correction is to direction changes.
 
         double correction, angle, gain = .10;
@@ -186,11 +181,10 @@ public class GyroTest extends LinearOpMode
 
     /**
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
-     * @param degrees Degrees to turn, + is left - is right
+     * @param radians Radians to turn, + is left - is right
      * There is no need
      */
-    private void rotate(int degrees, double power)
-    {
+    private void rotate(int radians, double power) {
         double  leftPower, rightPower;
 
         // restart imu movement tracking.
@@ -199,13 +193,11 @@ public class GyroTest extends LinearOpMode
         // getAngle() returns + when rotating counter clockwise (left) and - when rotating
         // clockwise (right).
 
-        if (degrees < 0)
-        {   // turn right.
+        if (radians < 0) {   // turn right.
             leftPower = power;
             rightPower = -power;
         }
-        else if (degrees > 0)
-        {   // turn left.
+        else if (radians > 0) {   // turn left.
             leftPower = -power;
             rightPower = power;
         }
@@ -217,15 +209,14 @@ public class GyroTest extends LinearOpMode
         robot.rightPower(rightPower);
 
         // rotate until turn is completed.
-        if (degrees < 0)
-        {
+        if (radians < 0) {
             // On right turn we have to get off zero first.
             while (opModeIsActive() && getAngle() == 0) {}
 
-            while (opModeIsActive() && getAngle() > degrees) {}
+            while (opModeIsActive() && getAngle() > radians) {}
         }
         else    // left turn.
-            while (opModeIsActive() && getAngle() < degrees) {}
+            while (opModeIsActive() && getAngle() < radians) {}
 
         // turn the motors off.
         robot.stopDriving();

@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * auto code without having the field, as it can be done using inch values
  */
 
-@Autonomous(name="Auto Encoder", group="Linear Opmode")
+@Autonomous(name="Independent Self-Governing Labor Union Solidarity by Lech Walesa in Poland", group="Linear Opmode")
 
 public class Auto2 extends LinearOpMode {
 
@@ -34,9 +34,7 @@ public class Auto2 extends LinearOpMode {
 
 
     HardwarePushbot hardware = new HardwarePushbot();
-    Methods robot = new Methods();
-
-
+    Methods robot = new Methods(hardware);
 
     @Override
     public void runOpMode() {
@@ -77,9 +75,9 @@ public class Auto2 extends LinearOpMode {
         hardware.frontLeft.setTargetPosition(encoderDrivingTarget);
         hardware.frontRight.setTargetPosition(encoderDrivingTarget);
 
-        hardware.backLeft.setPower(0.5);
+        hardware.backLeft.setPower(-0.5);
         hardware.backRight.setPower(0.5);
-        hardware.frontLeft.setPower(0.5);
+        hardware.frontLeft.setPower(-0.5);
         hardware.frontRight.setPower(0.5);
 
         hardware.backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);

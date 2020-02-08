@@ -31,7 +31,7 @@ public class Auto extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
     HardwarePushbot hardware = new HardwarePushbot();
-    Methods robot = new Methods();
+    Methods robot = new Methods(hardware);
 
 
     @Override

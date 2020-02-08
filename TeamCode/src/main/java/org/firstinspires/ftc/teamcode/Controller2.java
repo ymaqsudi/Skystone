@@ -39,7 +39,7 @@ import com.qualcomm.robotcore.util.Range;
 import java.util.Arrays;
 
 
-@TeleOp(name="Competition", group="Linear Opmode")
+@TeleOp(name="Competition")
 public class Controller2 extends LinearOpMode {
 
     // Declare OpMode members.
