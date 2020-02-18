@@ -67,7 +67,7 @@ public class Auto extends LinearOpMode {
         sleep(2000);
 
         // stops all movement of motors
-        robot.stopDriving();
+        robot.stopMotors();
 
 
     }
