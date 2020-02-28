@@ -83,27 +83,13 @@ public class Controller2 extends LinearOpMode {
             hardware.backLeft.setPower(BackLeftVal/2);
             hardware.backRight.setPower(BackRightVal/2);
 
-            if (gamepad1.left_trigger > 0.5 || gamepad2.left_trigger > 0.5) {
-                hardware.firstLiftMotorOne.setPower(0.3);
-                hardware.firstLiftMotorTwo.setPower(0.3);
-                hardware.secondLiftMotorOne.setPower(0.3);
-            }
 
-            if (gamepad1.right_trigger > 0.5 || gamepad2.right_trigger > 0.5) {
-                hardware.firstLiftMotorOne.setPower(-0.3);
-                hardware.firstLiftMotorTwo.setPower(-0.3);
-                hardware.secondLiftMotorOne.setPower(-0.3);
-            }
+            hardware.firstLiftMotorOne.setPower((gamepad1.left_trigger - gamepad1.right_trigger) / 2);
+            hardware.firstLiftMotorTwo.setPower((gamepad1.left_trigger - gamepad1.right_trigger) / 2);
+            hardware.secondLiftMotorOne.setPower((gamepad1.left_trigger - gamepad1.right_trigger) /2);
 
-            if (gamepad1.a || gamepad2.a) {
-                hardware.intake.setPosition(1); // grabs block
-            }
 
-            if (gamepad1.b || gamepad2.b) {
-                hardware.intake.setPosition(0.6);
-            }
 
-            hardware.intake.setPosition(intakeServoPos);
 
 
 

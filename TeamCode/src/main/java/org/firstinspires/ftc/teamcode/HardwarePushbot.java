@@ -60,9 +60,9 @@ public class HardwarePushbot
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
 
-        firstLiftMotorOne.setDirection(DcMotor.Direction.FORWARD);
-        firstLiftMotorTwo.setDirection(DcMotor.Direction.FORWARD);
-        secondLiftMotorOne.setDirection(DcMotor.Direction.REVERSE);
+        firstLiftMotorOne.setDirection(DcMotor.Direction.REVERSE);
+        firstLiftMotorTwo.setDirection(DcMotor.Direction.REVERSE);
+        secondLiftMotorOne.setDirection(DcMotor.Direction.FORWARD);
 
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
