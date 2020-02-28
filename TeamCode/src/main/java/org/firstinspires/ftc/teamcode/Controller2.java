@@ -46,12 +46,7 @@ public class Controller2 extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     HardwarePushbot hardware = new HardwarePushbot();
 
-
-    double intakeXLeftPos;
-    double intakeXRightPos;
-
-    double intakeYLeftPos;
-    double intakeYRightPos;
+    private double intakeServoPos;
 
     @Override
     public void runOpMode() {
@@ -60,13 +55,7 @@ public class Controller2 extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-
-        intakeYLeftPos = 1;
-
-        intakeYRightPos = 0.178999;
-
-        intakeXLeftPos = .577;
-        intakeXRightPos = .571;
+        intakeServoPos = 0.5;
 
         waitForStart();
 
@@ -80,8 +69,6 @@ public class Controller2 extends LinearOpMode {
             double BackRightVal = gamepad1.left_stick_y - (gamepad1.left_stick_x) - -gamepad1.right_stick_x + gamepad2.left_stick_y - gamepad2.left_stick_x - -gamepad2.right_stick_x;
 
 
-
-
             double[] wheelPowers = {FrontRightVal, FrontLeftVal, BackLeftVal, BackRightVal};
             Arrays.sort(wheelPowers);
             if (wheelPowers[3] > 1) {
@@ -89,7 +76,6 @@ public class Controller2 extends LinearOpMode {
                 FrontRightVal /= wheelPowers[3];
                 BackLeftVal /= wheelPowers[3];
                 BackRightVal /= wheelPowers[3];
-
             }
 
             hardware.frontLeft.setPower(FrontLeftVal/2);
@@ -97,52 +83,33 @@ public class Controller2 extends LinearOpMode {
             hardware.backLeft.setPower(BackLeftVal/2);
             hardware.backRight.setPower(BackRightVal/2);
 
-
-            // intake
-            if ((gamepad1.right_trigger > 0.5) || gamepad2.right_trigger > 0.5) {
-                intakeXLeftPos = 0.668;
-                intakeXRightPos = 0.391999;
-                intakeYLeftPos = 1.0;
-                intakeYRightPos = 0.1570;
+            if (gamepad1.left_trigger > 0.5 || gamepad2.left_trigger > 0.5) {
+                hardware.firstLiftMotorOne.setPower(0.3);
+                hardware.firstLiftMotorTwo.setPower(0.3);
+                hardware.secondLiftMotorOne.setPower(0.3);
             }
 
-            // outtake
-            if ((gamepad1.left_trigger > 0.5) || gamepad2.left_trigger > 0.5) {
-                intakeYLeftPos = 1;
-                intakeYRightPos = 0.168999;
-                intakeXLeftPos = .577;
-                intakeXRightPos = .571;
+            if (gamepad1.right_trigger > 0.5 || gamepad2.right_trigger > 0.5) {
+                hardware.firstLiftMotorOne.setPower(-0.3);
+                hardware.firstLiftMotorTwo.setPower(-0.3);
+                hardware.secondLiftMotorOne.setPower(-0.3);
             }
 
-
-            // up on servo arms
             if (gamepad1.a || gamepad2.a) {
-                intakeYLeftPos -= 0.001;
-                intakeYRightPos += 0.001;
+                hardware.intake.setPosition(1); // grabs block
             }
 
-            // down on servo arms
             if (gamepad1.b || gamepad2.b) {
-                intakeYLeftPos += 0.001;
-                intakeYRightPos -= 0.001;
+                hardware.intake.setPosition(0.6);
             }
 
-            // sets servo positions = servoPos variable
-            hardware.intakeXLeft.setPosition(intakeXLeftPos);
-            hardware.intakeXRight.setPosition(intakeXRightPos);
-
-            hardware.intakeYLeft.setPosition(intakeYLeftPos);
-            hardware.intakeYRight.setPosition(intakeYRightPos);
+            hardware.intake.setPosition(intakeServoPos);
 
 
 
 
             // information to print to the phones
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Left X Pos: ", hardware.intakeXLeft.getPosition());
-            telemetry.addData("Right X Pos: ", hardware.intakeXRight.getPosition());
-            telemetry.addData("Left Y Pos: ", hardware.intakeYLeft.getPosition());
-            telemetry.addData("Right Y Pos: ", hardware.intakeYRight.getPosition());
             telemetry.update();
 
         }

@@ -21,11 +21,15 @@ public class HardwarePushbot
     public DcMotor frontLeft;
     public DcMotor frontRight;
 
-    public Servo intakeXLeft;
-    public Servo intakeXRight;
+    public DcMotor firstLiftMotorOne;
+    public DcMotor firstLiftMotorTwo;
 
-    public Servo intakeYLeft;
-    public Servo intakeYRight;
+    public DcMotor secondLiftMotorOne;
+
+    public Servo intake;
+
+
+
 
 
 
@@ -44,13 +48,11 @@ public class HardwarePushbot
         frontLeft  = hwMap.get(DcMotor.class, "frontLeft");
         frontRight = hwMap.get(DcMotor.class, "frontRight");
 
-        intakeXLeft = hwMap.get(Servo.class, "xLeft");
-        intakeXRight = hwMap.get(Servo.class, "xRight");
+        firstLiftMotorOne = hwMap.get(DcMotor.class, "firstLiftMotorOne");
+        firstLiftMotorTwo = hwMap.get(DcMotor.class, "firstLiftMotorTwo");
+        secondLiftMotorOne = hwMap.get(DcMotor.class, "secondLiftMotorOne");
 
-        intakeYLeft = hwMap.get(Servo.class, "yLeft");
-        intakeYRight = hwMap.get(Servo.class, "yRight");
-
-
+        intake = hwMap.get(Servo.class, "intake");
 
 
         backLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -58,20 +60,37 @@ public class HardwarePushbot
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
 
+        firstLiftMotorOne.setDirection(DcMotor.Direction.FORWARD);
+        firstLiftMotorTwo.setDirection(DcMotor.Direction.FORWARD);
+        secondLiftMotorOne.setDirection(DcMotor.Direction.REVERSE);
 
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        firstLiftMotorOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        firstLiftMotorTwo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        secondLiftMotorOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeft.setPower(0);
         backRight.setPower(0);
         backLeft.setPower(0);
         frontLeft.setPower(0);
 
-
+        firstLiftMotorOne.setPower(0);
+        firstLiftMotorTwo.setPower(0);
+        secondLiftMotorOne.setPower(0);
 
 
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        firstLiftMotorOne.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        firstLiftMotorTwo.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        secondLiftMotorOne.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
  }
